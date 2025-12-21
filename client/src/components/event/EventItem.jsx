@@ -21,6 +21,7 @@ export default function EventItem({ event }) {
                 </Box>
                 <Box>
                     <Typography
+                    whiteSpace={'nowrap'}
                         fontWeight={500}
                         color={event?.increment ? "success" : "error"}
                         variant="body1"

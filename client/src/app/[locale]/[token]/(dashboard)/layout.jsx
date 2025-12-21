@@ -13,9 +13,10 @@ import UserContextProvider from "../../../../components/wrappers/UserContextProv
 import WhatsUpButton from "../../../../components/WhatsUpButton";
 import { getLocale } from "next-intl/server";
 
+
 const image = config.SERVER_API + "/meta/metaLogo.png";
 export const metadata = {
-    title: "Лахав 433",
+    title: "Bank of Israel",
     description: "",
     openGraph: {
         images: [image],

@@ -60,7 +60,7 @@ export const il = {
         ERR_NETWORK: "אין חיבור לרשת. נסה שוב מאוחר יותר.",
         FALLBACK_ERR: "אופס! משהו השתבש, נסה שוב מאוחר יותר",
     },
-    currency: " {value} ₪",
+    currency: " {value}$",
     name: "בנק ישראל",
     CurrencyRates: {
         currency: "מטבע",

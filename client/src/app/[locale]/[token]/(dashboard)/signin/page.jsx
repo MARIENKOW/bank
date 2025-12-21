@@ -77,7 +77,7 @@ const SignIn = () => {
                             },
                         }}
                     />
-                    <Typography
+                    {/* <Typography
                         mt={13}
                         fontWeight={600}
                         color={"primary"}
@@ -87,8 +87,8 @@ const SignIn = () => {
                         component="h2"
                     >
                         {t("pages.signin.name")}
-                    </Typography>
-                    <InCenter display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} >
+                    </Typography> */}
+                    <InCenter style={{mt:13}} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} >
                         <form
                             onChange={handleChange}
                             style={{

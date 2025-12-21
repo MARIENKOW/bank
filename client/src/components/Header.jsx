@@ -95,14 +95,16 @@ const Header = ({ data }) => {
                         // pb={1}
                         // gap={1}
                     >
-                        <Typography
-                            variant="h6"
-                            fontWeight={"600"}
-                            textTransform={"uppercase"}
-                            color="secondary"
-                        >
-                            {t("name")}
-                        </Typography>
+                        <Link href={MAIN_ROUTE(token)}>
+                            <Typography
+                                variant="h6"
+                                fontWeight={"600"}
+                                textTransform={"uppercase"}
+                                color="secondary"
+                            >
+                                {t("name")}
+                            </Typography>
+                        </Link>
                     </Box>
                     <Box display={"flex"} gap={1} alignItems={"center"}>
                         <LanguageChange />
