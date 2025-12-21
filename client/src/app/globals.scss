@@ -1,0 +1,181 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+:focus,
+:active {
+    outline: none;
+}
+a:focus,
+a:active {
+    outline: none;
+}
+nav,
+footer,
+header,
+aside {
+    display: block;
+}
+html,
+body {
+    width: 100%;
+    font-size: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+input,
+button,
+textarea {
+    font-family: inherit;
+}
+input::-ms-clear {
+    display: none;
+}
+button {
+    cursor: pointer;
+}
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+a,
+a:visited {
+    text-decoration: none;
+    color: #000;
+}
+a:hover {
+    text-decoration: none;
+}
+img {
+    vertical-align: top;
+}
+input[type="text"]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+}
+input[type="text"]::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type="number"],
+input[type="number"]:hover,
+input[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+/*! ______ОБНУЛЕНИЕ______ */
+
+// html {
+//     background-color: #202020;
+// }
+
+body {
+    // background-color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.tiptap {
+    img {
+        max-width: 100%;
+    }
+}
+
+.rmUserSelect {
+    pointer-events: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+// #nprogress .bar {
+//     background: #06b6d4 !important; /* твой цвет */
+//     height: 300px !important;
+//     width: 100%;
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     z-index: 9999; /* вот так правильно */
+// }
+
+/* Убираем верхний баннер */
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+/* Чтобы не было пустого отступа сверху */
+body {
+    //   top: 0px !important;
+}
+
+/* Убираем иконку Google Translate (если мешает) */
+// .goog-te-gadget-icon {
+//     display: none !important;
+// }
+// .goog-te-gadget-icon {
+//     display: none !important;
+// }
+
+// /* Убираем белый фон при переключении */
+// .goog-te-menu-value span {
+//     color: inherit !important;
+// }
+
+// .goog-logo-link,
+// .goog-te-gadget {
+//     display: none !important;
+// }
+
+// .skiptranslate {
+//     display: none !important;
+// }
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+body {
+    top: 0 !important;
+}
+.goog-logo-link,
+.goog-te-gadget span {
+    display: none !important;
+}
+#goog-gt-tt.skiptranslate {
+    display: none !important;
+}
+
+/* Скрываем оригинальный select */
+#google_translate_element {
+    display: none !important;
+}
+iframe.skiptranslate {
+    display: none !important;
+}

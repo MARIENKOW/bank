@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src/app/",
+    "paths": {
+      "@/styles/*": [
+        "styles/*"
+      ],
+      "@/components/*": [
+        "components/*"
+      ]
+    },
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app/admin/(dashboard)/blog/page.jsx",
+    "src/app/(dashboard)/blog/page.jsx",
+    "src/i18n/languages/de.js",
+    "src/i18n/languages/ru.js",
+    "src/i18n/index.js",
+    "src/i18n/request.js",
+    "src/i18n/navigation.js",
+    "src/i18n/routing.js",
+    "src/components/native-translate.jsx",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
