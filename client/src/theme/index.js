@@ -36,6 +36,13 @@ export const themeSettings = {
             light: grey[50],
             contrastText: grey[900],
         },
+        dif: {
+            main: "#1a8fa4",
+            dark: "#186a78",
+            // light: "#363636",
+            light: '#73cddd',
+            contrastText: grey[900],
+        },
         text: {
             primary: "rgba(0, 0, 0, 0.87)", // ← ТЕКСТ на светлом фоне
             secondary: "rgba(0, 0, 0, 0.6)",
@@ -67,7 +74,7 @@ export const themeSettings = {
             contrastText: "#ffffff",
         },
         background: {
-            default: "#2e3d50",
+            default: "#fff",
             paper: "#2e3d50",
             main: "#bebebe",
             dark: "#e9e9e9",
@@ -82,7 +89,7 @@ export const themeSettings = {
                     "&:hover": {
                         // backgroundColor: theme.palette.table.hover,
                     },
-                    backgound: theme.palette.primary.light,
+                    backgound: theme.palette.secondary.light,
                 }),
                 // head НЕ РАБОТАЕТ! Используйте MuiTableCell.head
             },
@@ -93,14 +100,42 @@ export const themeSettings = {
                     // borderColor: theme.palette.divider,
                     bgcolor: "#fff",
                     fontWeight: 500,
-                    color: "#fff",
-                    backgroundColor: theme.palette.primary.main, // ← ЗДЕСЬ!
+                    color: theme.palette.primary.dark,
+                    backgroundColor: theme.palette.secondary.main, // ← ЗДЕСЬ!
                 }),
                 head: ({ theme }) => ({
                     backgroundColor: theme.palette.primary.dark, // ← ЗДЕСЬ!
                     color: theme.palette.common.white, // белый текст
                     fontWeight: 700,
                 }),
+            },
+        },
+        MuiTypography: {
+            styleOverrides: {
+                root: {
+                    letterSpacing: "1.2px", // или '-0.01em' для более плотного
+                },
+            },
+        },
+
+        // Все Button
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    letterSpacing: "1.5px",
+                },
+            },
+        },
+
+        // Все TextField input
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    letterSpacing: "1.2px",
+                    "& input, & textarea": {
+                        letterSpacing: "1.2px",
+                    },
+                },
             },
         },
     },

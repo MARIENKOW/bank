@@ -53,10 +53,11 @@ export default function AccountButton() {
                 aria-controls={`userAccountBtn`}
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
-                color="secondary"
+                color="primary"
                 ref={anchorEl}
+                
                 endIcon={<MenuIcon />}
-                sx={{ textTransform: "none" }}
+                sx={{ textTransform: "none",fontWeight:500 }}
             >
                 @{user.username}
             </Button>

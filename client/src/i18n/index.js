@@ -1,12 +1,12 @@
 import { ru } from "./languages/ru";
-import { il } from "./languages/il";
+import { he } from "./languages/he";
 
 export const messagesModules = {
     //первый - defaultLanguage
     ru,
-    il
+    he
 };
 
 export const languages = Object.keys(messagesModules);
 
-export const defaultLanguage = "ru";
+export const defaultLanguage = "he";

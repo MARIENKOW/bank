@@ -11,11 +11,8 @@ import AdminContextProvider from "../../../../components/wrappers/AdminContextPr
 
 export default function RootLayout({ children }) {
     return (
-        <html
-            className={montserrat.className}
-            lang="ru"
-        >
-            <body >
+        <html className={montserrat.className} lang="ru">
+            <body>
                 <MainWrapper>
                     <AdminContextProvider>
                         <ChechAuthAdmin>

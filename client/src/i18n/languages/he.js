@@ -1,4 +1,4 @@
-export const il = {
+export const he = {
     pages: {
         main: {
             name: "דף הבית",

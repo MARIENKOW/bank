@@ -46,7 +46,7 @@ const Header = ({ data }) => {
             width={"100%"}
             zIndex={1000}
             sx={{
-                background: theme.palette.primary.dark,
+                bgcolor: "secondary.main",
             }}
         >
             <ContainerComponent sx={{ p: { xs: 0 } }}>
@@ -55,6 +55,7 @@ const Header = ({ data }) => {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
+                        bgcolor: "secondary.main",
                         gap: 1,
                     }}
                 >
@@ -96,17 +97,15 @@ const Header = ({ data }) => {
                         // gap={1}
                     >
                         <Link href={MAIN_ROUTE(token)}>
-                            <Typography
-                                variant="h6"
-                                fontWeight={"600"}
-                                textTransform={"uppercase"}
-                                color="secondary"
-                            >
-                                {t("name")}
-                            </Typography>
+                            <Image
+                                alt="logo2"
+                                width={50}
+                                height={50}
+                                src={"/logo2.png"}
+                            />
                         </Link>
                     </Box>
-                    <Box display={"flex"} gap={1} alignItems={"center"}>
+                    <Box display={"flex"} gap={2} alignItems={"center"}>
                         <LanguageChange />
                         <Box>
                             {isLoading ? (
@@ -117,7 +116,8 @@ const Header = ({ data }) => {
                                 <Link href={SIGNIN_ROUTE(token)}>
                                     <Typography
                                         variant="body1"
-                                        color="secondary"
+                                        color="primary"
+                                        fontWeight={500}
                                     >
                                         {t("pages.signin.name")}
                                     </Typography>

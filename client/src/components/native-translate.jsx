@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "../i18n/navigation";
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select, Typography } from "@mui/material";
 import { useLocale } from "next-intl";
 import { languages, defaultLanguage } from "../i18n";
 import ReactCountryFlag from "react-country-flag";
@@ -20,21 +20,32 @@ export function LanguageChange() {
     return (
         <FormControl
             size="small"
-            sx={{ display: "inline-block", minWidth: 70 }}
+            sx={{ display: "inline-block", minWidth: 25 }}
             fullWidth
         >
             <Select
+                variant="standard"
                 sx={{ width: "100%" }}
                 defaultValue={locale}
                 onChange={handleChange}
+                MenuProps={{
+                    sx: {
+                        "& .MuiPaper-root": {
+                            bgcolor: "secondary.main",
+                        },
+                    },
+                }}
             >
                 {languages.map((lang) => (
                     <MenuItem key={lang} value={lang}>
-                        <ReactCountryFlag
+                        {/* <ReactCountryFlag
                             svg
                             style={{ width: "1.5em", height: "1.5em" }}
                             countryCode={lang === "en" ? "us" : lang}
-                        />
+                        /> */}
+                        <Typography variant="body1" color="primary">
+                            {lang}
+                        </Typography>
                     </MenuItem>
                 ))}
             </Select>

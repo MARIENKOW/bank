@@ -64,8 +64,8 @@ export const ru = {
     name: "Bank of Israel",
     CurrencyRates: {
         currency: "Валюта",
-        cur: " ₽",
+        cur: " ₪",
         title: "Курс валют",
-        per_unit: "₽ за 1 ед.",
+        per_unit: "₪ за 1 ед.",
     },
 };

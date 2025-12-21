@@ -7,39 +7,58 @@ import {
     TableRow,
     Paper,
     Typography,
+    Box,
 } from "@mui/material";
 import axios from "axios";
 import { getLocale, getTranslations } from "next-intl/server";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import StraightSharpIcon from "@mui/icons-material/StraightSharp";
 
-const CURRENCIES = [
-    "USD",
-    "EUR",
-    "GBP",
-    "JPY",
-    "CAD",
-    "CHF",
-    "CZK",
-    "ILS",
-    "RUB",
-];
+const CURRENCIES = ["USD", "EUR", "GBP", "JPY", "CAD", "CHF", "CZK"];
 
 export default async function CurrencyRatesRUB() {
     const t = await getTranslations("CurrencyRates");
 
     const locale = await getLocale();
 
+    const today = new Date().toISOString().split("T")[0];
+    const yesterday = new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0];
+
     try {
         const { data } = await axios.get(
-            "https://api.exchangerate-api.com/v4/latest/usd"
+            "https://api.frankfurter.app/latest?from=USD"
+        );
+        const { data: yesterdayData } = await axios.get(
+            `https://api.frankfurter.app/${yesterday}?from=USD`
         );
 
-        const cur = locale == "il" ? data.rates.ILS : data.rates.RUB;
+        console.log(data);
 
-        const rates = CURRENCIES.map((code) => ({
-            CharCode: code,
-            Name: code,
-            RatePerUnit: cur / data.rates[code], // Сколько рублей за 1 единицу валюты
-        })).filter(Boolean);
+        console.log(yesterdayData);
+
+        const cur = data.rates.ILS;
+
+        const rates = CURRENCIES.map((code) => {
+            // const yesterdayData.rates[code];
+            console.log(data.rates[code]);
+            const today = code === "USD" ? cur : cur / data.rates[code];
+            const yesterday =
+                code === "USD"
+                    ? yesterdayData.rates.ILS
+                    : yesterdayData.rates.ILS / yesterdayData.rates[code];
+            return {
+                CharCode: code,
+                Name: code,
+                RatePerUnit: today,
+                RatePerUnitYesterday: yesterday,
+                Rate: ((today - yesterday) / yesterday) * 100,
+            };
+        }).filter(Boolean);
+
+        console.log(rates);
 
         return (
             <>
@@ -54,23 +73,78 @@ export default async function CurrencyRatesRUB() {
                     }}
                 >
                     <Table size="small">
-                        <TableHead>
+                        {/* <TableHead>
                             <TableRow>
                                 <TableCell width="50%">
                                     {t("currency")}
                                 </TableCell>
                                 <TableCell align="right" width="50%">
-                                    {t("per_unit")}
+                                    {t("rate")}
                                 </TableCell>
                             </TableRow>
-                        </TableHead>
+                        </TableHead> */}
                         <TableBody>
                             {rates.map((rate) => (
                                 <TableRow key={rate.CharCode} hover>
-                                    <TableCell>{rate.CharCode}</TableCell>
+                                    <TableCell>
+                                        <Typography variant="body1" color="dif">
+                                            {rate.CharCode}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <Typography
+                                            variant="body1"
+                                            color="primary"
+                                        >
+                                            {rate.RatePerUnit.toFixed(4)}
+                                            {t("cur")}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <Box
+                                            display={"flex"}
+                                            justifyContent={"center"}
+                                            alignItems={"center"}
+                                        >
+                                            {rate.Rate === 0 ? (
+                                                ""
+                                            ) : rate.Rate > 0 ? (
+                                                <>
+                                                    <StraightSharpIcon color="success" />
+                                                    <Typography
+                                                        variant="body1"
+                                                        color="success"
+                                                    >
+                                                        {rate.Rate.toFixed(3)}%
+                                                    </Typography>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <StraightSharpIcon
+                                                        color="error"
+                                                        sx={{
+                                                            transform:
+                                                                "rotate(180deg)",
+                                                        }}
+                                                    />
+                                                    <Typography
+                                                        variant="body1"
+                                                        color="error"
+                                                    >
+                                                        {rate.Rate.toFixed(3)}%
+                                                    </Typography>
+                                                </>
+                                            )}
+                                        </Box>
+                                    </TableCell>
                                     <TableCell align="right">
-                                        {rate.RatePerUnit.toFixed(4)}
-                                        {t("cur")}
+                                        {rate.Rate === 0 ? (
+                                            ""
+                                        ) : rate.Rate > 0 ? (
+                                            <TrendingUpIcon  color="dif" />
+                                        ) : (
+                                            <TrendingDownIcon color="dif" />
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}

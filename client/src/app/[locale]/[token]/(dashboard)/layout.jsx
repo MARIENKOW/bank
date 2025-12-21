@@ -4,7 +4,7 @@ import { Footer } from "../../../../components/Footer";
 import { HeaderWrapper } from "../../../../components/HeaderWrapper";
 import { Map } from "../../../../components/Map";
 import { MainWrapper } from "../../../../components/wrappers/MainWrapper";
-import { inter, montserrat } from "../../../../fonts/index";
+import { heebo, inter, montserrat } from "../../../../fonts/index";
 import config from "../../../../configs/config";
 import AccessService from "../../../../services/AccessService";
 import ErrorPage from "../../../../components/pages/ErrorPage";
@@ -12,7 +12,6 @@ import RedirectToGoogle from "../../../../components/events/RedirectToGoogle";
 import UserContextProvider from "../../../../components/wrappers/UserContextProvider";
 import WhatsUpButton from "../../../../components/WhatsUpButton";
 import { getLocale } from "next-intl/server";
-
 
 const image = config.SERVER_API + "/meta/metaLogo.png";
 export const metadata = {
@@ -37,7 +36,11 @@ export default async function Layout({ children, params }) {
         if (!data) return <RedirectToGoogle />;
 
         return (
-            <html dir={locale=='il'?"rtl":''} className={montserrat.className} lang="ru">
+            <html
+                dir={locale == "he" ? "rtl" : ""}
+                className={heebo?.className}
+                lang="ru"
+            >
                 <body style={{ background: "#2e3d50" }}>
                     <UserContextProvider>
                         <MainWrapper>
@@ -57,7 +60,7 @@ export default async function Layout({ children, params }) {
                                     flexDirection={"column"}
                                     flex={1}
                                     position={"relative"}
-                                    zIndex={"10 "}
+                                    zIndex={"10"}
                                 >
                                     {children}
                                     {/* <SendForm/> */}
