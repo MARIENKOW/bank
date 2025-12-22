@@ -7,6 +7,9 @@ import fileUpload from "express-fileupload";
 import { Img } from "./models/Img.js";
 import { Admin } from "./models/Admin.js";
 import { Access } from "./models/Access.js";
+import { Blog } from "./models/Blog.js";
+import { Video } from "./models/Video.js";
+import VideoRouter from "./routers/VideoRouter.js";
 import config from "./config.js";
 import SiteRouter from "./routers/SiteRouter.js";
 import AdminRouter from "./routers/AdminRouter.js";
@@ -14,6 +17,7 @@ import AccessRouter from "./routers/AccessRouter.js";
 import UserRouter from "./routers/UserRouter.js";
 import EventRouter from "./routers/EventRouter.js";
 import PhoneRouter from "./routers/PhoneRouter.js";
+import BlogRouter from "./routers/BlogRouter.js";
 
 const asModels = (models) => {
     Object.values(models).forEach((model) => {
@@ -23,7 +27,7 @@ const asModels = (models) => {
     });
 };
 
-asModels({ Img, Admin, Access });
+asModels({ Img, Admin, Access, Blog, Video });
 
 dotenv.config();
 
@@ -54,6 +58,8 @@ app.use("/api/Admin", AdminRouter);
 app.use("/api/User", UserRouter);
 app.use("/api/Access", AccessRouter);
 app.use("/api/Event", EventRouter);
+app.use("/api/Blog", BlogRouter);
+app.use("/api/Video", VideoRouter);
 app.use("/api/Phone", PhoneRouter);
 app.use("/api", SiteRouter);
 
