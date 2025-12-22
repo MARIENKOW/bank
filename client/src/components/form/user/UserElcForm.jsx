@@ -47,7 +47,9 @@ export const UserElcForm = ({ item }) => {
             await user.updateElc({ ...data, id: item.id });
             await quertClient.invalidateQueries(["user", item.id]);
 
-            enqueueSnackbar(t("fields.elc.success"), { variant: "success" });
+            enqueueSnackbar(`Единый лицевой счет изменен!`, {
+                variant: "success",
+            });
         } catch (e) {
             if (e instanceof CanceledError) return;
             console.error(e);
@@ -58,14 +60,14 @@ export const UserElcForm = ({ item }) => {
                 }
                 return;
             }
-            enqueueSnackbar(t("form.error.message"), {
+            enqueueSnackbar("Упс, что-то пошло не так. Попробуйте позже", {
                 variant: "error",
             });
         }
     };
 
     return (
-        <Box width={'100%'} >
+        <Box width={"100%"}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box display={"flex"}>
                     <FormControl
@@ -76,18 +78,16 @@ export const UserElcForm = ({ item }) => {
                         <InputLabel
                             htmlFor={`filled-adornment-amount-${item.id}-elc`}
                         >
-                            {t("form.elc")}
+                            Единый лицевой счет
                         </InputLabel>
                         <OutlinedInput
-                            label={t("form.elc")}
+                            label={"Единый лицевой счет"}
                             errors={errors}
                             {...register("elc", {
-                                required: t("form.required"),
+                                required: "обязательное поле",
                                 maxLength: {
                                     value: ELC_MAX_LENGTH,
-                                    message: t("form.maxLength", {
-                                        value: ELC_MAX_LENGTH,
-                                    }),
+                                    message: `максимум ${ELC_MAX_LENGTH} символов`,
                                 },
                             })}
                             endAdornment={

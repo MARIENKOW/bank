@@ -11,7 +11,7 @@ import {
     MAIN_ROUTE,
     SIGNIN_ROUTE,
 } from "../configs/routerLinks";
-import { Children, useContext, useState } from "react";
+import { Children, useContext, useRef, useState } from "react";
 import GoogleTranslate from "./google-translate";
 import { LanguageChange } from "./native-translate";
 import { useTranslations } from "next-intl";
@@ -24,20 +24,9 @@ import AccountButton from "../components/AccountButton";
 observer;
 
 const Header = ({ data }) => {
-    const { isLoading, isAuth } = useContext(UserContext);
     const { token } = useParams();
-    const t = useTranslations();
-    const theme = useTheme();
+    const headerEl = useRef();
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const menu = Boolean(anchorEl);
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
     return (
         <Box
             // position={"fixed"}
@@ -51,6 +40,8 @@ const Header = ({ data }) => {
         >
             <ContainerComponent sx={{ p: { xs: 0 } }}>
                 <Toolbar
+                    id={`header`}
+                    ref={headerEl}
                     sx={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -87,15 +78,7 @@ const Header = ({ data }) => {
                             />
                         </Box>
                     </Link> */}
-                    <Box
-                        display={"flex"}
-                        // justifyContent={"end"}
-                        alignItems={"center"}
-                        // flexWrap={"wrap"}
-                        // pt={1}
-                        // pb={1}
-                        // gap={1}
-                    >
+                    <Box display={"flex"} alignItems={"center"}>
                         <Link href={MAIN_ROUTE(token)}>
                             <Image
                                 alt="logo2"
@@ -108,21 +91,7 @@ const Header = ({ data }) => {
                     <Box display={"flex"} gap={2} alignItems={"center"}>
                         <LanguageChange />
                         <Box>
-                            {isLoading ? (
-                                <Loading />
-                            ) : isAuth ? (
-                                <AccountButton />
-                            ) : (
-                                <Link href={SIGNIN_ROUTE(token)}>
-                                    <Typography
-                                        variant="body1"
-                                        color="primary"
-                                        fontWeight={500}
-                                    >
-                                        {t("pages.signin.name")}
-                                    </Typography>
-                                </Link>
-                            )}
+                            <AccountButton header={headerEl} />
                         </Box>
                     </Box>
                 </Toolbar>

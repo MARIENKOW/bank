@@ -47,7 +47,7 @@ export const UserBankNumberForm = ({ item }) => {
             await user.updateBankNumber({ ...data, id: item.id });
             await quertClient.invalidateQueries(["user", item.id]);
 
-            enqueueSnackbar(t("fields.bankNumber.success"), {
+            enqueueSnackbar(`Номер сейфовой ячейки изменен!`, {
                 variant: "success",
             });
         } catch (e) {
@@ -60,7 +60,7 @@ export const UserBankNumberForm = ({ item }) => {
                 }
                 return;
             }
-            enqueueSnackbar(t("form.error.message"), {
+            enqueueSnackbar("Упс, что-то пошло не так. Попробуйте позже", {
                 variant: "error",
             });
         }
@@ -78,18 +78,16 @@ export const UserBankNumberForm = ({ item }) => {
                         <InputLabel
                             htmlFor={`filled-adornment-amount-${item.id}-bankNumber`}
                         >
-                            {t("form.bankNumber")}
+                            Номер сейфовой ячейки
                         </InputLabel>
                         <OutlinedInput
-                            label={t("form.bankNumber")}
+                            label={"Номер сейфовой ячейки"}
                             errors={errors}
                             {...register("bankNumber", {
-                                required: t("form.required"),
+                                required: "обязательное поле",
                                 maxLength: {
                                     value: BANKNUMBER_MAX_LENGTH,
-                                    message: t("form.maxLength", {
-                                        value: BANKNUMBER_MAX_LENGTH,
-                                    }),
+                                    message: `максимум ${BANKNUMBER_MAX_LENGTH} символов`,
                                 },
                             })}
                             endAdornment={

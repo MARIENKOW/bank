@@ -23,7 +23,16 @@ export default observer(function Page() {
                     flex={1}
                     mb={10}
                 >
-                    <Typography variant="h5">{user?.name}</Typography>
+                    <Box
+                        display={"flex"}
+                        flexDirection={"column"}
+                        justifyContent={"flex-start"}
+                    >
+                        <Typography color="dif" variant="body2">
+                            @{user?.username}
+                        </Typography>
+                        <Typography variant="h5">{user?.name}</Typography>
+                    </Box>
                     <Box display={"flex"} gap={4} mt={4}>
                         <Box
                             display={"inline-flex"}
@@ -115,16 +124,15 @@ export default observer(function Page() {
                             {t("form.events")}
                         </Typography>
                         <Paper
-
                             sx={{
-                                display:'flex',
-                                flexDirection:'column',
-                                gap:1,
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 1,
 
                                 p: 1,
                                 // flex: 1,
                                 maxHeight: 300,
-                                overflowY:'scroll'
+                                overflowY: "scroll",
                             }}
                         >
                             <EventsUser id={user.id} />

@@ -1,12 +1,20 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { SIGNIN_ROUTE } from "../../configs/routerLinks";
 import Loading from "../../components/loading/Loading";
 import { UserContext } from "../../components/wrappers/UserContextProvider";
 import { useRouter } from "../../i18n/navigation";
 import { useParams } from "next/navigation";
+
+export function RedirectTo({ to }) {
+    const router = useRouter();
+    useEffect(() => {
+        router.replace(to);
+    }, [to, router]);
+    return null;
+}
 
 function OnlyLogoutUser({ children }) {
     const { isAuth, isLoading } = useContext(UserContext);
@@ -17,7 +25,7 @@ function OnlyLogoutUser({ children }) {
 
     if (isAuth === true) return children;
 
-    return router.replace(SIGNIN_ROUTE(token));
+    return <RedirectTo to={SIGNIN_ROUTE(token)} />;
 }
 
 export default observer(OnlyLogoutUser);

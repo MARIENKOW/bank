@@ -60,7 +60,7 @@ export const ru = {
         ERR_NETWORK: "Нет подключения к сети. Попробуйте позже.",
         FALLBACK_ERR: "Упс! Что-то пошло не так, попробуйте позже",
     },
-    currency: " ${value}",
+    currency: " ₪{value}",
     name: "Bank of Israel",
     CurrencyRates: {
         currency: "Валюта",

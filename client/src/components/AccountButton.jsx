@@ -1,25 +1,32 @@
 "use client";
 
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box, Button, CircularProgress, LinearProgress } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useContext, useRef, useState } from "react";
 import { ListItemIcon } from "@mui/material";
 import { MenuItem, Menu } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { red } from "@mui/material/colors";
-import { ACCOUNT_ROUTE, MAIN_ROUTE } from "../configs/routerLinks";
+import {
+    ACCOUNT_ROUTE,
+    MAIN_ROUTE,
+    SIGNIN_ROUTE,
+} from "../configs/routerLinks";
 import { Link, useRouter } from "../i18n/navigation";
 import { useParams } from "next/navigation";
 import { UserContext } from "../components/wrappers/UserContextProvider";
 import { useTranslations } from "next-intl";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { enqueueSnackbar } from "notistack";
+import HomeIcon from "@mui/icons-material/Home";
+import LoginIcon from "@mui/icons-material/Login";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { observer } from "mobx-react-lite";
 
-export default function AccountButton() {
+export default observer(function AccountButton({ header }) {
     const { token } = useParams();
-    const { user, logOut } = useContext(UserContext);
+    const { user, logOut, isAuth, isLoading } = useContext(UserContext);
     const [loadingLogout, setLoadingLoagout] = useState(false);
-    const anchorEl = useRef();
     const [open, setOpen] = useState(false);
     const router = useRouter();
     const t = useTranslations();
@@ -47,31 +54,31 @@ export default function AccountButton() {
     return (
         <>
             <Button
-                size="large"
-                id={`userAccountBtn`}
-                aria-label="account of current user"
-                aria-controls={`userAccountBtn`}
-                aria-haspopup="true"
+                // size="large"
+                // aria-label="account of current user"
+                // aria-controls={`header`}
+                // aria-haspopup="true"
                 onClick={handleOpenNavMenu}
-                color="primary"
-                ref={anchorEl}
-                
-                endIcon={<MenuIcon />}
-                sx={{ textTransform: "none",fontWeight:500 }}
+                // color="primary"
+                // ref={anchorEl}
+                // sx={{ textTransform: "none", fontWeight: 500 }}
             >
-                @{user.username}
+                <MenuIcon />
             </Button>
             <Menu
                 id="long-menu"
                 MenuListProps={{
-                    "aria-labelledby": `userAccountBtn`,
+                    "aria-labelledby": `header`,
                 }}
                 open={open}
                 onClose={handleCloseNavMenu}
-                anchorEl={anchorEl.current}
+                anchorEl={header.current}
                 sx={{
                     "& .MuiPaper-root": {
                         bgcolor: "#fff",
+                        left: "0px !important",
+                        width: "100%",
+                        minWidth: "100%",
                     },
                     paddingBottom: 0,
                 }}
@@ -79,10 +86,9 @@ export default function AccountButton() {
                     vertical: "bottom",
                     horizontal: "right",
                 }}
-                // keepMounted
                 transformOrigin={{
                     vertical: "top",
-                    horizontal: "right",
+                    horizontal: "center",
                 }}
             >
                 <MenuItem
@@ -91,59 +97,78 @@ export default function AccountButton() {
                         router.replace(MAIN_ROUTE(token));
                     }}
                 >
-                    <Box
-                        width={"100%"}
-                        gap={1}
-                        display={"flex"}
-                        justifyContent={"end"}
-                        alignItems={"center"}
-                    >
-                        <Typography textAlign={"right"} variant="body1">
-                            {t("pages.main.name")}
-                        </Typography>
-                    </Box>
-                </MenuItem>
-                <MenuItem
-                    onClick={(event) => {
-                        handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_ROUTE(token));
-                    }}
-                >
-                    <Box
-                        width={"100%"}
-                        gap={1}
-                        display={"flex"}
-                        justifyContent={"end"}
-                        alignItems={"center"}
-                    >
-                        <Typography textAlign={"right"} variant="body1">
-                            {t("pages.account.name")}
-                        </Typography>
-                    </Box>
-                </MenuItem>
-                <MenuItem
-                    sx={{ color: red[900], bgcolor: red[50] }}
-                    onClick={async (event) => {
-                        await handleLogout();
-                        handleCloseNavMenu(event);
-                    }}
-                >
-                    <ListItemIcon sx={{ color: red[900] }}>
-                        {loadingLogout ? (
-                            <CircularProgress size={17} />
-                        ) : (
-                            <LogoutIcon />
-                        )}
+                    <ListItemIcon>
+                        <HomeIcon />
                     </ListItemIcon>
                     <Typography
-                        width={"100%"}
-                        textTransform="capitalize"
-                        textAlign="center"
+                        // fontWeight={500}
+                        // textAlign={"right"}
+                        variant="body1"
                     >
-                        {t("pages.logout.name")}
+                        {t("pages.main.name")}
                     </Typography>
                 </MenuItem>
+                {isLoading ? (
+                    <LinearProgress color="dif" />
+                ) : isAuth ? (
+                    <>
+                        <MenuItem
+                            // sx={{ bgcolor: red[50] }}
+                            onClick={(event) => {
+                                handleCloseNavMenu(event);
+                                router.replace(ACCOUNT_ROUTE(token));
+                            }}
+                        >
+                            <ListItemIcon>
+                                <AccountCircleIcon color="dif" />
+                            </ListItemIcon>
+
+                            <Typography color="dif" variant="body1">
+                                {t("pages.account.name")}
+                            </Typography>
+                        </MenuItem>
+                        <MenuItem
+                            sx={{ bgcolor: red[50] }}
+                            onClick={async (event) => {
+                                await handleLogout();
+                                handleCloseNavMenu(event);
+                            }}
+                        >
+                            <ListItemIcon>
+                                {loadingLogout ? (
+                                    <CircularProgress size={17} />
+                                ) : (
+                                    <LogoutIcon color="error" />
+                                )}
+                            </ListItemIcon>
+                            <Typography
+                                width={"100%"}
+                                textTransform="capitalize"
+                                // textAlign="right"
+                                variant="body1"
+                                color="error"
+                            >
+                                {t("pages.logout.name")}
+                            </Typography>
+                        </MenuItem>
+                    </>
+                ) : (
+                    <Link href={SIGNIN_ROUTE(token)}>
+                        <MenuItem
+                            onClick={async (event) => {
+                                handleCloseNavMenu(event);
+                            }}
+                        >
+                            <ListItemIcon>
+                                <LoginIcon />
+                            </ListItemIcon>
+                            <Typography variant="body1">
+                                {t("pages.signin.name")}
+                            </Typography>
+                        </MenuItem>
+                    </Link>
+                )}
             </Menu>
         </>
     );
-}
+});

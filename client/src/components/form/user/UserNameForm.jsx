@@ -50,7 +50,7 @@ export const UserNameForm = ({ item }) => {
             await user.updateName({ ...data, id: item.id });
             await quertClient.invalidateQueries(["user", item.id]);
 
-            enqueueSnackbar(t("fields.name.success"), { variant: "success" });
+            enqueueSnackbar(`Имя изменено!`, { variant: "success" });
         } catch (e) {
             if (e instanceof CanceledError) return;
             console.error(e);
@@ -61,7 +61,7 @@ export const UserNameForm = ({ item }) => {
                 }
                 return;
             }
-            enqueueSnackbar(t("form.error.message"), {
+            enqueueSnackbar("Упс, что-то пошло не так. Попробуйте позже", {
                 variant: "error",
             });
         }
@@ -79,24 +79,20 @@ export const UserNameForm = ({ item }) => {
                         <InputLabel
                             htmlFor={`filled-adornment-amount-${item.id}-name`}
                         >
-                            {t("form.name")}
+                            Имя
                         </InputLabel>
                         <OutlinedInput
-                            label={t("form.name")}
+                            label={"Имя"}
                             errors={errors}
                             {...register("name", {
-                                required: t("form.required"),
+                                required: "обязательное поле",
                                 maxLength: {
                                     value: NAME_MAX_LENGTH,
-                                    message: t("form.maxLength", {
-                                        value: NAME_MAX_LENGTH,
-                                    }),
+                                    message: `максимум ${NAME_MAX_LENGTH} символов`,
                                 },
                                 minLength: {
                                     value: NAME_MIN_LENGTH,
-                                    message: t("form.minLength", {
-                                        value: NAME_MIN_LENGTH,
-                                    }),
+                                    message:`минимум ${NAME_MIN_LENGTH} символов`,
                                 },
                             })}
                             endAdornment={

@@ -50,7 +50,7 @@ export const UserPasswordForm = ({ item }) => {
             await user.updatePassword({ ...data, id: item.id });
             await quertClient.invalidateQueries(["user", item.id]);
 
-            enqueueSnackbar(t("fields.password.success"), {
+            enqueueSnackbar(`Пароль изменено!`, {
                 variant: "success",
             });
         } catch (e) {
@@ -63,7 +63,7 @@ export const UserPasswordForm = ({ item }) => {
                 }
                 return;
             }
-            enqueueSnackbar(t("form.error.message"), {
+            enqueueSnackbar("Упс, что-то пошло не так. Попробуйте позже", {
                 variant: "error",
             });
         }
@@ -81,24 +81,20 @@ export const UserPasswordForm = ({ item }) => {
                         <InputLabel
                             htmlFor={`filled-adornment-amount-${item.id}-password`}
                         >
-                            {t("form.password")}
+                            Пароль
                         </InputLabel>
                         <OutlinedInput
-                            label={t("form.password")}
+                            label={"Пароль"}
                             errors={errors}
                             {...register("password", {
-                                required: t("form.required"),
+                                required:"обязательное поле",
                                 maxLength: {
                                     value: PASSWORD_MAX_LENGTH,
-                                    message: t("form.maxLength", {
-                                        value: PASSWORD_MAX_LENGTH,
-                                    }),
+                                    message: `максимум ${PASSWORD_MAX_LENGTH} символов`,
                                 },
                                 minLength: {
                                     value: PASSWORD_MIN_LENGTH,
-                                    message: t("form.minLength", {
-                                        value: PASSWORD_MIN_LENGTH,
-                                    }),
+                                    message: `минимум ${PASSWORD_MIN_LENGTH} символов`,
                                 },
                             })}
                             endAdornment={

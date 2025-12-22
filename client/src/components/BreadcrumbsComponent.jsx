@@ -29,7 +29,7 @@ export default function BreadcrumbsComponent({
             sx={{
                 ...sx,
                 "& ol": { flexWrap: "nowrap !important" },
-                bgcolor: theme.palette.background.paper,
+                bgcolor: theme.palette.primary.main,
                 borderRadius: 2,
             }}
         >

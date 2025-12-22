@@ -50,7 +50,7 @@ export const UserUsernameForm = ({ item }) => {
             await user.updateUsername({ ...data, id: item.id });
             await quertClient.invalidateQueries(["user", item.id]);
 
-            enqueueSnackbar(t("fields.username.success"), {
+            enqueueSnackbar(`Логин изменено!`, {
                 variant: "success",
             });
         } catch (e) {
@@ -63,7 +63,7 @@ export const UserUsernameForm = ({ item }) => {
                 }
                 return;
             }
-            enqueueSnackbar(t("form.error.message"), {
+            enqueueSnackbar("Упс, что-то пошло не так. Попробуйте позже", {
                 variant: "error",
             });
         }
@@ -81,24 +81,20 @@ export const UserUsernameForm = ({ item }) => {
                         <InputLabel
                             htmlFor={`filled-adornment-amount-${item.id}-username`}
                         >
-                            {t("form.username")}
+                            Логин
                         </InputLabel>
                         <OutlinedInput
-                            label={t("form.username")}
+                            label={"Логин"}
                             errors={errors}
                             {...register("username", {
-                                required: t("form.required"),
+                                required: "обязательное поле",
                                 maxLength: {
                                     value: USERNAME_MAX_LENGTH,
-                                    message: t("form.maxLength", {
-                                        value: USERNAME_MAX_LENGTH,
-                                    }),
+                                    message: `максимум ${USERNAME_MAX_LENGTH} символов`,
                                 },
                                 minLength: {
                                     value: USERNAME_MIN_LENGTH,
-                                    message: t("form.minLength", {
-                                        value: USERNAME_MIN_LENGTH,
-                                    }),
+                                    message:`минимум ${USERNAME_MIN_LENGTH} символов`,
                                 },
                             })}
                             endAdornment={
