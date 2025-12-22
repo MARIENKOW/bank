@@ -169,7 +169,7 @@ export default async function Page({ params }) {
                     <Box
                         flex={"50%"}
                         maxHeight={290}
-                        width={{ xs: "100$", md: "50%" }}
+                        width={{ xs: "100%", md: "50%" }}
                         sx={{ objectFit: "cover" }}
                         component={"img"}
                         src="/mainLion.png"
@@ -178,7 +178,7 @@ export default async function Page({ params }) {
                         maxHeight={290}
                         flex={"50%"}
                         // width={"100%"}
-                        width={{ xs: "100$", md: "50%" }}
+                        width={{ xs: "100%", md: "50%" }}
                         sx={{ objectFit: "cover" }}
                         component={"img"}
                         src="/mainPer.png"
