@@ -2,7 +2,7 @@ import { Link } from "../../../../i18n/navigation";
 import CurrencyRates from "../../../../components/CurrencyRate";
 import { ContainerComponent } from "../../../../components/wrappers/ContainerComponent";
 import { getTranslations } from "next-intl/server";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import { SIGNIN_ROUTE } from "../../../../configs/routerLinks";
 import PhonesMain from "../../../../components/PhonesMain";
 import ImgBG from "../../../../components/ImgBG";
@@ -27,7 +27,7 @@ export default async function Page({ params }) {
                 position={"relative"}
                 zIndex={2}
             >
-                <Box position={"relative"} pb={7}>
+                <Box position={"relative"}>
                     <ImgBG />
                     <Typography
                         position={"relative"}
@@ -44,7 +44,7 @@ export default async function Page({ params }) {
                     >
                         {tM("name")}
                     </Typography>
-                    <ContainerComponent
+                    {/* <ContainerComponent
                         sx={{ position: "relative", zIndex: 2 }}
                     >
                         <Link href={SIGNIN_ROUTE(token)}>
@@ -52,28 +52,139 @@ export default async function Page({ params }) {
                                 {t("buttons.signin")}
                             </Button>
                         </Link>
-                    </ContainerComponent>
+                    </ContainerComponent> */}
                 </Box>
-                <Box pb={3} pt={3}  bgcolor={'background.paper'} >
+                <Box pb={3} pt={3} bgcolor={"background.paper"}>
                     <ContainerComponent>
                         <Typography
                             variant="body1"
-                            fontWeight={600}
-                            fontSize={16}
-                            color={'secondary'}
+                            fontWeight={700}
+                            fontSize={17}
+                            textAlign={"center"}
+                            color={"secondary"}
                             // mb={7}
                         >
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Pariatur mollitia sapiente repudiandae illo
-                            nemo debitis ullam qui in. Necessitatibus,
-                            temporibus quae eligendi odit doloremque tempore
-                            veritatis, impedit praesentium blanditiis dolorem
-                            reiciendis sed harum suscipit explicabo iste odio!
-                            Debitis vel molestias assumenda dolore itaque
-                            pariatur culpa iusto rem earum, ipsam ullam?
+                            {t("blocks.top.title")}
+                        </Typography>
+                        <Typography
+                            variant="body1"
+                            fontWeight={400}
+                            textAlign={"center"}
+                            fontSize={16}
+                            color={"secondary"}
+                            mt={2}
+                        >
+                            {t("blocks.top.subtitle")}
                         </Typography>
                     </ContainerComponent>
                 </Box>
+                <Box pb={3} pt={3} bgcolor={"primary.main"}>
+                    <ContainerComponent>
+                        <Box gap={5} display={"flex"}>
+                            <Box
+                                flex={"50%"}
+                                display={"flex"}
+                                flexDirection={"column"}
+                                alignItems={"center"}
+                                justifyContent={"end"}
+                                gap={1}
+                            >
+                                <Typography
+                                    variant="body1"
+                                    fontWeight={400}
+                                    fontSize={40}
+                                    color={"secondary"}
+                                    // mb={7}
+                                >
+                                    {t("blocks.top.left.percent")}
+                                </Typography>
+                                <Divider
+                                    sx={{
+                                        height: 1.5,
+                                        bgcolor: "primary.light",
+                                        width: "100%",
+                                    }}
+                                />
+                                <Typography
+                                    variant="body1"
+                                    fontWeight={700}
+                                    fontSize={17}
+                                    textAlign={"center"}
+                                    color={"secondary"}
+                                    // mb={7}
+                                >
+                                    {t("blocks.top.left.text")}
+                                </Typography>
+                            </Box>
+                            <Box
+                                flex={"50%"}
+                                display={"flex"}
+                                flexDirection={"column"}
+                                alignItems={"center"}
+                                justifyContent={"start"}
+                                gap={1}
+                            >
+                                <Typography
+                                    variant="body1"
+                                    fontWeight={400}
+                                    fontSize={40}
+                                    color={"secondary"}
+                                    // mb={7}
+                                >
+                                    {t("blocks.top.right.percent")}
+                                </Typography>
+                                <Divider
+                                    sx={{
+                                        height: 1.5,
+                                        bgcolor: "primary.light",
+                                        width: "100%",
+                                    }}
+                                />
+                                <Typography
+                                    variant="body1"
+                                    fontWeight={700}
+                                    fontSize={17}
+                                    color={"secondary"}
+                                    textAlign={"center"}
+                                    // mb={7}
+                                >
+                                    {t("blocks.top.right.text")}
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </ContainerComponent>
+                </Box>
+
+                <Box
+                    display={"flex"}
+                    flexDirection={{ xs: "column", md: "row" }}
+                    sx={{
+                        width: {
+                            xs: "calc(100% + 32px)",
+                            md: "100%",
+                        },
+                        ml: { xs: "-16px", md: 0 },
+                    }}
+                >
+                    <Box
+                        flex={"50%"}
+                        maxHeight={290}
+                        width={{ xs: "100$", md: "50%" }}
+                        sx={{ objectFit: "cover" }}
+                        component={"img"}
+                        src="/mainLion.png"
+                    />
+                    <Box
+                        maxHeight={290}
+                        flex={"50%"}
+                        // width={"100%"}
+                        width={{ xs: "100$", md: "50%" }}
+                        sx={{ objectFit: "cover" }}
+                        component={"img"}
+                        src="/mainPer.png"
+                    />
+                </Box>
+
                 <ContainerComponent>
                     <Box
                         gap={{ xs: 0, md: 3 }}
@@ -84,9 +195,17 @@ export default async function Page({ params }) {
                             <CurrencyRates />
                         </Box>
                         <Box flex={"50%"} mb={7}>
-                            <PhonesMain />
+                            <Typography mb={2} variant="h6" gutterBottom>
+                                {t("blocks.gra.name")}
+                            </Typography>
+                            <Box
+                                sx={{ objectFit: "contain", width: "100%" }}
+                                component={"img"}
+                                src={"/gra.png"}
+                            />
                         </Box>
                     </Box>
+                    <PhonesMain />
                 </ContainerComponent>
             </Box>
         </Box>

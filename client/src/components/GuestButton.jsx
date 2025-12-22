@@ -14,7 +14,7 @@ import {
 } from "../configs/routerLinks";
 import { Link, useRouter } from "../i18n/navigation";
 import { useParams } from "next/navigation";
-import { UserContext } from "../components/wrappers/UserContextProvider";
+import { UserContext } from "./wrappers/UserContextProvider";
 import { useTranslations } from "next-intl";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { enqueueSnackbar } from "notistack";
@@ -23,24 +23,13 @@ import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { observer } from "mobx-react-lite";
 
-export default observer(function AccountButton({ header }) {
+export default observer(function GuestButton({ header }) {
     const { token } = useParams();
     const { user, logOut, isAuth, isLoading } = useContext(UserContext);
     const [loadingLogout, setLoadingLoagout] = useState(false);
     const [open, setOpen] = useState(false);
     const router = useRouter();
     const t = useTranslations();
-
-    const handleLogout = async () => {
-        setLoadingLoagout(true);
-        try {
-            await logOut();
-        } catch (error) {
-            enqueueSnackbar(t("form.error.message"), { variant: "error" });
-        } finally {
-            setLoadingLoagout(true);
-        }
-    };
 
     const handleOpenNavMenu = (event) => {
         setOpen(true);
@@ -108,45 +97,20 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.main.name")}
                     </Typography>
                 </MenuItem>
-                <MenuItem
-                    // sx={{ bgcolor: red[50] }}
-                    onClick={(event) => {
-                        handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_ROUTE(token));
-                    }}
-                >
-                    <ListItemIcon>
-                        <AccountCircleIcon color="dif" />
-                    </ListItemIcon>
-
-                    <Typography color="dif" variant="body1">
-                        {t("pages.account.name")}
-                    </Typography>
-                </MenuItem>
-                <MenuItem
-                    sx={{ bgcolor: red[50] }}
-                    onClick={async (event) => {
-                        await handleLogout();
-                        handleCloseNavMenu(event);
-                    }}
-                >
-                    <ListItemIcon>
-                        {loadingLogout ? (
-                            <CircularProgress size={17} />
-                        ) : (
-                            <LogoutIcon color="error" />
-                        )}
-                    </ListItemIcon>
-                    <Typography
-                        width={"100%"}
-                        textTransform="capitalize"
-                        // textAlign="right"
-                        variant="body1"
-                        color="error"
+                <Link href={SIGNIN_ROUTE(token)}>
+                    <MenuItem
+                        onClick={async (event) => {
+                            handleCloseNavMenu(event);
+                        }}
                     >
-                        {t("pages.logout.name")}
-                    </Typography>
-                </MenuItem>
+                        <ListItemIcon>
+                            <LoginIcon />
+                        </ListItemIcon>
+                        <Typography variant="body1">
+                            {t("pages.signin.name")}
+                        </Typography>
+                    </MenuItem>
+                </Link>
             </Menu>
         </>
     );

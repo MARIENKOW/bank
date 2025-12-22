@@ -26,7 +26,7 @@ export const themeSettings = {
             // main: "#0058a5",
             main: "#3e5268",
             dark: "#2e3d50",
-            light: "#ccdadf",
+            light: "#6d8198",
             contrastText: "#e7f4ff",
         },
         secondary: {

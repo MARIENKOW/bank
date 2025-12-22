@@ -1,15 +1,19 @@
 "use client";
+import { Button, Menu, MenuItem, useTheme, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { ContainerComponent } from "./wrappers/ContainerComponent";
 import Image from "next/image";
+import PhoneForwardedIcon from "@mui/icons-material/PhoneForwarded";
 import { MAIN_ROUTE } from "../configs/routerLinks";
-import { useRef } from "react";
+import { Children, useContext, useRef, useState } from "react";
 import { LanguageChange } from "./native-translate";
 import { Link } from "../i18n/navigation";
 import { useParams } from "next/navigation";
 import { observer } from "mobx-react-lite";
-import GuestButton from "../components/GuestButton";
+import AccountButton from "./AccountButton";
+observer;
 
 const Header = ({ data }) => {
     const { token } = useParams();
@@ -17,7 +21,6 @@ const Header = ({ data }) => {
 
     return (
         <Box
-            // position={"fixed"}
             top={0}
             left={0}
             width={"100%"}
@@ -51,7 +54,7 @@ const Header = ({ data }) => {
                     <Box display={"flex"} gap={2} alignItems={"center"}>
                         <LanguageChange />
                         <Box>
-                            <GuestButton header={headerEl} />
+                            <AccountButton header={headerEl} />
                         </Box>
                     </Box>
                 </Toolbar>

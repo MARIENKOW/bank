@@ -1,9 +1,9 @@
-import Header from "../../../../components/Header";
+import HeaderUser from "../../../../../components/HeaderUser";
 
 export default function Layout({ children }) {
     return (
         <>
-            <Header />
+            <HeaderUser />
             {children}
         </>
     );

@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { Box, Paper } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { observer } from "mobx-react-lite";
-import EventsUser from "./EventsUser";
+import EventsUser from "../EventsUser";
 
 export default observer(function Page() {
     const t = useTranslations();

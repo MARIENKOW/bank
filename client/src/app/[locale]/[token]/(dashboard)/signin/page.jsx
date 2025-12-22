@@ -65,7 +65,7 @@ const SignIn = () => {
             <ContainerComponent>
                 <Box mt={1}>
                     <BreadcrumbsComponent
-                    user={true}
+                        user={true}
                         options={[{ name: t("pages.signin.name") }]}
                         sx={{
                             display: "inline-flex",
@@ -88,7 +88,13 @@ const SignIn = () => {
                     >
                         {t("pages.signin.name")}
                     </Typography> */}
-                    <InCenter style={{mt:13}} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} >
+                    <InCenter
+                        style={{ mt: 13 }}
+                        display={"flex"}
+                        flexDirection={"column"}
+                        alignItems={"center"}
+                        justifyContent={"center"}
+                    >
                         <form
                             onChange={handleChange}
                             style={{
