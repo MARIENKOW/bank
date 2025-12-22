@@ -7,10 +7,11 @@ import { useTheme } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import { ADMIN_ROUTE, MAIN_ROUTE } from "../configs/routerLinks";
 import { StyledLink } from "./StyledLink";
-import Link from "next/link";
 import style from "./breadcrumbs.module.scss";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { Link } from "../i18n/navigation";
+
 
 export default function BreadcrumbsComponent({
     main = true,
