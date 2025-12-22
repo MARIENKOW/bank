@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContainerComponent } from "../../../../components/wrappers/ContainerComponent";
 import {
     ADMIN_ACCESS_ROUTE,
+    ADMIN_BLOG_ROUTE,
     ADMIN_PHONE_ROUTE,
     ADMIN_USERS_ROUTE,
 } from "../../../../configs/routerLinks";
@@ -25,6 +26,11 @@ export default function Page() {
                 justifyContent={"center"}
                 flexDirection={"column"}
             >
+                <Link href={ADMIN_BLOG_ROUTE}>
+                    <Button fullWidth variant="contained" color="primary">
+                        Новости
+                    </Button>
+                </Link>
                 <Link href={ADMIN_USERS_ROUTE}>
                     <Button fullWidth variant="contained" color="primary">
                         Клиенты

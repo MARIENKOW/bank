@@ -158,13 +158,7 @@ export default async function Page({ params }) {
                 <Box
                     display={"flex"}
                     flexDirection={{ xs: "column", md: "row" }}
-                    sx={{
-                        width: {
-                            xs: "calc(100% + 32px)",
-                            md: "100%",
-                        },
-                        ml: { xs: "-16px", md: 0 },
-                    }}
+
                 >
                     <Box
                         flex={"50%"}
