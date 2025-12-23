@@ -23,11 +23,13 @@ import { CanceledError } from "axios";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import { useQueryClient } from "@tanstack/react-query";
 
 const phone = new PhoneService();
 
-export default function PhoneAdd({ getData }) {
+export default function PhoneAdd() {
     const [open, setOpen] = useState(false);
+    const queryClient = useQueryClient();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -50,7 +52,7 @@ export default function PhoneAdd({ getData }) {
     const onSubmit = async (data) => {
         try {
             await phone.create(data);
-            await getData();
+            await queryClient.invalidateQueries(["phones"]);
             enqueueSnackbar(`Номер добавлено!`, { variant: "success" });
         } catch (e) {
             if (e instanceof CanceledError) return;

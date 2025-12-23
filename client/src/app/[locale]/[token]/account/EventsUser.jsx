@@ -27,8 +27,8 @@ export default function EventsUser({ id }) {
 
     return (
         <>
-            {data?.map((event) => (
-                <EventItem key={event.id} event={event} />
+            {data?.map((event, i) => (
+                <EventItem i={i} key={event.id} event={event} />
             ))}
         </>
     );

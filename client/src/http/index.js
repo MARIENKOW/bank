@@ -78,6 +78,7 @@ $AdminApi.interceptors.response.use(
     (config) => config,
     async (err) => {
         const originalRequest = err.config;
+        console.log(err?.response);
         if (
             err?.response?.status === 401 &&
             err.config &&

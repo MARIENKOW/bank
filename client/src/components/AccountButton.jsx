@@ -54,16 +54,15 @@ export default observer(function AccountButton({ header }) {
     return (
         <>
             <Button
-                // size="large"
-                // aria-label="account of current user"
-                // aria-controls={`header`}
-                // aria-haspopup="true"
+                sx={{
+                    minWidth: 40,
+                    borderWidth: 1.5,
+                    borderColor: "#0000001f",
+                    borderStyle: "solid",
+                }}
                 onClick={handleOpenNavMenu}
-                // color="primary"
-                // ref={anchorEl}
-                // sx={{ textTransform: "none", fontWeight: 500 }}
             >
-                <MenuIcon />
+                <MenuIcon color="error" />
             </Button>
             <Menu
                 id="long-menu"
@@ -79,6 +78,7 @@ export default observer(function AccountButton({ header }) {
                         left: "0px !important",
                         width: "100%",
                         minWidth: "100%",
+                        height: "100%",
                     },
                     paddingBottom: 0,
                 }}

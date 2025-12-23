@@ -13,11 +13,12 @@ import { Link } from "../i18n/navigation";
 import { useParams } from "next/navigation";
 import { observer } from "mobx-react-lite";
 import AccountButton from "./AccountButton";
-observer;
+import { useTranslations } from "next-intl";
 
-const Header = ({ data }) => {
+const Header = () => {
     const { token } = useParams();
     const headerEl = useRef();
+    const t = useTranslations();
 
     return (
         <Box
@@ -41,6 +42,27 @@ const Header = ({ data }) => {
                         gap: 1,
                     }}
                 >
+                    <Box
+                        display={"flex"}
+                        gap={2}
+                        justifyContent={"flex-start"}
+                        alignItems={"center"}
+                    >
+                        <Box>
+                            <AccountButton header={headerEl} />
+                        </Box>
+                        {/* <LanguageChange /> */}
+                        <Typography
+                            fontSize={18}
+                            letterSpacing={0}
+                            whiteSpace={"nowrap"}
+                            fontWeight={500}
+                            variant="body2"
+                            color="error"
+                        >
+                            {t("pages.account.header")}
+                        </Typography>
+                    </Box>
                     <Box display={"flex"} alignItems={"center"}>
                         <Link href={MAIN_ROUTE(token)}>
                             <Image
@@ -50,12 +72,6 @@ const Header = ({ data }) => {
                                 src={"/logo2.png"}
                             />
                         </Link>
-                    </Box>
-                    <Box display={"flex"} gap={2} alignItems={"center"}>
-                        <LanguageChange />
-                        <Box>
-                            <AccountButton header={headerEl} />
-                        </Box>
                     </Box>
                 </Toolbar>
             </ContainerComponent>

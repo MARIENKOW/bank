@@ -43,14 +43,14 @@ class Admin {
             const { data } = await adminService.aboutAdmin();
             this.setAdmin(data);
             this.setAuth(true);
-            this.setIsLoading(false);
         } catch (e) {
             console.log(e);
             if (e?.response?.status === 401) {
                 this.setUnauthorized();
-                return this.setIsLoading(false);
             }
-            setTimeout(this.aboutAdmin, 5000);
+            // setTimeout(this.aboutAdmin, 5000);
+        } finally {
+            return this.setIsLoading(false);
         }
     };
 }

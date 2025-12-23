@@ -20,6 +20,7 @@ export default function BlogUpdate() {
     const [data, setData] = useState([]);
     const [error, setError] = useState(false);
     const { id } = useParams();
+    const router = useRouter();
 
     async function getLine() {
         try {
@@ -42,7 +43,6 @@ export default function BlogUpdate() {
 
     if (!data || data?.length === 0) return <Empty />;
 
-    const router = useRouter();
 
     const onSubmit = (body, setError) => async (data) => {
         try {

@@ -12,6 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import BlogItem from "./item/BlogItem";
 import { CanceledError } from "axios";
 import Pagination from "../../components/Pagination";
+import { flushSync } from "react-dom";
 
 const blog = new BlogService();
 const blogDelete = new BlogService();
@@ -28,20 +29,29 @@ export default function Blogs() {
     async function getAllBlogs(page = null) {
         try {
             const { data } = await blog.getAll(page);
-            setPaginationInfo(data.info);
-            setData(data.data);
+            // setPaginationInfo(data.info);
+            // setData(data.data);
+            flushSync(() => {
+                // ✅ Принудительно применяем ВСЕ сразу
+                setData(data.data);
+                setPaginationInfo(data.info);
+                setLoading(false);
+            });
         } catch (error) {
-            if (error instanceof CanceledError) return;
+            if (error instanceof CanceledError) return ;
             console.log(error);
             setError(error);
+            setLoading(false)
         } finally {
-            setLoading(false);
         }
     }
 
     useEffect(() => {
         getAllBlogs();
     }, []);
+
+    console.log(loading);
+    console.log(data);
 
     if (loading) return <Loading />;
 

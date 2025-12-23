@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import SignInAdmin from "../../app/[locale]/admin/(dashboard)/SignInAdmin";
 import { useContext, useEffect } from "react";
 import { AdminContext } from "./AdminContextProvider";
+import ErrorElement from "../../components/ErrorElement";
 
 function ChechAuthAdmin({ children }) {
     const { isAuth, isLoading } = useContext(AdminContext);
@@ -12,6 +13,7 @@ function ChechAuthAdmin({ children }) {
     console.log(isLoading);
 
     if (isLoading) return <Loading />;
+    if (!isLoading && isAuth === null) return <ErrorElement />;
     if (!isAuth) return <SignInAdmin />;
 
     return children;
