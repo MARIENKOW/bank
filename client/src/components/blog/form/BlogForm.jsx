@@ -15,6 +15,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ruRU } from "@mui/x-date-pickers/locales";
 import "dayjs/locale/ru";
+import { FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { languages } from "../../../i18n";
+import { useLocale } from "next-intl";
 
 import {
     POST_BODY_MAX_LENGTH,
@@ -22,22 +25,22 @@ import {
     POST_TITLE_MAX_LENGTH,
     POST_TITLE_MIN_LENGTH,
 } from "../../../configs/validateConfig";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useLayoutEffect, useState } from "react";
 
 export const VideosIdContext = createContext();
 
-const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => {
+const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать", blogsData }) => {
+    const locale = useLocale();
+    const [blogLocale, setBlogLocale] = useState(locale);
     const [body, setBody] = useState(data?.body || null);
     const [videos_id, setVideos_id] = useState(data?.videos_id || []);
 
-    console.log(videos_id);
-
-    const defaultValues = {
-        body: data?.body || "",
-        img: data?.img || null,
-        title: data?.title || "",
-        date: dayjs(data?.date),
-    };
+    // const defaultValues = {
+    //     body: data?.body || "",
+    //     img: data?.img || null,
+    //     title: data?.title || "",
+    //     date: dayjs(data?.date),
+    // };
 
     const {
         handleSubmit,
@@ -47,11 +50,13 @@ const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => 
         control,
         resetField,
         getValues,
+        reset,
         setValue,
         formState: {
             errors,
             isValid,
             isSubmitting,
+
             isDirty,
             dirtyFields,
             validatingFields,
@@ -59,14 +64,21 @@ const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => 
     } = useForm({
         mode: "onChange",
         // defaultValues: { ...data, date: dayjs(data?.date) },
-        defaultValues,
+        defaultValues: blogsData[blogLocale],
     });
 
-    console.log(isDirty);
-    console.log(isValid);
-    console.log(dirtyFields);
-    console.log(validatingFields);
-    console.log(getValues());
+    const handleChangeLanguage = ({ target }) => {
+        setBlogLocale(target?.value);
+        reset(blogsData[target?.value]);
+    };
+
+    blogsData[blogLocale] = getValues();
+
+    useEffect(() => {
+        // resetField();
+        console.log(blogsData);
+    }, [blogLocale]);
+    // blogsData[blogLocale] = getValues();
 
     const handleChange = () => {
         clearErrors("root");
@@ -78,6 +90,38 @@ const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => 
             style={{ display: "flex", flexDirection: "column", gap: "15px" }}
             onSubmit={handleSubmit(onSubmit({ body, videos_id }, setError))}
         >
+            <FormControl
+                size="small"
+                sx={{ display: "inline-block", minWidth: 25, mb: 3 }}
+                fullWidth
+            >
+                <Select
+                    variant="standard"
+                    sx={{ width: "100%" }}
+                    value={blogLocale}
+                    onChange={handleChangeLanguage}
+                    MenuProps={{
+                        sx: {
+                            "& .MuiPaper-root": {
+                                bgcolor: "secondary.main",
+                            },
+                        },
+                    }}
+                >
+                    {languages.map((lang) => (
+                        <MenuItem key={lang} value={lang}>
+                            {/* <ReactCountryFlag
+                            svg
+                            style={{ width: "1.5em", height: "1.5em" }}
+                            countryCode={lang === "en" ? "us" : lang}
+                        /> */}
+                            <Typography variant="body1" color="primary">
+                                {lang}
+                            </Typography>
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
             <Grid container spacing={{ xs: 3, md: 2 }} columns={10}>
                 <Grid
                     sx={{
@@ -138,7 +182,6 @@ const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => 
                             field: { onChange, value },
                             fieldState: { error },
                         }) => {
-                            console.log(error);
                             return (
                                 <LocalizationProvider
                                     dateAdapter={AdapterDayjs}

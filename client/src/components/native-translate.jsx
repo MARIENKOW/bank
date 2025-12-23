@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "../i18n/navigation";
 import { FormControl, MenuItem, Select, Typography } from "@mui/material";
 import { useLocale } from "next-intl";
 import { languages, defaultLanguage } from "../i18n";
-import ReactCountryFlag from "react-country-flag";
+
 export function LanguageChange() {
     const router = useRouter();
     const locale = useLocale();

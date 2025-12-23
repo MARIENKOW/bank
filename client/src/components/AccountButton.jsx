@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { observer } from "mobx-react-lite";
+import { LanguageChange } from "./native-translate";
 
 export default observer(function AccountButton({ header }) {
     const { token } = useParams();
@@ -146,6 +147,9 @@ export default observer(function AccountButton({ header }) {
                     >
                         {t("pages.logout.name")}
                     </Typography>
+                </MenuItem>
+                <MenuItem>
+                    <LanguageChange />
                 </MenuItem>
             </Menu>
         </>

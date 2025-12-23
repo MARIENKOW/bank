@@ -8,6 +8,8 @@ import BlogService from "../../../../../../services/BlogService";
 import { useRouter } from "next/navigation";
 import BlogForm from "../../../../../../components/blog/form/BlogForm";
 import { Box } from "@mui/material";
+import { languages } from "../../../../../../i18n";
+import dayjs from "dayjs";
 
 const blog = new BlogService();
 
@@ -38,6 +40,15 @@ export default function () {
             });
         }
     };
+    let blogsData = {};
+    for (const element of languages) {
+        blogsData[element] = {
+            body: "",
+            img: null,
+            title: "",
+            date: dayjs(),
+        };
+    }
 
     return (
         <ContainerComponent>
@@ -56,7 +67,7 @@ export default function () {
                 }}
             />
             <Box mt={5}>
-                <BlogForm onSubmit={onSubmit} />
+                <BlogForm blogsData = {blogsData} onSubmit={onSubmit} />
             </Box>
         </ContainerComponent>
     );

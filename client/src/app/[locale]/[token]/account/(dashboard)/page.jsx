@@ -18,13 +18,12 @@ export default observer(function Page() {
         <OnlyLoginUser>
             <ContainerComponent>
                 <Box
-                    mt={4}
                     display={"flex"}
                     flexDirection={"column"}
                     flex={1}
                     mb={10}
                 >
-                    <Box display={"flex"} gap={4} mt={4}>
+                    <Box display={"flex"} gap={4} mt={1}>
                         <Box
                             display={"inline-flex"}
                             flexDirection={"column"}
