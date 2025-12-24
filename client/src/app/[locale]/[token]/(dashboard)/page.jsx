@@ -7,6 +7,8 @@ import { SIGNIN_ROUTE } from "../../../../configs/routerLinks";
 import PhonesMain from "../../../../components/PhonesMain";
 import ImgBG from "../../../../components/ImgBG";
 import zIndex from "@mui/material/styles/zIndex";
+import Blogs from "../../../../components/blog/Blogs";
+import { BlogsUser } from "../../../../components/blog/BlogsUser";
 
 export default async function Page({ params }) {
     const t = await getTranslations("pages.main");
@@ -158,7 +160,6 @@ export default async function Page({ params }) {
                 <Box
                     display={"flex"}
                     flexDirection={{ xs: "column", md: "row" }}
-
                 >
                     <Box
                         flex={"50%"}
@@ -199,6 +200,7 @@ export default async function Page({ params }) {
                             />
                         </Box>
                     </Box>
+                    <BlogsUser token={token} />
                     <PhonesMain />
                 </ContainerComponent>
             </Box>

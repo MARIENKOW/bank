@@ -1,4 +1,4 @@
-import style from "./BlogItem.module.scss";
+// import style from "./BlogItem.module.scss";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -9,13 +9,13 @@ import { grey } from "@mui/material/colors";
 export const BlogItemContent = ({ Blog }) => {
     return (
         <CardContent
-            className={style.text}
+            // className={style.text}
             sx={{
                 flex: "1",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                paddingBottom: "0px !important",
+                padding: "0px !important",
             }}
         >
             <Grid spacing={2} sx={{ mb: "20px" }} container columns={2}>
@@ -48,7 +48,7 @@ export const BlogItemContent = ({ Blog }) => {
                     >
                         {Blog?.title}
                     </Typography>
-                    <Typography
+                    {/* <Typography
                         // textAlign={"right"}
                         // sx={{ maxWidth: "400px" }}
                         fontWeight={"500"}
@@ -59,17 +59,17 @@ export const BlogItemContent = ({ Blog }) => {
                         component="div"
                     >
                         <DatePharse date={Blog?.date} />
-                    </Typography>
+                    </Typography> */}
                 </Grid>
             </Grid>
-            <Typography
+            {/* <Typography
                 flex={1}
                 component={"div"}
                 dangerouslySetInnerHTML={{ __html: Blog?.body }}
                 variant="body2"
                 color="text.secondary"
                 sx={{ maxHeight: "86px", overflow: "hidden" }}
-            />
+            /> */}
         </CardContent>
     );
 };

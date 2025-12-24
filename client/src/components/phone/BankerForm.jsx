@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
 import { CanceledError } from "axios";
 import SiteService from "../../services/SiteService";
+import DragAndDrop from "../../components/form/DragAndDrop";
 
 const site = new SiteService();
 
@@ -64,7 +65,20 @@ export const BankerForm = ({ value, getData }) => {
     return (
         <Box>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Box display={"flex"}>
+                <Box flexDirection={"column"} gap={1} display={"flex"}>
+                    {/* <DragAndDrop
+                        clearErrors={clearErrors}
+                        setError={setError}
+                        control={control}
+                        name={"img"}
+                        rules={{
+                            required: "required field",
+                        }}
+                        sx={{ borderRadius: "10px" }}
+                        resetField={resetField}
+                        setValue={setValue}
+                        imgdefault={data?.img?.path}
+                    /> */}
                     <FormControl error={!!errors["value"]} variant="outlined">
                         <InputLabel
                             htmlFor={`filled-adornment-amount-${value}`}
@@ -75,27 +89,35 @@ export const BankerForm = ({ value, getData }) => {
                             label={"Номер"}
                             errors={errors}
                             {...register("value")}
-                            endAdornment={
-                                <InputAdornment
-                                    sx={{ display: "flex", gap: 1 }}
-                                    position="end"
-                                >
-                                    <StyledLoadingButton
-                                        type="submit"
-                                        sx={{ height: "100%" }}
-                                        loading={isSubmitting}
-                                        disabled={!isValid || !isDirty}
-                                        endIcon={<DoubleArrowIcon />}
-                                        variant="contained"
-                                    ></StyledLoadingButton>
-                                </InputAdornment>
-                            }
+                            // endAdornment={
+                            //     <InputAdornment
+                            //         sx={{ display: "flex", gap: 1 }}
+                            //         position="end"
+                            //     >
+                            //         <StyledLoadingButton
+                            //             type="submit"
+                            //             sx={{ height: "100%" }}
+                            //             loading={isSubmitting}
+                            //             disabled={!isValid || !isDirty}
+                            //             endIcon={<DoubleArrowIcon />}
+                            //             variant="contained"
+                            //         ></StyledLoadingButton>
+                            //     </InputAdornment>
+                            // }
                             id={`filled-adornment-amount-${value}`}
                         />
                         <FormHelperText>
                             {errors?.["value"]?.message}
                         </FormHelperText>
                     </FormControl>
+                    <StyledLoadingButton
+                        type="submit"
+                        sx={{ height: "100%" }}
+                        loading={isSubmitting}
+                        disabled={!isValid || !isDirty}
+                        endIcon={<DoubleArrowIcon />}
+                        variant="contained"
+                    ></StyledLoadingButton>
                 </Box>
             </form>
         </Box>

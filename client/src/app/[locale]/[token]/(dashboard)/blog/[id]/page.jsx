@@ -6,14 +6,16 @@ import BlogService from "../../../../../../services/BlogService";
 import RedirectWithMessage from "../../../../../../components/events/RedirectWithMessage";
 import BlogFullItem from "../../../../../../components/blog/item/BlogFullItem";
 import { BlogsImportant } from "../../../../../../components/blog/BlogsImportant";
+import { getLocale } from "next-intl/server";
 
 const blog = new BlogService();
 
 export default async function Page({ params }) {
     const { id, token } = await params;
+    const locale = await getLocale();
 
     try {
-        const { data } = await blog.getById(id);
+        const { data } = await blog.getById(id, locale);
 
         if (!data)
             return (
@@ -26,7 +28,6 @@ export default async function Page({ params }) {
         return (
             <Box backgroundColor={"#fff"}>
                 <Box
-                    pt={{ xs: 15, md: 20 }}
                     pb={0}
                     overflow={"hidden"}
                     position={"relative"}
@@ -36,35 +37,11 @@ export default async function Page({ params }) {
                     >
                         <Box
                             sx={{ pr: { xs: 2, md: 0 }, pl: { xs: 2, md: 0 } }}
-                        >
-                            <BreadcrumbsComponent
-                                sx={{
-                                    position: "relative",
-                                    zIndex: "10",
-                                    display: "inline-block",
-                                    // width:'100%',
-                                    ol: {
-                                        borderRadius: 2,
-                                        display: "inline-flex",
-                                        backgroundColor: "#00427c",
-                                        padding: "5px 15px",
-                                    },
-                                }}
-                                main={false}
-                                options={[
-                                    {
-                                        name: "Новости",
-                                        link: MAIN_ROUTE(token),
-                                    },
-                                    { name: data?.title },
-                                ]}
-                            />
-                        </Box>
+                        ></Box>
                         <Box mb={5} mt={5}>
                             <BlogFullItem Blog={data} />
                         </Box>
                     </ContainerComponent>
-                    <BlogsImportant />
                 </Box>
             </Box>
         );
