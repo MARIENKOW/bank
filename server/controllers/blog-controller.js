@@ -81,14 +81,14 @@ class Controller {
                 ],
                 order: [
                     ["is_main", "DESC"],
-                    // [
-                    //     {
-                    //         model: BlogVersionLanguage,
-                    //         as: "blogVersionLanguages",
-                    //     },
-                    //     "date",
-                    //     "DESC",
-                    // ],
+                    [
+                        {
+                            model: BlogVersionLanguage,
+                            as: "blogVersionLanguages",
+                        },
+                        "date",
+                        "DESC",
+                    ],
                     ["id", "DESC"],
                 ],
                 offset,
