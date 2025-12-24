@@ -63,12 +63,6 @@ const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => 
         defaultValues,
     });
 
-    console.log(isDirty);
-    console.log(isValid);
-    console.log(dirtyFields);
-    console.log(validatingFields);
-    console.log(getValues());
-
     const handleChange = () => {
         clearErrors("root");
     };

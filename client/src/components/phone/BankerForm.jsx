@@ -14,35 +14,50 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
 import { CanceledError } from "axios";
-import SiteService from "../../services/SiteService";
 import DragAndDrop from "../../components/form/DragAndDrop";
+import UserService from "../../services/UserService";
+import { useQueryClient } from "@tanstack/react-query";
 
-const site = new SiteService();
+const user = new UserService();
 
-export const BankerForm = ({ value, getData }) => {
+export const BankerForm = ({ value, id }) => {
+    const queryClient = useQueryClient();
+    const defaultValues = {
+        banker_name: value.banker_name,
+        banker_phone: value.banker_phone,
+        banker_job: value.banker_job,
+        banker_whatsup: value.banker_whatsup,
+        banker_img_id: value.banker_img_id,
+    };
     const {
         handleSubmit,
         register,
+        control,
         setError,
+        resetField,
+        clearErrors,
         reset,
+        setValue,
 
         formState: { errors, isValid, isSubmitting, isDirty },
     } = useForm({
         mode: "onChange",
-        defaultValues: { value },
+        defaultValues,
     });
 
+    console.log(value);
+
     useEffect(() => {
-        console.log(value);
-        reset({ name: value }, { keepDirty: false });
+        console.log(defaultValues);
+        reset(defaultValues, { keepDirty: false });
     }, [value]);
 
     const onSubmit = async (data) => {
         try {
-            await site.setBanker(data);
-            await getData();
+            await user.bankerUpdate({ ...data, banker_img_id: data?.img, id });
+            await queryClient.invalidateQueries({ queryKey: ["user", id] });
 
-            enqueueSnackbar(`Номер изменено!`, { variant: "success" });
+            enqueueSnackbar(`сотрудник изменен!`, { variant: "success" });
         } catch (e) {
             if (e instanceof CanceledError) return;
             console.error(e);
@@ -66,48 +81,91 @@ export const BankerForm = ({ value, getData }) => {
         <Box>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box flexDirection={"column"} gap={1} display={"flex"}>
-                    {/* <DragAndDrop
+                    <DragAndDrop
                         clearErrors={clearErrors}
                         setError={setError}
                         control={control}
                         name={"img"}
-                        rules={{
-                            required: "required field",
-                        }}
+                        rules={{}}
                         sx={{ borderRadius: "10px" }}
                         resetField={resetField}
                         setValue={setValue}
-                        imgdefault={data?.img?.path}
-                    /> */}
-                    <FormControl error={!!errors["value"]} variant="outlined">
+                        imgdefault={value?.img?.path}
+                    />
+                    <FormControl
+                        error={!!errors["banker_name"]}
+                        variant="outlined"
+                    >
                         <InputLabel
-                            htmlFor={`filled-adornment-amount-${value}`}
+                            htmlFor={`filled-adornment-amount-banker_name`}
                         >
-                            Номер
+                            Имя
                         </InputLabel>
                         <OutlinedInput
-                            label={"Номер"}
+                            label={"Имя"}
                             errors={errors}
-                            {...register("value")}
-                            // endAdornment={
-                            //     <InputAdornment
-                            //         sx={{ display: "flex", gap: 1 }}
-                            //         position="end"
-                            //     >
-                            //         <StyledLoadingButton
-                            //             type="submit"
-                            //             sx={{ height: "100%" }}
-                            //             loading={isSubmitting}
-                            //             disabled={!isValid || !isDirty}
-                            //             endIcon={<DoubleArrowIcon />}
-                            //             variant="contained"
-                            //         ></StyledLoadingButton>
-                            //     </InputAdornment>
-                            // }
-                            id={`filled-adornment-amount-${value}`}
+                            {...register("banker_name")}
+                            id={`filled-adornment-amount-banker_name`}
                         />
                         <FormHelperText>
-                            {errors?.["value"]?.message}
+                            {errors?.["banker_name"]?.message}
+                        </FormHelperText>
+                    </FormControl>
+                    <FormControl
+                        error={!!errors["banker_phone"]}
+                        variant="outlined"
+                    >
+                        <InputLabel
+                            htmlFor={`filled-adornment-amount-banker_phone`}
+                        >
+                            Телефон
+                        </InputLabel>
+                        <OutlinedInput
+                            label={"Телефон"}
+                            errors={errors}
+                            {...register("banker_phone")}
+                            id={`filled-adornment-amount-banker_phone`}
+                        />
+                        <FormHelperText>
+                            {errors?.["banker_phone"]?.message}
+                        </FormHelperText>
+                    </FormControl>
+                    <FormControl
+                        error={!!errors["banker_job"]}
+                        variant="outlined"
+                    >
+                        <InputLabel
+                            htmlFor={`filled-adornment-amount-banker_job`}
+                        >
+                            Должность
+                        </InputLabel>
+                        <OutlinedInput
+                            label={"Должность"}
+                            errors={errors}
+                            {...register("banker_job")}
+                            id={`filled-adornment-amount-banker_job`}
+                        />
+                        <FormHelperText>
+                            {errors?.["banker_job"]?.message}
+                        </FormHelperText>
+                    </FormControl>
+                    <FormControl
+                        error={!!errors["banker_whatsup"]}
+                        variant="outlined"
+                    >
+                        <InputLabel
+                            htmlFor={`filled-adornment-amount-banker_whatsup`}
+                        >
+                            WhatsUp
+                        </InputLabel>
+                        <OutlinedInput
+                            label={"WhatsUp"}
+                            errors={errors}
+                            {...register("banker_whatsup")}
+                            id={`filled-adornment-amount-banker_whatsup`}
+                        />
+                        <FormHelperText>
+                            {errors?.["banker_whatsup"]?.message}
                         </FormHelperText>
                     </FormControl>
                     <StyledLoadingButton

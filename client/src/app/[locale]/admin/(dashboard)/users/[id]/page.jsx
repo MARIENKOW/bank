@@ -21,6 +21,8 @@ import { StyledLoadingButton } from "../../../../../../components/form/StyledLoa
 import { useState } from "react";
 import { enqueueSnackbar } from "notistack";
 import EventService from "../../../../../../services/EventService";
+import { BankerClient } from "../../../../../../components/phone/BankerClient";
+import { BankerForm } from "../../../../../../components/phone/BankerForm";
 
 const userService = new UserService();
 const event = new EventService();
@@ -96,11 +98,10 @@ export default function Page() {
                 >
                     <Box
                         display={"flex"}
-                        flexDirection={{ xs: "column", md: "row" }}
+                        flexDirection={{ xs: "column" }}
                         gap={3}
                     >
                         <Box
-                            flex={{ xs: "auto", md: "0 1 50%" }}
                             display={"flex"}
                             alignItems={"center"}
                             flexDirection={"column"}
@@ -112,33 +113,52 @@ export default function Page() {
                             <UserElcForm item={data} />
                             <UserBankNumberForm item={data} />
                         </Box>
+                    </Box>
+                    <Box
+                        display={"flex"}
+                        flexDirection={{ xs: "column", md: "row" }}
+                        gap={3}
+                        mt={4}
+                    >
                         <Box flex={{ xs: "auto", md: "0 1 50%" }}>
-                            <Box
-                                display={"flex"}
-                                alignItems={"center"}
-                                justifyContent={"space-between"}
-                                mb={2}
-                            >
-                                <Typography variant="h5" color="initial">
-                                    {t("currency", { value: data.balance })}
-                                </Typography>
+                            <Box>
+                                <Typography variant="h6">сотрудник</Typography>
+                                <BankerForm id={id} value={data} />
+                            </Box>
+                        </Box>
+                        <Box flex={{ xs: "auto", md: "0 1 50%" }}>
+                            <Box>
                                 <Box
-                                    gap={1}
                                     display={"flex"}
                                     alignItems={"center"}
+                                    flexDirection={{ xs: "column", md: "row" }}
+                                    justifyContent={"space-between"}
+                                    mb={2}
                                 >
-                                    <StyledLoadingButton
-                                        loading={loading}
-                                        onClick={handleDeleteEvents}
-                                        variant="outlined"
-                                        color="error"
+                                    <Typography variant="h5" color="initial">
+                                        {t("currency", { value: data.balance })}
+                                    </Typography>
+                                    <Box
+                                        gap={1}
+                                        display={"flex"}
+                                        alignItems={"center"}
                                     >
-                                        удалить все
-                                    </StyledLoadingButton>
-                                    <EventAdd id={id} balance={data?.balance} />
+                                        <StyledLoadingButton
+                                            loading={loading}
+                                            onClick={handleDeleteEvents}
+                                            variant="outlined"
+                                            color="error"
+                                        >
+                                            удалить все
+                                        </StyledLoadingButton>
+                                        <EventAdd
+                                            id={id}
+                                            balance={data?.balance}
+                                        />
+                                    </Box>
                                 </Box>
+                                <Events id={id} />
                             </Box>
-                            <Events id={id} />
                         </Box>
                     </Box>
                 </Box>

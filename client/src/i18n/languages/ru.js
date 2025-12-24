@@ -31,7 +31,13 @@ export const ru = {
             buttons: {
                 banker: "связь с банкиром",
             },
-            header:'Операции по счету'
+            banker: {
+                name: "Имя",
+                job: "Должность",
+                whatsup: "Перейти",
+                phone: "Номер телефона:",
+            },
+            header: "Операции по счету",
         },
         signin: {
             name: "Открыть счет",

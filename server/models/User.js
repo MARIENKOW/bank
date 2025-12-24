@@ -56,9 +56,40 @@ export const User = sequelize.define(
             defaultValue: sql.uuidV4,
             allowNull: false,
         },
+        banker_name: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        banker_phone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        banker_job: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        banker_whatsup: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        banker_img_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            columnName: "img_id",
+        },
     },
     {
         tableName: "user",
         timestamps: false,
     }
 );
+User.associate = (models) => {
+    User.belongsTo(models.Img, {
+        foreignKey: {
+            name: "img_id",
+            allowNull: true,
+            onDelete: "SET NULL",
+            onUpdate: "CASCADE",
+        },
+    });
+};

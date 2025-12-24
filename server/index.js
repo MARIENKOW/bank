@@ -19,6 +19,7 @@ import EventRouter from "./routers/EventRouter.js";
 import PhoneRouter from "./routers/PhoneRouter.js";
 import BlogRouter from "./routers/BlogRouter.js";
 import { BlogVersionLanguage } from "./models/BlogVersionLanguage.js";
+import { User } from "./models/User.js";
 
 const asModels = (models) => {
     Object.values(models).forEach((model) => {
@@ -28,7 +29,7 @@ const asModels = (models) => {
     });
 };
 
-asModels({ Img, Admin, Access, Blog, Video, BlogVersionLanguage });
+asModels({ Img, Admin, Access, Blog, Video, BlogVersionLanguage,User });
 
 dotenv.config();
 

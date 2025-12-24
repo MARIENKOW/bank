@@ -76,5 +76,15 @@ export default class UserService {
             );
             return res;
         };
+        this.bankerUpdate = async (value) => {
+            const res = await $AdminApi.post(
+                USER_API_URL + "/bankerUpdate",
+                value,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            return res;
+        };
     }
 }

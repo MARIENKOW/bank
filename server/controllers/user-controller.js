@@ -4,6 +4,7 @@ import { User } from "../models/User.js";
 import { Img } from "../models/Img.js";
 
 import config from "../config.js";
+import imgService from "../services/img-service.js";
 
 class Controller {
     signIn = async (req, res) => {
@@ -190,6 +191,12 @@ class Controller {
                 where: {
                     id,
                 },
+                include: [
+                    {
+                        model: Img,
+                        as: "img",
+                    },
+                ],
             });
 
             if (!userData) return res.status(404).json("Not found User");
@@ -337,6 +344,39 @@ class Controller {
             const passwordHash = await bcrypt.hash(password, 5);
 
             await User.update({ password, passwordHash }, { where: { id } });
+
+            res.status(200).json(true);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(e?.message);
+        }
+    };
+    bankerUpdate = async (req, res) => {
+        try {
+            const {
+                banker_name,
+                banker_phone,
+                banker_job,
+                banker_whatsup,
+                id,
+            } = req.body;
+
+            const banker_img_id = req?.files?.banker_img_id;
+            let img_id = null;
+            if (banker_img_id) {
+                const data = await imgService.save(banker_img_id);
+                img_id = data?.img_id;
+            }
+            await User.update(
+                {
+                    banker_name,
+                    banker_phone,
+                    banker_job,
+                    banker_whatsup,
+                    img_id,
+                },
+                { where: { id } }
+            );
 
             res.status(200).json(true);
         } catch (e) {

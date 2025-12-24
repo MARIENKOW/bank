@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
 import { Admin } from "../models/Admin.js";
 import config from "../config.js";
+import { Img } from "../models/Img.js";
 
 class TokenService {
     generateTokens(payload) {
@@ -28,6 +29,7 @@ class TokenService {
     async findTokenUser(refreshToken) {
         const data = await User.findOne({
             where: { refreshToken },
+            include: [{ model: Img, as: "img", required: "false" }],
         });
         if (!data) return null;
         return data;

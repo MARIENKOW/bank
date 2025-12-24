@@ -62,40 +62,6 @@ export default async function Page() {
                     initialData={initialData}
                 />
             </Box>
-            <Paper sx={{mt:2}} elevation={3}>
-                <BottomNavigation 
-                sx={{ display: "flex", gap: 3 }}
-                >
-                    <Link href={ADMIN_PHONE_WHATSUP_ROUTE}>
-                        <IconButton
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                            }}
-                        >
-                            <WhatsAppIcon color={"secondary"} />
-                            <Typography variant="body2" color="secondary">
-                                WhatsUp
-                            </Typography>
-                        </IconButton>
-                    </Link>
-                    <Link href={ADMIN_PHONE_BANKER_ROUTE}>
-                        <IconButton
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                            }}
-                        >
-                            <AccountBalanceIcon color={"secondary"} />
-                            <Typography variant="body2" color="secondary">
-                                Связь с банкиром
-                            </Typography>
-                        </IconButton>
-                    </Link>
-                </BottomNavigation>
-            </Paper>
         </ContainerComponent>
     );
 }

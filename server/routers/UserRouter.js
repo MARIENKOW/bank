@@ -40,5 +40,10 @@ UserRouter.post(
     authAdminMiddelware,
     controller.updatePassword
 );
+UserRouter.post(
+    "/bankerUpdate",
+    authAdminMiddelware,
+    controller.bankerUpdate
+);
 
 export default UserRouter;

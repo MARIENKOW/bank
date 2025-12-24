@@ -31,6 +31,12 @@ export const he = {
             buttons: {
                 banker: "יצירת קשר עם הבנקאי",
             },
+            banker: {
+                name: "שם",
+                job: "תפקיד",
+                whatsup: "לעבור",
+                phone: "מספר טלפון:",
+            },
             header: "תנועות בחשבון",
         },
         signin: {
