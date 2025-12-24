@@ -7,9 +7,7 @@ export const accessController = {
         try {
             const { token } = req.body;
             if (!token) return res.status(200).json(false);
-            console.log(token);
             const data = await Access.findOne({ where: { token } });
-            console.log(data);
             res.status(200).json(!!data);
         } catch (e) {
             console.log(e);

@@ -5,14 +5,17 @@ import { ADMIN_BLOG_ROUTE } from "../../../../../../configs/routerLinks";
 import { ContainerComponent } from "../../../../../../components/wrappers/ContainerComponent";
 import { enqueueSnackbar } from "notistack";
 import BlogService from "../../../../../../services/BlogService";
-import { useRouter } from "next/navigation";
 import BlogForm from "../../../../../../components/blog/form/BlogForm";
 import { Box } from "@mui/material";
+import { LanguageChange } from "../../../../../../components/native-translate";
+import { useLocale } from "next-intl";
+import { useRouter } from "../../../../../../i18n/navigation";
 
 const blog = new BlogService();
 
 export default function () {
     const router = useRouter();
+    const locale = useLocale();
 
     const onSubmit = (body, setError) => async (data) => {
         try {
@@ -20,6 +23,7 @@ export default function () {
                 ...data,
                 ...body,
                 date: data?.date?.format("YYYY-MM-DD") || null,
+                locale,
             });
             enqueueSnackbar(`Новость добавлено!`, { variant: "success" });
             router.push(ADMIN_BLOG_ROUTE);
@@ -50,7 +54,6 @@ export default function () {
                     ol: {
                         borderRadius: 2,
                         display: "inline-flex",
-                        backgroundColor: "#00427c",
                         padding: "5px 15px",
                     },
                 }}

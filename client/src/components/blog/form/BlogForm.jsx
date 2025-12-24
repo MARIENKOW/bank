@@ -14,6 +14,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ruRU } from "@mui/x-date-pickers/locales";
+
 import "dayjs/locale/ru";
 
 import {
@@ -23,6 +24,7 @@ import {
     POST_TITLE_MIN_LENGTH,
 } from "../../../configs/validateConfig";
 import { createContext, useState } from "react";
+import { LanguageChange } from "../../../components/native-translate";
 
 export const VideosIdContext = createContext();
 
@@ -30,13 +32,12 @@ const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => 
     const [body, setBody] = useState(data?.body || null);
     const [videos_id, setVideos_id] = useState(data?.videos_id || []);
 
-    console.log(videos_id);
-
     const defaultValues = {
         body: data?.body || "",
         img: data?.img || null,
         title: data?.title || "",
         date: dayjs(data?.date),
+        // locale: data?.locale || "ru",
     };
 
     const {
@@ -78,6 +79,7 @@ const BlogForm = ({ data = {}, onSubmit, btn = "Опубликовать" }) => 
             style={{ display: "flex", flexDirection: "column", gap: "15px" }}
             onSubmit={handleSubmit(onSubmit({ body, videos_id }, setError))}
         >
+            <LanguageChange />
             <Grid container spacing={{ xs: 3, md: 2 }} columns={10}>
                 <Grid
                     sx={{

@@ -91,12 +91,18 @@ const BlogItem = ({ Blog, deletePost, deleteMainPost, setMainPost }) => {
                         marginBottom: "0px !important",
                     },
                 }}
-                avatar={
-                    <>
-                    <StarCheckbox getData={changeImportant} checked={checked} />
-                    <ShortCheckbox getData={changeShort} checked={checkedShort} />
-                    </>
-                }
+                // avatar={
+                //     <>
+                //         <StarCheckbox
+                //             getData={changeImportant}
+                //             checked={checked}
+                //         />
+                //         <ShortCheckbox
+                //             getData={changeShort}
+                //             checked={checkedShort}
+                //         />
+                //     </>
+                // }
                 action={
                     <IconButton
                         aria-label="more"
@@ -118,7 +124,7 @@ const BlogItem = ({ Blog, deletePost, deleteMainPost, setMainPost }) => {
                 open={menu}
                 onClose={handleClose}
                 anchorEl={anchorEl}
-                sx={{ paddingBottom: 0 }}
+                sx={{'& .MuiPaper-root':{bgcolor:'#fff'}, paddingBottom: 0 }}
             >
                 {Blog?.is_main ? (
                     <MenuItem
@@ -157,14 +163,6 @@ const BlogItem = ({ Blog, deletePost, deleteMainPost, setMainPost }) => {
                         </Typography>
                     </MenuItem>
                 )}
-                <Link target="_blank" href={BLOG_ROUTE + "/" + Blog?.id}>
-                    <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                            <OpenInNewIcon />
-                        </ListItemIcon>
-                        Просмотреть
-                    </MenuItem>
-                </Link>
                 <Link href={ADMIN_BLOG_UPDATE_ROUTE + "/" + Blog?.id}>
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>

@@ -5,18 +5,19 @@ import { Img } from "../models/Img.js";
 import config from "../config.js";
 import dayjs from "dayjs";
 import { Video } from "../models/Video.js";
+import { BlogVersionLanguage } from "../models/BlogVersionLanguage.js";
 
 const { BLOG_COUNT } = config;
 
 class Controller {
     create = async (req, res) => {
         try {
-            const { title, body, date } = req.body;
+            const { title, body, date, locale } = req.body;
             const videos_id = req.body["videos_id[]"];
 
             const img = req?.files?.img;
 
-            if (!title || !img || !body || !date)
+            if (!title || !img || !body || !date || !locale)
                 return res
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
@@ -24,14 +25,20 @@ class Controller {
             const { img_id } = await imgService.save(img);
 
             try {
-                const blog = await Blog.create({
+                const { id: blog_id } = await Blog.create();
+
+                const blog = await BlogVersionLanguage.create({
                     title,
                     img_id,
                     body,
                     date,
+                    blog_id,
+                    locale,
                 });
                 const { id } = blog;
+
                 try {
+                    console.log(videos_id);
                     const videos = await Video.findAll({
                         where: { id: videos_id },
                     });
@@ -51,20 +58,37 @@ class Controller {
         }
     };
     getAll = async (req, res) => {
-        let { page } = req?.query;
+        let { page, locale } = req?.query;
+        const normalizeLocale = locale || "ru";
         const offset = ((page || 1) - 1) * BLOG_COUNT;
         try {
             const blogData = await Blog.findAll({
+                subQuery: false,
                 include: [
                     {
-                        model: Img,
-                        as: "img",
+                        model: BlogVersionLanguage,
+                        as: "blogVersionLanguages",
+                        where: { locale: normalizeLocale },
                         required: true,
+                        include: [
+                            {
+                                model: Img,
+                                as: "img",
+                                required: true,
+                            },
+                        ],
                     },
                 ],
                 order: [
                     ["is_main", "DESC"],
-                    ["date", "DESC"],
+                    // [
+                    //     {
+                    //         model: BlogVersionLanguage,
+                    //         as: "blogVersionLanguages",
+                    //     },
+                    //     "date",
+                    //     "DESC",
+                    // ],
                     ["id", "DESC"],
                 ],
                 offset,
@@ -83,129 +107,90 @@ class Controller {
                     ? countItems - BLOG_COUNT * (countPages - 1)
                     : BLOG_COUNT,
             };
-            return res.status(200).json({ data: blogData, info });
-        } catch (e) {
-            console.log(e);
-            res.status(500).json(e?.message);
-        }
-    };
-    getMain = async (req, res) => {
-        try {
-            const blogData = await Blog.findOne({
-                include: [
-                    {
-                        model: Img,
-                        as: "img",
-                        required: true,
-                    },
-                ],
-                order: [
-                    ["is_main", "DESC"],
-                    ["date", "DESC"],
-                    ["id", "DESC"],
-                ],
-            });
 
-            return res.status(200).json(blogData);
-        } catch (e) {
-            console.log(e);
-            res.status(500).json(e?.message);
-        }
-    };
-    getImportant = async (req, res) => {
-        const { page } = req?.params;
-        try {
-            let blogImportantData = await Blog.findAll({
-                where: { is_important: true },
-                attributes: { exclude: ["body"] },
-                include: [
-                    {
-                        model: Img,
-                        as: "img",
-                        required: true,
-                    },
-                ],
-                order: [
-                    ["date", "DESC"],
-                    ["id", "DESC"],
-                ],
-            });
-            if (blogImportantData.length === 0) {
-                blogImportantData = await Blog.findAll({
-                    attributes: { exclude: ["body"] },
-                    include: [
-                        {
-                            model: Img,
-                            as: "img",
-                            required: true,
-                        },
-                    ],
-                    limit: 10,
-                    order: [
-                        ["date", "DESC"],
-                        ["id", "DESC"],
-                    ],
+            let normalizedData = [];
+            for (const element of blogData) {
+                normalizedData.push({
+                    id: element.id,
+                    is_main: element.is_main,
+                    is_important: element.is_important,
+                    is_short: element.is_short,
+                    createdAt: element.createdAt,
+                    title: element.blogVersionLanguages[0].title,
+                    body: element.blogVersionLanguages[0].body,
+                    date: element.blogVersionLanguages[0].date,
+                    locale: element.blogVersionLanguages[0].locale,
+                    img: element.blogVersionLanguages[0].img,
                 });
             }
 
-            return res.status(200).json(blogImportantData);
+            return res.status(200).json({ data: normalizedData, info });
         } catch (e) {
             console.log(e);
             res.status(500).json(e?.message);
         }
     };
-    getShort = async (req, res) => {
-        try {
-            const blogData = await Blog.findAll({
-                where: { is_short: true },
-                attributes: { exclude: ["body"] },
-                // include: [
-                //     {
-                //         model: Img,
-                //         as: "img",
-                //         required: true,
-                //     },
-                // ],
-                limit: 10,
-                order: [
-                    ["date", "DESC"],
-                    ["id", "DESC"],
-                ],
-            });
 
-            return res.status(200).json(blogData);
-        } catch (e) {
-            console.log(e);
-            res.status(500).json(e?.message);
-        }
-    };
     getById = async (req, res) => {
         try {
             const { id } = req.params;
+            let { locale } = req?.query;
+            const normalizeLocale = locale || "ru";
             if (!id) return res.status(400).json("id is not found");
+            const blog = await Blog.findOne({
+                where: {
+                    id,
+                },
+            });
             const blogData = await Blog.findOne({
                 where: {
                     id,
                 },
+                subQuery: false,
                 include: [
                     {
-                        model: Img,
-                        as: "img",
+                        model: BlogVersionLanguage,
+                        as: "blogVersionLanguages",
                         required: true,
-                    },
-                    {
-                        model: Video,
-                        as: "videos", // 👈 важно, alias должен совпадать с ассоциацией
-                        attributes: ["id"], // только id
-                        through: { attributes: [] },
+                        where: { locale: normalizeLocale },
+                        include: [
+                            {
+                                model: Img,
+                                as: "img",
+                                required: true,
+                            },
+                            {
+                                model: Video,
+                                as: "videos", // 👈 важно, alias должен совпадать с ассоциацией
+                                attributes: ["id"], // только id
+                                through: { attributes: [] },
+                            },
+                        ],
                     },
                 ],
             });
             console.log(blogData);
-            if (!blogData) return res.status(404).json("Not found blog");
+            if (!blogData) return res.status(404).json(blog);
+
+            const normalizedData = {
+                id: blogData.id,
+                is_main: blogData.is_main,
+                is_important: blogData.is_important,
+                is_short: blogData.is_short,
+                createdAt: blogData.createdAt,
+                title: blogData.blogVersionLanguages?.[0]?.title,
+                body: blogData.blogVersionLanguages?.[0]?.body,
+                date: blogData.blogVersionLanguages?.[0]?.date,
+                locale: blogData.blogVersionLanguages?.[0]?.locale,
+                img: blogData.blogVersionLanguages?.[0]?.img,
+            };
+
             return res.status(200).json({
-                ...blogData.toJSON(),
-                videos_id: blogData.videos.map((e) => e.id),
+                ...normalizedData,
+                videos_id:
+                    blogData.blogVersionLanguages?.[0]?.videos.map(
+                        (e) => e.id
+                    ) || [],
             });
         } catch (e) {
             console.log(e);
@@ -220,23 +205,37 @@ class Controller {
                 where: {
                     id,
                 },
+                subQuery: false,
                 include: [
                     {
-                        model: Img,
-                        as: "img",
+                        model: BlogVersionLanguage,
+                        as: "blogVersionLanguages",
                         required: true,
+                        include: [
+                            {
+                                model: Img,
+                                as: "img",
+                                required: true,
+                            },
+                        ],
                     },
                 ],
             });
 
             if (!blogData) return res.status(404).json("blog is not found");
 
-            const { img_id, id: blog_id } = blogData;
+            const { id: blog_id } = blogData;
+
+            for (const blogVersionLanguage of blogData.blogVersionLanguages) {
+                await blogVersionLanguage.destroy({
+                    where: { id: blogVersionLanguage.id },
+                });
+            }
 
             await blogData.destroy({ where: { id: blog_id } });
 
             // try {
-            //     await imgService.delete(img_id); //!   maybe delete
+            //     await imgService.delete(img_id);
             // } catch (error) {
             //     console.log(error);
             // }
@@ -265,38 +264,48 @@ class Controller {
                 where: {
                     id,
                 },
-                include: [
-                    {
-                        model: Img,
-                        as: "img",
-                        required: true,
-                    },
-                ],
             });
 
             if (!blogData) return res.status(404).json("blog not found");
+
+            let blogVData = await BlogVersionLanguage.findOne({
+                where: {
+                    blog_id: id,
+                    locale: data.locale,
+                },
+            });
 
             if (img) {
                 const imageData = await imgService.save(img);
                 data.img_id = imageData.img_id;
             }
 
-            function toBoolean(value) {
-                if (value === "true") return true;
-                if (value === "false") return false;
-                return Boolean(value); // на случай других типов
-            }
-
             try {
-                const updateUserData = await Blog.update(
-                    {
+                if (blogVData) {
+                    await BlogVersionLanguage.update(
+                        {
+                            ...data,
+
+                            date: dayjs(data.date).format("YYYY-MM-DD"),
+                        },
+                        { where: { id: blogVData.id } }
+                    );
+                    if (img) {
+                        await imgService.delete(blogVData.img_id);
+                    }
+                } else {
+                    await BlogVersionLanguage.create({
                         ...data,
-                        // is_main: toBoolean(data?.is_main),
-                        // is_important: toBoolean(data?.is_main),
+                        blog_id: blogData.id,
                         date: dayjs(data.date).format("YYYY-MM-DD"),
-                    },
-                    { where: { id: blogData.id } }
-                );
+                    });
+                    blogVData = await BlogVersionLanguage.findOne({
+                        where: {
+                            blog_id: id,
+                            locale: data.locale,
+                        },
+                    });
+                }
 
                 try {
                     if (videos_id && videos_id?.length > 0) {
@@ -304,7 +313,7 @@ class Controller {
                             where: { id: videos_id },
                         });
 
-                        await blogData.setVideos(videos);
+                        await blogVData.setVideos(videos);
                     }
                 } catch (error) {
                     console.log(error);
@@ -315,17 +324,13 @@ class Controller {
                 }
                 throw error;
             }
-            try {
-                if (img) {
-                    await imgService.delete(blogData.img_id);
-                }
-            } catch (error) {}
             return res.status(200).json(blogData.id);
         } catch (e) {
             console.log(e);
             res.status(500).json(e?.message);
         }
     };
+
     setImportant = async (req, res) => {
         try {
             const { is_important } = req.body;
@@ -425,6 +430,97 @@ class Controller {
                 { where: { id, is_main: true } }
             );
             return res.status(200).json(true);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(e?.message);
+        }
+    };
+
+    getMain = async (req, res) => {
+        try {
+            const blogData = await Blog.findOne({
+                include: [
+                    {
+                        model: Img,
+                        as: "img",
+                        required: true,
+                    },
+                ],
+                order: [
+                    ["is_main", "DESC"],
+                    ["date", "DESC"],
+                    ["id", "DESC"],
+                ],
+            });
+
+            return res.status(200).json(blogData);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(e?.message);
+        }
+    };
+    getImportant = async (req, res) => {
+        const { page } = req?.params;
+        try {
+            let blogImportantData = await Blog.findAll({
+                where: { is_important: true },
+                attributes: { exclude: ["body"] },
+                include: [
+                    {
+                        model: Img,
+                        as: "img",
+                        required: true,
+                    },
+                ],
+                order: [
+                    ["date", "DESC"],
+                    ["id", "DESC"],
+                ],
+            });
+            if (blogImportantData.length === 0) {
+                blogImportantData = await Blog.findAll({
+                    attributes: { exclude: ["body"] },
+                    include: [
+                        {
+                            model: Img,
+                            as: "img",
+                            required: true,
+                        },
+                    ],
+                    limit: 10,
+                    order: [
+                        ["date", "DESC"],
+                        ["id", "DESC"],
+                    ],
+                });
+            }
+
+            return res.status(200).json(blogImportantData);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(e?.message);
+        }
+    };
+    getShort = async (req, res) => {
+        try {
+            const blogData = await Blog.findAll({
+                where: { is_short: true },
+                attributes: { exclude: ["body"] },
+                // include: [
+                //     {
+                //         model: Img,
+                //         as: "img",
+                //         required: true,
+                //     },
+                // ],
+                limit: 10,
+                order: [
+                    ["date", "DESC"],
+                    ["id", "DESC"],
+                ],
+            });
+
+            return res.status(200).json(blogData);
         } catch (e) {
             console.log(e);
             res.status(500).json(e?.message);

@@ -52,10 +52,10 @@ Video.associate = (models) => {
             onUpdate: "CASCADE",
         },
     });
-    Video.belongsToMany(models.Blog, {
+    Video.belongsToMany(models.BlogVersionLanguage, {
         through: { model: "BlogVideos", timestamps: false },
         foreignKey: "video_id",
-        otherKey: "blog_id",
+        otherKey: "blogVersionLanguage_id",
         as: "blogs",
     });
 };

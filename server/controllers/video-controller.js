@@ -4,6 +4,7 @@ import { Img } from "../models/Img.js";
 import { Blog } from "../models/Blog.js";
 import { sequelize } from "../services/DB.js";
 import { Op } from "sequelize";
+import { BlogVersionLanguage } from "../models/BlogVersionLanguage.js";
 class Controller {
     create = async (req, res) => {
         try {
@@ -31,7 +32,7 @@ class Controller {
             const { id } = req.params;
             if (!id) return res.status(400).json("id is not found");
             const blogData = await Video.findOne({
-                include: [{ model: Blog, as: "blogs" }],
+                include: [{ model: BlogVersionLanguage, as: "blogs" }],
                 where: {
                     id,
                 },
@@ -61,7 +62,7 @@ class Controller {
             let usedData = await Video.findAll({
                 include: [
                     {
-                        model: Blog,
+                        model: BlogVersionLanguage,
                         as: "blogs",
                         required: true,
                     },

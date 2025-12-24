@@ -13,12 +13,12 @@ export default class BlogService {
             });
             return res;
         };
-        this.getAll = async (page = null) => {
+        this.getAll = async (page = null, locale) => {
             if (this.CancelToken) this.CancelToken.abort();
             const controller = new AbortController();
             this.CancelToken = controller;
             const res = await axios.get(BLOG_API_URL + "/", {
-                params: { page },
+                params: { page, locale },
                 signal: controller.signal,
             });
             return res;
@@ -82,13 +82,9 @@ export default class BlogService {
             return res;
         };
         this.setShort = async (id, value) => {
-            const res = await $api.put(
-                BLOG_API_URL + "/short/" + id,
-                value,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
-            );
+            const res = await $api.put(BLOG_API_URL + "/short/" + id, value, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
             return res;
         };
         this.update = async (id, value) => {
@@ -97,12 +93,14 @@ export default class BlogService {
             });
             return res;
         };
-        this.delete = async (id) => {
+        this.delete = async (id, locale) => {
             const res = await $api.delete(BLOG_API_URL + "/" + id);
             return res;
         };
-        this.getById = async (id) => {
-            const res = await axios.get(BLOG_API_URL + "/" + id);
+        this.getById = async (id, locale) => {
+            const res = await axios.get(BLOG_API_URL + "/" + id, {
+                params: { locale },
+            });
             return res;
         };
     }

@@ -18,13 +18,12 @@ export default observer(function Page() {
         <OnlyLoginUser>
             <ContainerComponent>
                 <Box
-                    mt={4}
                     display={"flex"}
                     flexDirection={"column"}
                     flex={1}
                     mb={10}
                 >
-                    <Box display={"flex"} gap={4} mt={4}>
+                    <Box display={"flex"} gap={4} mt={3}>
                         <Box
                             display={"inline-flex"}
                             flexDirection={"column"}
@@ -51,7 +50,7 @@ export default observer(function Page() {
                             pb={1}
                         >
                             <Typography lineHeight={"1"} variant="body1">
-                                {t("form.elc")}
+                                {t("form.name")}
                             </Typography>
                             <Typography
                                 fontSize={18}

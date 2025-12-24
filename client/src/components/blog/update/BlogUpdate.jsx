@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 import Loading from "../../loading/Loading";
 import ErrorElement from "../../ErrorElement";
 import { enqueueSnackbar } from "notistack";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Empty } from "../../Empty";
 import BlogService from "../../../services/BlogService";
 import BlogForm from "../form/BlogForm";
 import { ADMIN_BLOG_ROUTE, BLOG_ROUTE } from "../../../configs/routerLinks";
 import { Box, Button } from "@mui/material";
-import Link from "next/link";
 import BreadcrumbsComponent from "../../BreadcrumbsComponent";
+import { LanguageChange } from "../../../components/native-translate";
+import { useLocale } from "next-intl";
+import { useRouter } from "../../../i18n/navigation";
 
 const blog = new BlogService();
 
@@ -21,13 +23,19 @@ export default function BlogUpdate() {
     const [error, setError] = useState(false);
     const { id } = useParams();
     const router = useRouter();
+    const locale = useLocale();
 
     async function getLine() {
         try {
-            const { data } = await blog.getById(id);
+            const { data } = await blog.getById(id, locale);
             setData(data);
         } catch (error) {
-            setError(error);
+            if (error?.response?.status === 404) {
+                setData(error?.response?.data);
+                console.log(error);
+            } else {
+                setError(error);
+            }
         } finally {
             setLoading(false);
         }
@@ -43,13 +51,13 @@ export default function BlogUpdate() {
 
     if (!data || data?.length === 0) return <Empty />;
 
-
     const onSubmit = (body, setError) => async (data) => {
         try {
             await blog.update(id, {
                 ...data,
                 ...body,
                 date: data?.date?.format("YYYY-MM-DD") || null,
+                locale,
             });
             enqueueSnackbar(`Новость отредактировано!`, {
                 variant: "success",
@@ -85,7 +93,6 @@ export default function BlogUpdate() {
                         ol: {
                             borderRadius: 2,
                             display: "inline-flex",
-                            backgroundColor: "#00427c",
                             padding: "5px 15px",
                         },
                     }}
@@ -94,11 +101,6 @@ export default function BlogUpdate() {
                         { name: "Редактировать" },
                     ]}
                 />
-                <Link target="_blank" href={BLOG_ROUTE + "/" + data?.id}>
-                    <Button fullWidth variant="contained">
-                        просмотреть
-                    </Button>
-                </Link>
             </Box>
             <Box mt={5}>
                 <BlogForm btn={"Изменить"} data={data} onSubmit={onSubmit} />

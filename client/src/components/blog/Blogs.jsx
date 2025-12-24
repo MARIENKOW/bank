@@ -13,6 +13,7 @@ import BlogItem from "./item/BlogItem";
 import { CanceledError } from "axios";
 import Pagination from "../../components/Pagination";
 import { flushSync } from "react-dom";
+import { useLocale } from "next-intl";
 
 const blog = new BlogService();
 const blogDelete = new BlogService();
@@ -25,10 +26,11 @@ export default function Blogs() {
     const [paginationInfo, setPaginationInfo] = useState({});
     const [error, setError] = useState(false);
     const [openBackdrop, setOpenBackdrop] = useState(false);
+    const locale = useLocale();
 
     async function getAllBlogs(page = null) {
         try {
-            const { data } = await blog.getAll(page);
+            const { data } = await blog.getAll(page, locale);
             // setPaginationInfo(data.info);
             // setData(data.data);
             flushSync(() => {
@@ -38,10 +40,10 @@ export default function Blogs() {
                 setLoading(false);
             });
         } catch (error) {
-            if (error instanceof CanceledError) return ;
+            if (error instanceof CanceledError) return;
             console.log(error);
             setError(error);
-            setLoading(false)
+            setLoading(false);
         } finally {
         }
     }
