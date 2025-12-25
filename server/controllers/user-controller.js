@@ -9,7 +9,8 @@ import imgService from "../services/img-service.js";
 class Controller {
     signIn = async (req, res) => {
         try {
-            const { username, password } = req.body;
+            const username = req?.body?.username?.trim();
+            const password = req?.body?.password?.trim();
 
             if (!username || !password)
                 return res
@@ -69,7 +70,8 @@ class Controller {
 
     signUp = async (req, res) => {
         try {
-            const { username, password } = req.body;
+            const username = req?.body?.username?.trim();
+            const password = req?.body?.password?.trim();
 
             if (!username || !password)
                 return res
@@ -254,7 +256,9 @@ class Controller {
     };
     updateUsername = async (req, res) => {
         try {
-            const { username, id } = req.body;
+            const { id } = req.body;
+
+            const username = req?.body?.username?.trim();
 
             if (!username)
                 return res.status(400).json({ username: "username not found" });
@@ -278,7 +282,8 @@ class Controller {
     };
     updatePassword = async (req, res) => {
         try {
-            const { password, id } = req.body;
+            const { id } = req.body;
+            const password = req?.body?.password?.trim();
 
             if (!password)
                 return res.status(400).json({ password: "password not found" });
