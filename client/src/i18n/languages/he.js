@@ -96,4 +96,9 @@ export const he = {
         title: "שערי מטבעות",
         per_unit: "₪ עבור 1 יחידה",
     },
+    empty: "כאן עדיין ריק.",
+    error: {
+        title: "אופס!",
+        subtitle: "משהו השתבש",
+    },
 };

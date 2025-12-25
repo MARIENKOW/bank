@@ -96,4 +96,6 @@ export const ru = {
         title: "Курс валют",
         per_unit: "₪ за 1 ед.",
     },
+    empty: "Тут пока что пусто.",
+    error: { title: "Упс!", subtitle: "Что-то пошло не так" },
 };
