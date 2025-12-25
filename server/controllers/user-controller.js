@@ -23,7 +23,7 @@ class Controller {
             if (!userData)
                 return res
                     .status(400)
-                    .json({ email: "Username is not defined" });
+                    .json({ username: "Username is not defined" });
 
             const dbPass = userData.passwordHash;
             const isPassEquals = await bcrypt.compare(password, dbPass);
