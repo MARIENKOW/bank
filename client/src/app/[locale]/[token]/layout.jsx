@@ -57,7 +57,7 @@ export default async function Layout({ children, params }) {
                                     zIndex={"10"}
                                 >
                                     {children}
-                                    <WhatsUpButton />
+                                    {/* <WhatsUpButton /> */}
                                 </Box>
                                 <Footer />
                             </Box>
