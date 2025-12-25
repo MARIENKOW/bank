@@ -29,7 +29,7 @@ class TokenService {
     async findTokenUser(refreshToken) {
         const data = await User.findOne({
             where: { refreshToken },
-            include: [{ model: Img, as: "img", required: "false" }],
+            include: [{ model: Img, as: "img", required: false }],
         });
         if (!data) return null;
         return data;

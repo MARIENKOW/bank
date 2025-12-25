@@ -46,7 +46,10 @@ function DragAndDrop({
         const files = event.dataTransfer.files;
         if (files && files[0]) {
             handleFileChange(files[0]);
-            setValue(name, files[0], { shouldValidate: true });
+            setValue(name, files[0], {
+                shouldValidate: true,
+                shouldDirty: true,
+            });
         }
     };
 
@@ -63,10 +66,7 @@ function DragAndDrop({
         reader.readAsDataURL(file);
     };
 
-    const handleDelete = async () => {
-        setImagePreview(null);
-        setValue(name, null, { shouldValidate: true });
-    };
+    // const handleDelete =;
 
     return (
         <Controller
@@ -90,7 +90,13 @@ function DragAndDrop({
                                 component={"img"}
                             />
                             <IconButton
-                                onClick={handleDelete}
+                                onClick={async () => {
+                                    setImagePreview(null);
+                                    setValue(name, null, {
+                                        shouldValidate: true,
+                                        shouldDirty: true,
+                                    });
+                                }}
                                 sx={{
                                     position: "absolute",
                                     top: "0",

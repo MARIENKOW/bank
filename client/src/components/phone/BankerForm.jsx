@@ -36,6 +36,7 @@ export const BankerForm = ({ value, id }) => {
         setError,
         resetField,
         clearErrors,
+        getValues,
         reset,
         setValue,
 
@@ -45,16 +46,17 @@ export const BankerForm = ({ value, id }) => {
         defaultValues,
     });
 
-    console.log(value);
+    console.log(getValues("banker_img_id"), isDirty);
 
     useEffect(() => {
-        console.log(defaultValues);
+        console.log("reset");
         reset(defaultValues, { keepDirty: false });
     }, [value]);
+    console.log(getValues());
 
     const onSubmit = async (data) => {
         try {
-            await user.bankerUpdate({ ...data, banker_img_id: data?.img, id });
+            await user.bankerUpdate({ ...data, id });
             await queryClient.invalidateQueries({ queryKey: ["user", id] });
 
             enqueueSnackbar(`сотрудник изменен!`, { variant: "success" });
@@ -85,7 +87,7 @@ export const BankerForm = ({ value, id }) => {
                         clearErrors={clearErrors}
                         setError={setError}
                         control={control}
-                        name={"img"}
+                        name={"banker_img_id"}
                         rules={{}}
                         sx={{ borderRadius: "10px" }}
                         resetField={resetField}

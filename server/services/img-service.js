@@ -48,9 +48,13 @@ class ImgService {
     async delete(img_id) {
         if (!img_id) throw new Error("img_id is not found");
 
-        const { name: imgName, id } = await Img.findOne({
+        const imgData = await Img.findOne({
             where: { id: img_id },
         });
+
+        if (!imgData) return;
+
+        const { name: imgName, id } = imgData;
 
         await this.unlinkFile(imgName);
 

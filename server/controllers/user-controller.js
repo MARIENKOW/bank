@@ -207,64 +207,6 @@ class Controller {
             console.log(e);
         }
     };
-    // cashOut = async (req, res) => {
-    //     try {
-    //         const { sum, description, user_id } = req.body;
-
-    //         if (!sum || !user_id)
-    //             return res
-    //                 .status(400)
-    //                 .json({ "root.server": "Incorrect values" });
-
-    //         const { id: checkUp_id } = await CheckUp.findOne({
-    //             order: [["date", "desc"]],
-    //         });
-
-    //         const userData = await User.findOne({
-    //             where: { id: user_id },
-    //         });
-
-    //         if (!userData)
-    //             return res
-    //                 .status(400)
-    //                 .json({ "root.server": "User is not found" });
-
-    //         const { [depositTypes[deposit_type]]: deposit, id } = userData;
-
-    //         const newDepositSum = parseFloat(deposit) - parseFloat(sum);
-
-    //         if (newDepositSum < 0)
-    //             return res
-    //                 .status(400)
-    //                 .json({ sum: "not enough money on deposit" });
-
-    //         const eventData = await Event.create({
-    //             sum,
-    //             name: description ? `cash out: ${description}` : "cash out",
-    //             user_id: id,
-    //             checkUp_id,
-    //             deposit_type,
-    //             increment: 0,
-    //         });
-
-    //         try {
-    //             await User.update(
-    //                 {
-    //                     [depositTypes[deposit_type]]: newDepositSum.toFixed(2),
-    //                 },
-    //                 { where: { id } }
-    //             );
-    //         } catch (error) {
-    //             await eventData.destroy();
-    //             throw error;
-    //         }
-
-    //         res.status(200).json(true);
-    //     } catch (e) {
-    //         console.log(e);
-    //         res.status(500).json(e?.message);
-    //     }
-    // };
     updateName = async (req, res) => {
         try {
             const { name, id } = req.body;
@@ -363,6 +305,11 @@ class Controller {
 
             const banker_img_id = req?.files?.banker_img_id;
             let img_id = null;
+            const userData = await User.findOne({ where: { id } });
+            if (!userData) return res.status(404).json("user not found");
+            if (userData.banker_img_id) {
+                await imgService.delete(userData.banker_img_id);
+            }
             if (banker_img_id) {
                 const data = await imgService.save(banker_img_id);
                 img_id = data?.img_id;
