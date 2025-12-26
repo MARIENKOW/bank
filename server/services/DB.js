@@ -6,7 +6,7 @@ const { db } = config;
 export const sequelize = new Sequelize({
     ...db,
     dialect: MySqlDialect,
-    // logging: console.log, 
+    // logging: console.log,
 });
 
 (async () => {
@@ -20,11 +20,13 @@ export const sequelize = new Sequelize({
 
 (async () => {
     try {
-        await sequelize.sync({ alter: true,force:true });
+        await sequelize.sync({
+            alter: true,
+            // force: true
+        });
         console.log("All models were synchronized successfully");
     } catch (error) {
         console.log(error);
         console.log("db sync is not correct");
     }
-
 })();
