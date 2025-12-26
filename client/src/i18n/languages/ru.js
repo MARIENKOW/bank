@@ -31,6 +31,9 @@ export const ru = {
             buttons: {
                 banker: "связь с банкиром",
             },
+            insurance: {
+                name: "Страховочные зачисления",
+            },
             banker: {
                 name: "Имя",
                 job: "Должность",
@@ -56,6 +59,7 @@ export const ru = {
         password: "Пароль",
         username: "Логин",
         name: "Имя",
+        insurance_elc: "Личный счет",
         elc: "Единый лицевой счет",
         bankNumber: "Номер сейфовой ячейки",
         balance: "Баланс сейфовой ячейки",

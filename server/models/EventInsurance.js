@@ -1,8 +1,8 @@
 import { sequelize } from "../services/DB.js";
 import { DataTypes } from "@sequelize/core";
 
-export const Event = sequelize.define(
-    "Event",
+export const EventInsurance = sequelize.define(
+    "EventInsurance",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -36,13 +36,13 @@ export const Event = sequelize.define(
         },
     },
     {
-        tableName: "event",
+        tableName: "eventInsurance",
         timestamps: false,
     }
 );
 
-Event.associate = (models) => {
-    Event.belongsTo(models.User, {
+EventInsurance.associate = (models) => {
+    EventInsurance.belongsTo(models.User, {
         foreignKey: {
             name: "user_id",
             onDelete: "CASCADE",

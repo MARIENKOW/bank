@@ -22,7 +22,6 @@ import BlogRouter from "./routers/BlogRouter.js";
 import { BlogVersionLanguage } from "./models/BlogVersionLanguage.js";
 import { User } from "./models/User.js";
 import { EventInsurance } from "./models/EventInsurance.js";
-import EventInsuranceRouter from "./routers/EventInsuranceRouter.js";
 
 const asModels = (models) => {
     Object.values(models).forEach((model) => {
@@ -73,7 +72,6 @@ app.use("/api/Admin", AdminRouter);
 app.use("/api/User", UserRouter);
 app.use("/api/Access", AccessRouter);
 app.use("/api/Event", EventRouter);
-app.use("/api/EventInsurance", EventInsuranceRouter);
 app.use("/api/Blog", BlogRouter);
 app.use("/api/Video", VideoRouter);
 app.use("/api/Phone", PhoneRouter);

@@ -237,6 +237,18 @@ class Controller {
             res.status(500).json(e?.message);
         }
     };
+    updateInsuranceElc = async (req, res) => {
+        try {
+            const { insurance_elc, id } = req.body;
+
+            await User.update({ insurance_elc }, { where: { id } });
+
+            res.status(200).json(true);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(e?.message);
+        }
+    };
     updateBankNumber = async (req, res) => {
         try {
             const { bankNumber, id } = req.body;

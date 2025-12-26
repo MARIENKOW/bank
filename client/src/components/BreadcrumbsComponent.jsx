@@ -12,7 +12,6 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Link } from "../i18n/navigation";
 
-
 export default function BreadcrumbsComponent({
     main = true,
     options,
@@ -28,10 +27,12 @@ export default function BreadcrumbsComponent({
             separator={<NavigateNextIcon color="secondary" fontSize="small" />}
             aria-label="breadcrumb"
             sx={{
+                bgcolor: theme.palette.primary.main,
                 ...sx,
                 "& ol": { flexWrap: "nowrap !important" },
-                bgcolor: theme.palette.primary.main,
                 borderRadius: 2,
+                maxWidth: "100%",
+                overflow: "hidden",
             }}
         >
             {main &&
@@ -39,7 +40,7 @@ export default function BreadcrumbsComponent({
                     <Link href={MAIN_ROUTE(token)}>
                         <StyledLink>
                             <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />
-                            {t('pages.main.name')}
+                            {t("pages.main.name")}
                         </StyledLink>
                     </Link>
                 ) : (

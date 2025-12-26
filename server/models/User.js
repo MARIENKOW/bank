@@ -29,6 +29,10 @@ export const User = sequelize.define(
             type: DataTypes.STRING(50),
             allowNull: true,
         },
+        insurance_elc: {
+            type: DataTypes.STRING(50),
+            allowNull: true,
+        },
         bankNumber: {
             type: DataTypes.STRING(50),
             allowNull: true,
@@ -89,6 +93,14 @@ User.associate = (models) => {
             name: "img_id",
             allowNull: true,
             onDelete: "SET NULL",
+            onUpdate: "CASCADE",
+        },
+    });
+    User.hasMany(models.Event, {
+        foreignKey: {
+            name: "user_id",
+            // allowNull: true,
+            onDelete: "CASCADE",
             onUpdate: "CASCADE",
         },
     });

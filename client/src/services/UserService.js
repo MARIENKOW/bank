@@ -55,6 +55,13 @@ export default class UserService {
             );
             return res;
         };
+        this.updateInsuranceElc = async (value) => {
+            const res = await $AdminApi.post(
+                USER_API_URL + "/updateInsuranceElc",
+                value
+            );
+            return res;
+        };
         this.updateBankNumber = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateBankNumber",

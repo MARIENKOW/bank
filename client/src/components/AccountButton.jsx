@@ -10,7 +10,7 @@ import { red } from "@mui/material/colors";
 import {
     ACCOUNT_ROUTE,
     MAIN_ROUTE,
-    SIGNIN_ROUTE,
+    ACCOUNT_INSURANCE_ROUTE,
 } from "../configs/routerLinks";
 import { Link, useRouter } from "../i18n/navigation";
 import { useParams } from "next/navigation";
@@ -19,10 +19,10 @@ import { useTranslations } from "next-intl";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { enqueueSnackbar } from "notistack";
 import HomeIcon from "@mui/icons-material/Home";
-import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { observer } from "mobx-react-lite";
 import { LanguageChange } from "./native-translate";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 
 export default observer(function AccountButton({ header }) {
     const { token } = useParams();
@@ -109,6 +109,7 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.main.name")}
                     </Typography>
                 </MenuItem>
+
                 <MenuItem
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
@@ -123,6 +124,24 @@ export default observer(function AccountButton({ header }) {
                     <Typography color="dif" variant="body1">
                         {t("pages.account.name")}
                     </Typography>
+                </MenuItem>
+                <MenuItem
+                    // sx={{ bgcolor: red[50] }}
+                    onClick={(event) => {
+                        handleCloseNavMenu(event);
+                        router.replace(ACCOUNT_INSURANCE_ROUTE(token));
+                    }}
+                >
+                    <ListItemIcon>
+                        <ReceiptLongIcon color="dif" />
+                    </ListItemIcon>
+
+                    <Typography color="dif" variant="body1">
+                        {t("pages.account.insurance.name")}
+                    </Typography>
+                </MenuItem>
+                <MenuItem sx={{ mt: 2 ,mb:1}}>
+                    <LanguageChange />
                 </MenuItem>
                 <MenuItem
                     sx={{ bgcolor: red[50] }}
@@ -147,9 +166,6 @@ export default observer(function AccountButton({ header }) {
                     >
                         {t("pages.logout.name")}
                     </Typography>
-                </MenuItem>
-                <MenuItem >
-                    <LanguageChange />
                 </MenuItem>
             </Menu>
         </>

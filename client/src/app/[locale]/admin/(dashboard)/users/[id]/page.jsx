@@ -21,8 +21,8 @@ import { StyledLoadingButton } from "../../../../../../components/form/StyledLoa
 import { useState } from "react";
 import { enqueueSnackbar } from "notistack";
 import EventService from "../../../../../../services/EventService";
-import { BankerClient } from "../../../../../../components/phone/BankerClient";
 import { BankerForm } from "../../../../../../components/phone/BankerForm";
+import NavigationButton from "./NavigationButton";
 
 const userService = new UserService();
 const event = new EventService();
@@ -69,8 +69,8 @@ export default function Page() {
                 <Box
                     display={"flex"}
                     alignItems={"center"}
-                    justifyContent={"space-between"}
-                    flexWrap={"nowrap"}
+                    // justifyContent={"space-between"}
+                    flexWrap={"wrap"}
                     flexDirection={"row"}
                     gap={2}
                 >
@@ -88,6 +88,10 @@ export default function Page() {
                             },
                         }}
                     />
+
+                    <Box flex={1} display={"flex"} justifyContent={"right"}>
+                        <NavigationButton id={id}  />
+                    </Box>
                 </Box>
                 <Box
                     display={"flex"}

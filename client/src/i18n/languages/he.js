@@ -31,6 +31,9 @@ export const he = {
             buttons: {
                 banker: "יצירת קשר עם הבנקאי",
             },
+            insurance: {
+                name: "הפקדות ביטוח",
+            },
             banker: {
                 name: "שם",
                 job: "תפקיד",
@@ -57,6 +60,7 @@ export const he = {
         username: "שם משתמש",
         name: "שם",
         elc: "חשבון אחיד",
+        insurance_elc: "חשבון בנק אישי",
         bankNumber: "מספר תא בטוח",
         balance: "יתרת תא הבטוח",
         events: "מידע על פעולות בחשבון האחיד",

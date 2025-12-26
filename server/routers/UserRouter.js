@@ -25,6 +25,11 @@ UserRouter.get("/:id", authAdminMiddelware, controller.getById);
 UserRouter.post("/updateName", authAdminMiddelware, controller.updateName);
 UserRouter.post("/updateElc", authAdminMiddelware, controller.updateElc);
 UserRouter.post(
+    "/updateInsuranceElc",
+    authAdminMiddelware,
+    controller.updateInsuranceElc
+);
+UserRouter.post(
     "/updateBankNumber",
     authAdminMiddelware,
     controller.updateBankNumber
@@ -40,10 +45,6 @@ UserRouter.post(
     authAdminMiddelware,
     controller.updatePassword
 );
-UserRouter.post(
-    "/bankerUpdate",
-    authAdminMiddelware,
-    controller.bankerUpdate
-);
+UserRouter.post("/bankerUpdate", authAdminMiddelware, controller.bankerUpdate);
 
 export default UserRouter;
