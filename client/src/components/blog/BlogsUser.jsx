@@ -17,7 +17,6 @@ export const BlogsUser = async ({ token }) => {
         const { data } = await blog.getAll(null, locale);
         return (
             <Box>
-                <Subtitile text={"Все новости"} />
                 <Box display={"flex"} flexDirection={"column"} gap={7}>
                     <Grid2 container columns={2} spacing={2}>
                         {data?.data?.map((Blog) => (
