@@ -18,8 +18,7 @@ export const WhatsUpClient = ({ initialData, initialError }) => {
         initialData,
     });
 
-    if (initialError || error) return <ErrorElement />;
-
+    if (initialError || error) return <ErrorElement admin={true} />;
 
     return (
         <WhatsUpForm

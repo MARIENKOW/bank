@@ -27,7 +27,7 @@ export const PhonesClient = ({ initialData, initialError }) => {
         initialData,
     });
 
-    if (initialError || error) return <ErrorElement />;
+    if (initialError || error) return <ErrorElement admin={true} />;
 
     if (!data || data?.length === 0) return <Empty admin={true} />;
 

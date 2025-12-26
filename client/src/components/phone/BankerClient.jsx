@@ -21,7 +21,7 @@ export const BankerClient = ({ initialData, initialError }) => {
 
     if (isPending) return <Loading />;
 
-    if (initialError || error) return <ErrorElement />;
+    if (initialError || error) return <ErrorElement admin={true} />;
 
     return (
         <BankerForm

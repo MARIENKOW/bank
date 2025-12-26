@@ -25,7 +25,7 @@ export default function Credits({}) {
     });
 
     if (isPending) return <Loading />;
-    if (error) return <ErrorElement />;
+    if (error) return <ErrorElement admin={true} />;
 
     if (!data) return <Empty admin={true} />;
 

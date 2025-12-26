@@ -20,7 +20,7 @@ export default function Users({}) {
     });
 
     if (isPending) return <Loading />;
-    if (error) return <ErrorElement />;
+    if (error) return <ErrorElement admin={true} />;
 
     if (!data || data?.length === 0) return <Empty admin={true} />;
 

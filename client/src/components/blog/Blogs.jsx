@@ -57,7 +57,7 @@ export default function Blogs() {
 
     if (loading) return <Loading />;
 
-    if (error) return <ErrorElement message={error} />;
+    if (error) return <ErrorElement admin={true} message={error} />;
 
     if (!data || data?.length === 0) return <Empty />;
 

@@ -47,7 +47,7 @@ export default function BlogUpdate() {
 
     if (loading) return <Loading />;
 
-    if (error) return <ErrorElement message={error} />;
+    if (error) return <ErrorElement admin={true} message={error} />;
 
     if (!data || data?.length === 0) return <Empty admin={true} />;
 

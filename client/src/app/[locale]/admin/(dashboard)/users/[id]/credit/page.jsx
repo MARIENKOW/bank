@@ -86,7 +86,7 @@ async function Inner({ id }) {
                         },
                     }}
                 />
-                <ErrorElement />
+                <ErrorElement admin={true} />
             </>
         );
     }

@@ -14,8 +14,9 @@ class Controller {
                 return res
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
-
+            console.log('before save');
             const { video_id, path, poster } = await videoService.save(video);
+            console.log('after save');
             const info = {
                 path: process.env.API_URL + path,
                 id: video_id,
