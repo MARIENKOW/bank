@@ -77,7 +77,9 @@ export default function EventInsuranceAdd({}) {
                 date: data?.date?.format("YYYY-MM-DD") || null,
             });
             // queryClient.invalidateQueries({ queryKey: ["user", id] });
-            queryClient.invalidateQueries({ queryKey: ["eventsInsurance", id] });
+            queryClient.invalidateQueries({
+                queryKey: ["eventsInsurance", id],
+            });
             enqueueSnackbar(`Событие создано!`, { variant: "success" });
             handleClose();
             reset();
@@ -112,7 +114,12 @@ export default function EventInsuranceAdd({}) {
             <Dialog open={open} onClose={handleClose}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent>
-                        <Box flexDirection={"row"} gap={1} display={"flex"}>
+                        <Box
+                            flexDirection={"row"}
+                            gap={1}
+                            flexWrap={"wrap"}
+                            display={"flex"}
+                        >
                             <Controller
                                 control={control}
                                 name={"date"}

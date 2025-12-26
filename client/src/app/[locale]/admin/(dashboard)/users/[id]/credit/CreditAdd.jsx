@@ -106,7 +106,12 @@ export default function CreditAdd({}) {
             <Dialog open={open} onClose={handleClose}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent>
-                        <Box flexDirection={"row"} gap={1} display={"flex"}>
+                        <Box
+                            flexDirection={"row"}
+                            flexWrap={"wrap"}
+                            gap={1}
+                            display={"flex"}
+                        >
                             <Controller
                                 control={control}
                                 name={"date"}
