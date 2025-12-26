@@ -23,7 +23,7 @@ export default function Events({ id }) {
     if (isPending) return <Loading />;
     if (error) return <ErrorElement />;
 
-    if (!data || data?.length === 0) return <Empty />;
+    if (!data || data?.length === 0) return <Empty admin={true} />;
 
     return (
         <Paper

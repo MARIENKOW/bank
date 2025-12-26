@@ -29,7 +29,7 @@ export const PhonesClient = ({ initialData, initialError }) => {
 
     if (initialError || error) return <ErrorElement />;
 
-    if (!data || data?.length === 0) return <Empty />;
+    if (!data || data?.length === 0) return <Empty admin={true} />;
 
     return data?.map((e) => (
         <PhoneForm

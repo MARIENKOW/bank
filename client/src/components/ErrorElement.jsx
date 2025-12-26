@@ -1,7 +1,7 @@
 import { Typography, Container } from "@mui/material";
 import { useTranslations } from "next-intl";
 
-const ErrorElement = ({ message, admin, buttons = true }) => {
+const ErrorElement = ({ message, admin }) => {
     const t = useTranslations();
     return (
         <Container
@@ -17,10 +17,10 @@ const ErrorElement = ({ message, admin, buttons = true }) => {
             gap={2}
         >
             <Typography color={"primary.dark"} variant={"h1"}>
-                {t("error.title")}
+                {admin ? "Упс!" : t("error.title")}
             </Typography>
             <Typography color={"primary.dark"} variant={"h4"}>
-                {t("error.subtitle")}
+                {admin ? "Что-то пошло не так!" : t("error.subtitle")}
             </Typography>
             {/* {(message?.message || message) && (
                 <Typography variant={"body1"} color="primary.light">

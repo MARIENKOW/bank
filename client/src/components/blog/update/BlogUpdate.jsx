@@ -49,7 +49,7 @@ export default function BlogUpdate() {
 
     if (error) return <ErrorElement message={error} />;
 
-    if (!data || data?.length === 0) return <Empty />;
+    if (!data || data?.length === 0) return <Empty admin={true} />;
 
     const onSubmit = (body, setError) => async (data) => {
         try {

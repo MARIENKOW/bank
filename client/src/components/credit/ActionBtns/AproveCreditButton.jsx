@@ -1,5 +1,8 @@
 "use client";
 
+import CreditService from "../../../services/CreditService";
+import VerifiedIcon from "@mui/icons-material/Verified";
+
 import {
     Box,
     Button,
@@ -7,47 +10,38 @@ import {
     FormHelperText,
     InputAdornment,
     InputLabel,
-    MenuItem,
-    Select,
 } from "@mui/material";
-import { StyledLoadingButton } from "../../../../../../components/form/StyledLoadingButton";
+import { StyledLoadingButton } from "../../form/StyledLoadingButton";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import { useEffect, useState } from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
 import {
-    PASSWORD_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH,
     SUM_MAX_VALUE,
     SUM_MIN_VALUE,
     SUM_PATTERN,
-    USERNAME_MAX_LENGTH,
-    USERNAME_MIN_LENGTH,
-} from "../../../../../../configs/validateConfig";
+} from "../../../configs/validateConfig";
 import { CanceledError } from "axios";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import {
-    STF,
-    StyledTextField,
-} from "../../../../../../components/form/StyledTextField";
+import { STF, StyledTextField } from "../../form/StyledTextField";
 import { useQueryClient } from "@tanstack/react-query";
-import EventService from "../../../../../../services/EventService";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ruRU } from "@mui/x-date-pickers/locales";
 import "dayjs/locale/ru";
-import { StyledFormControl } from "../../../../../../components/form/StyledPassword";
+import { StyledFormControl } from "../../form/StyledPassword";
 import { useTranslations } from "next-intl";
+import dayjs from "dayjs";
 
-const event = new EventService();
+const creditF = new CreditService();
 
-export default function EventAdd({ id, balance }) {
-    const t = useTranslations();
+export default function AproveCreditButton({ credit }) {
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
+    const t = useTranslations();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -68,19 +62,27 @@ export default function EventAdd({ id, balance }) {
         formState: { errors, isSubmitting },
     } = useForm({
         mode: "onChange",
-        defaultValues: { increment: "", date: null },
+        defaultValues: { date: dayjs(credit?.date), sum: credit?.sum },
     });
 
     const onSubmit = async (data) => {
         try {
-            await event.create({
+            console.log(data?.date?.format("YYYY-MM-DD"));
+            await creditF.setActive({
                 ...data,
-                id,
+                id: credit?.id,
+                user_id: credit?.user_id,
                 date: data?.date?.format("YYYY-MM-DD") || null,
             });
-            queryClient.invalidateQueries({ queryKey: ["user", id] });
-            queryClient.invalidateQueries({ queryKey: ["events", id] });
-            enqueueSnackbar(`Событие создано!`, { variant: "success" });
+            await queryClient.invalidateQueries({
+                queryKey: ["user", String(credit.user_id)],
+            });
+            await queryClient.invalidateQueries({
+                queryKey: ["credits", String(credit.user_id)],
+            });
+            enqueueSnackbar(`кредит переведено в активный!`, {
+                variant: "success",
+            });
             handleClose();
             reset();
         } catch (e) {
@@ -104,17 +106,19 @@ export default function EventAdd({ id, balance }) {
 
     return (
         <>
-            <Button
-                onClick={handleClickOpen}
-                sx={{ display: "inline-block" }}
+            <StyledLoadingButton
                 variant="contained"
+                size="small"
+                sx={{ p: 1, minWidth: "10px" }}
+                color="success"
+                onClick={handleClickOpen}
             >
-                Событие
-            </Button>
+                <VerifiedIcon />
+            </StyledLoadingButton>
             <Dialog open={open} onClose={handleClose}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent>
-                        <Box flexDirection={"row"} flexWrap={'wrap'} gap={1} display={"flex"}>
+                        <Box flexDirection={"row"} gap={1} display={"flex"}>
                             <Controller
                                 control={control}
                                 name={"date"}
@@ -173,55 +177,8 @@ export default function EventAdd({ id, balance }) {
                             />
                             <StyledTextField
                                 errors={errors}
-                                label={"комментарий"}
+                                label={"цель кредита"}
                                 register={register("comment", {})}
-                            />
-                            <Controller
-                                control={control}
-                                name="increment"
-                                rules={{ required: "required field" }}
-                                render={({
-                                    field: { value, onChange, name },
-                                    formState: { errors },
-                                }) => (
-                                    <StyledFormControl
-                                        error={!!errors?.increment}
-                                        variant="filled"
-                                        fullWidth
-                                    >
-                                        <InputLabel
-                                            id={`demo-simple-select-standard-increment`}
-                                        >
-                                            Тип события
-                                        </InputLabel>
-                                        <Select
-                                            // sx={{}}}
-                                            labelId={`demo-simple-select-standard-increment`}
-                                            value={value}
-                                            onChange={({ target }) => {
-                                                onChange(target?.value);
-                                            }}
-                                            label={"Тип события"}
-                                            MenuProps={{
-                                                sx: {
-                                                    "& .MuiPaper-root": {
-                                                        bgcolor: "#fff",
-                                                    },
-                                                },
-                                            }}
-                                        >
-                                            <MenuItem value={0}>
-                                                Снятие
-                                            </MenuItem>
-                                            <MenuItem value={1}>
-                                                Пополнение
-                                            </MenuItem>
-                                        </Select>
-                                        <FormHelperText>
-                                            {errors?.increment?.message}
-                                        </FormHelperText>
-                                    </StyledFormControl>
-                                )}
                             />
                             <Controller
                                 control={control}
@@ -241,13 +198,6 @@ export default function EventAdd({ id, balance }) {
                                         value: SUM_MAX_VALUE,
                                         message: `maximum ${SUM_MAX_VALUE}`,
                                     },
-                                    // validate: (value) => {
-                                    //     const numberValue = Number(value);
-                                    //     if (numberValue > SUM_MAX_VALUE) {
-                                    //         return `maximum ${maxValue}`;
-                                    //     }
-                                    //     return true;
-                                    // },
                                 }}
                                 render={({
                                     field: { value, onChange, name },
@@ -288,19 +238,17 @@ export default function EventAdd({ id, balance }) {
                             />
                         </Box>
                     </DialogContent>
+
                     <DialogActions>
-                        <Button color="secondary" onClick={handleClose}>
-                            Отмена
-                        </Button>
+                        <Button onClick={handleClose}>Отмена</Button>
                         <StyledLoadingButton
                             type="submit"
                             sx={{ height: "100%" }}
                             loading={isSubmitting}
                             endIcon={<DoubleArrowIcon />}
                             variant="contained"
-                            color="secondary"
                         >
-                            Создать событие
+                            Подтвердить
                         </StyledLoadingButton>
                     </DialogActions>
                 </form>

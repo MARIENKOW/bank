@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { ADMIN_USER_EVENT_INSURANCE_ROUTE } from "../../../../../../configs/routerLinks";
+import {
+    ADMIN_USER_CREDIT_ROUTE,
+    ADMIN_USER_EVENT_INSURANCE_ROUTE,
+} from "../../../../../../configs/routerLinks";
 import { Typography } from "@mui/material";
 import { IconButton } from "@mui/material";
 import { MenuItem, Menu } from "@mui/material";
@@ -61,6 +64,21 @@ export default function NavigationButton({ id }) {
                             textTransform="capitalize"
                         >
                             Страховочные зачисления
+                        </Typography>
+                    </MenuItem>
+                </Link>
+                <Link href={ADMIN_USER_CREDIT_ROUTE(id)}>
+                    <MenuItem
+                        onClick={(event) => {
+                            handleCloseNavMenu(event);
+                        }}
+                    >
+                        <Typography
+                            width={"100%"}
+                            textAlign="right"
+                            textTransform="capitalize"
+                        >
+                            Кредиты
                         </Typography>
                     </MenuItem>
                 </Link>

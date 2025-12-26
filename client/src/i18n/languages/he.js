@@ -34,6 +34,10 @@ export const he = {
             insurance: {
                 name: "הפקדות ביטוח",
             },
+            credit: {
+                name: "הלוואות",
+            },
+
             banker: {
                 name: "שם",
                 job: "תפקיד",

@@ -13,7 +13,7 @@ function ChechAuthAdmin({ children }) {
     console.log(isLoading);
 
     if (isLoading) return <Loading />;
-    if (!isLoading && isAuth === null) return <ErrorElement />;
+    if (!isLoading && isAuth === null) return <ErrorElement admin={true} />;
     if (!isAuth) return <SignInAdmin />;
 
     return children;

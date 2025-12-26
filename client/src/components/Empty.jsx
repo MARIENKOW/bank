@@ -3,7 +3,7 @@ import SickIcon from "@mui/icons-material/Sick";
 import InCenter from "./wrappers/InCenter";
 import { useTranslations } from "next-intl";
 
-export const Empty = () => {
+export const Empty = ({ admin }) => {
     const t = useTranslations();
     return (
         <InCenter>
@@ -20,7 +20,7 @@ export const Empty = () => {
                     fontWeight={600}
                     textAlign={"center"}
                 >
-                    {t("empty")}
+                    {admin ? "Тут пока что пусто." : t("empty")}
                 </Typography>
             </Box>
         </InCenter>

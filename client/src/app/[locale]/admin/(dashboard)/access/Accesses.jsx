@@ -50,7 +50,7 @@ export const Accesses = ({ dataApi }) => {
                     flexDirection={"column"}
                     flex={1}
                 >
-                    <Empty />
+                    <Empty admin={true}/>
                 </Box>
             </ContainerComponent>
         );

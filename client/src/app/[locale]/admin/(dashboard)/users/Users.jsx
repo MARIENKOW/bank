@@ -22,7 +22,7 @@ export default function Users({}) {
     if (isPending) return <Loading />;
     if (error) return <ErrorElement />;
 
-    if (!data || data?.length === 0) return <Empty />;
+    if (!data || data?.length === 0) return <Empty admin={true} />;
 
     return (
         <Box width={"100%"} display={"flex"} flexDirection={"column"} gap={1}>

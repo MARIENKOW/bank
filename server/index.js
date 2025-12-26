@@ -23,6 +23,9 @@ import { BlogVersionLanguage } from "./models/BlogVersionLanguage.js";
 import { User } from "./models/User.js";
 import { EventInsurance } from "./models/EventInsurance.js";
 import EventInsuranceRouter from "./routers/EventInsuranceRouter.js";
+import { Credit } from "./models/Credit.js";
+import { Document } from "./models/Document.js";
+import CreditRouter from "./routers/CreditRouter.js";
 
 const asModels = (models) => {
     Object.values(models).forEach((model) => {
@@ -42,6 +45,8 @@ asModels({
     User,
     Event,
     EventInsurance,
+    Document,
+    Credit,
 });
 
 dotenv.config();
@@ -77,15 +82,10 @@ app.use("/api/EventInsurance", EventInsuranceRouter);
 app.use("/api/Blog", BlogRouter);
 app.use("/api/Video", VideoRouter);
 app.use("/api/Phone", PhoneRouter);
+app.use("/api/Credit", CreditRouter);
 app.use("/api", SiteRouter);
 
 const web = http.Server(app);
-
-// process.on("warning", (warning) => {
-//     if (warning.name === "DeprecationWarning") {
-//         console.log("Deprecation warning stack:", warning.stack);
-//     }
-// });
 
 try {
     web.listen(PORT, process.env.SERVER_URL, () =>

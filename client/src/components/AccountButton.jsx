@@ -11,6 +11,7 @@ import {
     ACCOUNT_ROUTE,
     MAIN_ROUTE,
     ACCOUNT_INSURANCE_ROUTE,
+    ACCOUNT_CREDIT_ROUTE,
 } from "../configs/routerLinks";
 import { Link, useRouter } from "../i18n/navigation";
 import { useParams } from "next/navigation";
@@ -140,7 +141,22 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.account.insurance.name")}
                     </Typography>
                 </MenuItem>
-                <MenuItem sx={{ mt: 2 ,mb:1}}>
+                <MenuItem
+                    // sx={{ bgcolor: red[50] }}
+                    onClick={(event) => {
+                        handleCloseNavMenu(event);
+                        router.replace(ACCOUNT_CREDIT_ROUTE(token));
+                    }}
+                >
+                    <ListItemIcon>
+                        <ReceiptLongIcon color="dif" />
+                    </ListItemIcon>
+
+                    <Typography color="dif" variant="body1">
+                        {t("pages.account.credit.name")}
+                    </Typography>
+                </MenuItem>
+                <MenuItem sx={{ mt: 2, mb: 1 }}>
                     <LanguageChange />
                 </MenuItem>
                 <MenuItem
