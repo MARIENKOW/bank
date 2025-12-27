@@ -36,6 +36,9 @@ export const ru = {
             },
             credit: {
                 name: "Кредиты",
+                statement: "Активные заявки",
+                active: "Активные кредиты",
+                cancel: "Отмененные кредиты",
             },
             banker: {
                 name: "Имя",

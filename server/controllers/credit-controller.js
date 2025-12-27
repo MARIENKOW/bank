@@ -1,6 +1,8 @@
 import { User } from "../models/User.js";
 import { Credit } from "../models/Credit.js";
 import { Event } from "../models/Event.js";
+import documentService from "../services/document-service.js";
+import { Document } from "../models/Document.js";
 
 class Controller {
     create = async (req, res) => {
@@ -52,6 +54,7 @@ class Controller {
             });
             const cancelData = await Credit.findAll({
                 where: { user_id: id, status: 3 },
+                include: [{ model: Document, as: "document", required: false }],
                 order: [
                     ["date", "desc"],
                     ["id", "desc"],
@@ -93,6 +96,40 @@ class Controller {
                 { balance: newBalance },
                 { where: { id: user_id } }
             );
+            return res.json(true);
+        } catch (e) {
+            res.status(500).json(e.message);
+            console.log(e);
+        }
+    };
+    setCancel = async (req, res) => {
+        try {
+            const { id, sum, date, user_id } = req.body;
+            const document = req?.files?.document;
+            console.log(document);
+
+            if (!id || !sum || !date)
+                return res
+                    .status(400)
+                    .json({ "root.server": "Incorrect values" });
+
+            const userData = await User.findOne({
+                where: {
+                    id: user_id,
+                },
+            });
+
+            if (!userData) return res.status(404).json("Not found User");
+
+            const { document_id } = await documentService.save(document);
+
+            console.log(document_id);
+
+            await Credit.update(
+                { date, document_id, sum, status: 3 },
+                { where: { id } }
+            );
+
             return res.json(true);
         } catch (e) {
             res.status(500).json(e.message);

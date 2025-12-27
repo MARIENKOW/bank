@@ -1,5 +1,6 @@
 import { sequelize } from "../services/DB.js";
 import { DataTypes } from "@sequelize/core";
+import documentService from "../services/document-service.js";
 
 export const Credit = sequelize.define(
     "Credit",
@@ -42,18 +43,31 @@ export const Credit = sequelize.define(
     {
         tableName: "credit",
         timestamps: false,
+        hooks: {
+            async afterDestroy(post, options) {
+                try {
+                    console.log('fffffffffffffffffffffffffffffffffffffffffff');
+                    console.log(post);
+                    if (post?.document?.id) {
+                        await documentService.delete(post?.document?.id);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+        },
     }
 );
 
-Event.associate = (models) => {
-    Event.belongsTo(models.User, {
+Credit.associate = (models) => {
+    Credit.belongsTo(models.User, {
         foreignKey: {
             name: "user_id",
             onDelete: "CASCADE",
             onUpdate: "CASCADE",
         },
     });
-    Event.belongsTo(models.Document, {
+    Credit.belongsTo(models.Document, {
         foreignKey: {
             name: "document_id",
             allowNull: true,

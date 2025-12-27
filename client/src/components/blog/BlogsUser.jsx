@@ -1,5 +1,4 @@
-import { Box, Grid2, Typography } from "@mui/material";
-import BlogItemUser from "../../components/blog/item/BlogItemUser";
+import { Box, Grid2 } from "@mui/material";
 
 import BlogService from "../../services/BlogService";
 

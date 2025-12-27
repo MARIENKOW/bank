@@ -36,6 +36,9 @@ export const he = {
             },
             credit: {
                 name: "הלוואות",
+                statement: "בקשות פעילות",
+                active: "הלוואות פעילות",
+                cancel: "הלוואות מבוטלות",
             },
 
             banker: {

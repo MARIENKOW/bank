@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 import { unlink, existsSync, mkdirSync, writeFileSync } from "fs";
 import path from "path";
-import { Document } from "../models/Document";
+import { Document } from "../models/Document.js";
 
 class DocumentService {
     save = async (document) => {

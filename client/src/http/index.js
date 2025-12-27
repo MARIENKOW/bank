@@ -45,8 +45,13 @@ $UserApi.interceptors.response.use(
                     });
                     userPromise = promise;
                 }
-                const response = await promise;
-                userPromise = null;
+                try {
+                    await promise;
+                } catch (error) {
+                    throw error;
+                } finally {
+                    userPromise = null;
+                }
                 return await $UserApi.request(originalRequest);
             } catch (e) {
                 console.log(e?.message);
@@ -78,7 +83,6 @@ $AdminApi.interceptors.response.use(
     (config) => config,
     async (err) => {
         const originalRequest = err.config;
-        console.log(err?.response);
         if (
             err?.response?.status === 401 &&
             err.config &&
@@ -95,10 +99,17 @@ $AdminApi.interceptors.response.use(
                     });
                     adminPromise = promise;
                 }
-                await promise;
-                adminPromise = null;
+                try {
+                    await promise;
+                } catch (error) {
+                    throw error;
+                } finally {
+                    adminPromise = null;
+                }
+
                 return await $AdminApi.request(originalRequest);
             } catch (e) {
+                console.log(e?.message);
                 if (e?.response?.status === 401) adminStore.setUnauthorized();
                 throw e;
             }

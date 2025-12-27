@@ -3,15 +3,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { UserInsuranceElcForm } from "../../../../../../../components/form/user/UserInsuranceElcForm";
 import UserService from "../../../../../../../services/UserService";
+import { useParams } from "next/navigation";
+import Loading from "../../../../../../../components/loading/Loading";
 
 const user = new UserService();
 
-export function InsuranceElcClient({ initialData }) {
+export function InsuranceElcClient() {
+    const { id } = useParams();
     const { data, error, isPending } = useQuery({
-        queryKey: ["user", initialData.id],
-        initialData,
+        queryKey: ["user", id],
         queryFn: async () => {
-            const { data } = await user.getById(initialData.id);
+            const { data } = await user.getById(id);
             return data;
         },
     });

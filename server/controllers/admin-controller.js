@@ -107,7 +107,6 @@ class Controller {
 
     aboutAdmin = async (req, res) => {
         try {
-            console.log('aboutAs');
             const { refreshTokenAdmin } = req.cookies;
             if (!refreshTokenAdmin)
                 return res.status(401).json("not Authorization");

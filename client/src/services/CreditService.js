@@ -25,5 +25,15 @@ export default class CreditService {
             );
             return res;
         };
+        this.setCancel = async (value) => {
+            const res = await $AdminApi.post(
+                CREDIT_API_URL + "/setCancel",
+                value,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            return res;
+        };
     }
 }

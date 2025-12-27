@@ -13,11 +13,16 @@ CreditRouter.get("/:id", authUserAdminMiddleware, creditController.find);
 //     authUserAdminMiddleware,
 //     creditController.deleteAll
 // );
-CreditRouter.delete("/:id", authUserAdminMiddleware, creditController.delete);
+CreditRouter.delete("/:id", authAdminMiddelware, creditController.delete);
 CreditRouter.post(
     "/setActive",
-    authUserAdminMiddleware,
+    authAdminMiddelware,
     creditController.setActive
+);
+CreditRouter.post(
+    "/setCancel",
+    authAdminMiddelware,
+    creditController.setCancel
 );
 
 export default CreditRouter;

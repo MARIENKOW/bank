@@ -73,6 +73,10 @@ app.use(
     "/api" + process.env.NFT_FOLDER,
     express.static("./" + process.env.NFT_FOLDER)
 );
+app.use(
+    "/api" + process.env.DOCUMENT_FOLDER,
+    express.static("./" + process.env.DOCUMENT_FOLDER)
+);
 app.use("/api/meta", express.static("./meta"));
 app.use("/api/Admin", AdminRouter);
 app.use("/api/User", UserRouter);

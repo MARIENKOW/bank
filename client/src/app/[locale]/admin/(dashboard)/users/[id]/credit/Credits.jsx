@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import CreditService from "../../../../../../../services/CreditService";
 import CreditAccordion from "./CreditAccordion";
 import AproveCreditItemAdmin from "../../../../../../../components/credit/AproveCreditItemAdmin";
+import CancelCreditItemAdmin from "../../../../../../../components/credit/CancelCreditItemAdmin";
 
 const credit = new CreditService($AdminApi);
 
@@ -44,7 +45,7 @@ export default function Credits({}) {
             <CreditAccordion
                 label={"Отмененные кредиты"}
                 data={data?.cancelData}
-                InnerComponent={StatementCreditItemAdmin}
+                InnerComponent={CancelCreditItemAdmin}
             />
         </Box>
     );

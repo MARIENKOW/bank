@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 export default function EventItem({ event,i }) {
     const t = useTranslations();
     return (
-        <Box sx={{ bgcolor: i%2?"secondary.main":'#fff' }} variant="elevation">
+        <Box sx={{ bgcolor: i%2?'#fff':"secondary.main" }} variant="elevation">
             <Box
                 justifyContent={"space-between"}
                 display={"flex"}

@@ -5,12 +5,12 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export default function CreditAccordion({ data, InnerComponent, label }) {
+export default function CreditAccordion({ data, InnerComponent, label,user }) {
     return (
         <Accordion
             sx={{
                 "& .MuiPaper-root": {},
-                bgcolor: "primary.main",
+                bgcolor: user?"error.main":"primary.main",
             }}
             defaultExpanded
         >
@@ -19,23 +19,23 @@ export default function CreditAccordion({ data, InnerComponent, label }) {
                     {label}
                 </Typography>
             </AccordionSummary>
-            <AccordionDetails sx={{ bgcolor: "secondary.main" }}>
+            <AccordionDetails sx={{ bgcolor: "#fff",p:0 }}>
                 <Box
                     sx={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: 1,
+                        gap: user?0:1,
                         p: 1,
                         maxHeight: 350,
                         overflowY: "scroll",
                     }}
                 >
                     {data && data?.length !== 0 ? (
-                        data?.map((credit) => (
-                            <InnerComponent key={credit.id} credit={credit} />
+                        data?.map((credit,i) => (
+                            <InnerComponent i={i} key={credit.id} credit={credit} />
                         ))
                     ) : (
-                        <Empty admin={true} />
+                        <Empty admin={!user} />
                     )}
                 </Box>
             </AccordionDetails>
