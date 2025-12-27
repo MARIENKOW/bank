@@ -20,7 +20,7 @@ export default observer(function Page() {
     return (
         <OnlyLoginUser>
             <ContainerComponent>
-                <Box display={'flex'} >
+                <Box display={"flex"}>
                     <BreadcrumbsComponent
                         user={true}
                         main={false}
@@ -43,45 +43,22 @@ export default observer(function Page() {
                         }}
                     />
                 </Box>
-                <Box display={"flex"} mt={4} flexDirection={"column"} flex={1} mb={10}>
+                <Box
+                    display={"flex"}
+                    mt={4}
+                    flexDirection={"column"}
+                    flex={1}
+                    mb={10}
+                >
                     <Box
-                        display={"inline-flex"}
-                        flexDirection={"column"}
-                        pt={1}
-                        gap={0.5}
-                        pb={1}
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            maxHeight: 400,
+                            overflowY: "scroll",
+                        }}
                     >
-                        <Typography lineHeight={"1"} variant="body1">
-                            {t("form.insurance_elc")}
-                        </Typography>
-                        <Typography
-                            fontSize={18}
-                            fontWeight={600}
-                            variant="body1"
-                        >
-                            {user?.insurance_elc}
-                        </Typography>
-                    </Box>
-                    <Divider sx={{ mt: 4 }} />
-                    <Box
-                        mt={4}
-                        display={"flex"}
-                        flexDirection={"column"}
-                        // gap={1}
-                        pt={1}
-                        flex={1}
-                        pb={1}
-                    >
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                maxHeight: 400,
-                                overflowY: "scroll",
-                            }}
-                        >
-                            <EventsInsuranceUser id={user.id} />
-                        </Box>
+                        <EventsInsuranceUser id={user.id} />
                     </Box>
                 </Box>
             </ContainerComponent>
