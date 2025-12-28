@@ -7,6 +7,7 @@ export const ACCOUNT_INSURANCE_ROUTE = (token) =>
 export const ACCOUNT_CREDIT_STATEMENT_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditStatement";
 export const ACCOUNT_CREDIT_ACTIVE_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditActive";
 export const ACCOUNT_CREDIT_CANCEL_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditCancel";
+export const ACCOUNT_DOCUMENT_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/document";
 
 export const ADMIN_ROUTE = "/admin";
 export const ADMIN_ACCESS_ROUTE = ADMIN_ROUTE + "/access";
@@ -15,6 +16,7 @@ export const ADMIN_USER_ROUTE = (id) => ADMIN_ROUTE + "/users" + "/" + id;
 export const ADMIN_USER_EVENT_INSURANCE_ROUTE = (id) =>
     ADMIN_USER_ROUTE(id) + "/eventInsurance";
 export const ADMIN_USER_CREDIT_ROUTE = (id) => ADMIN_USER_ROUTE(id) + "/credit";
+export const ADMIN_USER_DOCUMENT_ROUTE = (id) => ADMIN_USER_ROUTE(id) + "/document";
 export const ADMIN_PHONE_ROUTE = ADMIN_ROUTE + "/phone";
 export const ADMIN_PHONE_WHATSUP_ROUTE = ADMIN_PHONE_ROUTE + "/whatsup";
 export const ADMIN_PHONE_BANKER_ROUTE = ADMIN_PHONE_ROUTE + "/banker";

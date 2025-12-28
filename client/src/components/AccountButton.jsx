@@ -13,6 +13,7 @@ import {
     ACCOUNT_INSURANCE_ROUTE,
     ACCOUNT_CREDIT_STATEMENT_ROUTE,
     ACCOUNT_CREDIT_ACTIVE_ROUTE,
+    ACCOUNT_DOCUMENT_ROUTE,
     ACCOUNT_CREDIT_CANCEL_ROUTE,
 } from "../configs/routerLinks";
 import { Link, useRouter } from "../i18n/navigation";
@@ -246,7 +247,21 @@ export default observer(function AccountButton({ header }) {
                         </Box>
                     </AccordionDetails>
                 </Accordion>
+                <MenuItem
+                    // sx={{ bgcolor: red[50] }}
+                    onClick={(event) => {
+                        handleCloseNavMenu(event);
+                        router.replace(ACCOUNT_DOCUMENT_ROUTE(token));
+                    }}
+                >
+                    <ListItemIcon>
+                        <ReceiptLongIcon color="dif" />
+                    </ListItemIcon>
 
+                    <Typography color="dif" variant="body1">
+                        {t("pages.account.document.name")}
+                    </Typography>
+                </MenuItem>
                 <MenuItem sx={{ mt: 2, mb: 1 }}>
                     <LanguageChange />
                 </MenuItem>

@@ -1,46 +1,23 @@
 "use client";
 
-import CreditService from "../../../services/CreditService";
-import VerifiedIcon from "@mui/icons-material/Verified";
-
-import {
-    Box,
-    Button,
-    FilledInput,
-    FormHelperText,
-    InputAdornment,
-    InputLabel,
-    Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { StyledLoadingButton } from "../../form/StyledLoadingButton";
-import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { enqueueSnackbar } from "notistack";
-import {
-    SUM_MAX_VALUE,
-    SUM_MIN_VALUE,
-    SUM_PATTERN,
-} from "../../../configs/validateConfig";
-import { CanceledError } from "axios";
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import { STF, StyledTextField } from "../../form/StyledTextField";
-import { useQueryClient } from "@tanstack/react-query";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ruRU } from "@mui/x-date-pickers/locales";
-import "dayjs/locale/ru";
-import { StyledFormControl } from "../../form/StyledPassword";
 import { useTranslations } from "next-intl";
 import InfoIcon from "@mui/icons-material/Info";
-
-const creditF = new CreditService();
+import { useRouter } from "../../../i18n/navigation";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import { ACCOUNT_DOCUMENT_ROUTE } from "../../../configs/routerLinks";
+import { useParams } from "next/navigation";
 
 export default function InfoCreditButton({ credit, user }) {
     const [open, setOpen] = useState(false);
+    const router = useRouter();
+    const { token } = useParams();
     const t = useTranslations();
 
     const handleClickOpen = () => {
@@ -170,9 +147,7 @@ export default function InfoCreditButton({ credit, user }) {
                                     lineHeight={"1"}
                                     variant="body1"
                                 >
-                                    {!user
-                                        ? "Время"
-                                        : t("fields.credit.time")}
+                                    {!user ? "Время" : t("fields.credit.time")}
                                 </Typography>
                                 <Typography
                                     color="secondary"
@@ -189,13 +164,32 @@ export default function InfoCreditButton({ credit, user }) {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleClose}
-                    >
-                        {user ? t("buttons.close") : "закрыть"}
-                    </Button>
+                    <Box display={'flex'} gap={2} >
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleClose}
+                        >
+                            {user ? t("buttons.close") : "закрыть"}
+                        </Button>
+                        {user && (
+                            <Button
+                                variant='outlined'
+                                // sx={{ bgcolor: red[50] }}
+                                onClick={(event) => {
+                                    router.replace(
+                                        ACCOUNT_DOCUMENT_ROUTE(token)
+                                    );
+                                }}
+                            >
+                                <ReceiptLongIcon color="dif" />
+
+                                <Typography color="dif" variant="body1">
+                                    {t("pages.account.document.name")}
+                                </Typography>
+                            </Button>
+                        )}
+                    </Box>
                 </DialogActions>
             </Dialog>
         </>

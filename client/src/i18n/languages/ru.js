@@ -34,6 +34,9 @@ export const ru = {
             insurance: {
                 name: "Страховочные зачисления",
             },
+            document: {
+                name: "Документы",
+            },
             credit: {
                 name: "Кредиты",
                 statement: "Активные заявки",

@@ -130,7 +130,6 @@ class Controller {
             const { id, sum, date, comment, elc, time, bank, user_id } =
                 req.body;
             const document = req?.files?.document;
-            console.log(document);
 
             if (!id || !sum || !date)
                 return res

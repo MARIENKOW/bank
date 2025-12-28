@@ -46,8 +46,6 @@ export const BankerForm = ({ value, id }) => {
         defaultValues,
     });
 
-    console.log(getValues("banker_img_id"), isDirty);
-
     useEffect(() => {
         console.log("reset");
         reset(defaultValues, { keepDirty: false });
