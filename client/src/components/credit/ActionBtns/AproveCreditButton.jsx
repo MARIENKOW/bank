@@ -57,12 +57,17 @@ export default function AproveCreditButton({ credit }) {
         control,
         reset,
         setError,
-        trigger,
-        getValues,
         formState: { errors, isSubmitting },
     } = useForm({
         mode: "onChange",
-        defaultValues: { date: dayjs(credit?.date), sum: credit?.sum },
+        defaultValues: {
+            date: dayjs(credit?.date),
+            sum: credit?.sum,
+            bank: credit?.bank,
+            elc: credit?.elc,
+            comment: credit?.comment,
+            time: credit?.time,
+        },
     });
 
     const onSubmit = async (data) => {
@@ -184,6 +189,21 @@ export default function AproveCreditButton({ credit }) {
                                 errors={errors}
                                 label={"цель кредита"}
                                 register={register("comment", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"банк"}
+                                register={register("bank", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"счет"}
+                                register={register("elc", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"время"}
+                                register={register("time", {})}
                             />
                             <Controller
                                 control={control}

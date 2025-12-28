@@ -7,7 +7,7 @@ import { Document } from "../models/Document.js";
 class Controller {
     create = async (req, res) => {
         try {
-            const { id, sum, date } = req.body;
+            const { id, sum, comment, bank, time, elc, date } = req.body;
 
             if (!id || !sum || !date)
                 return res
@@ -17,7 +17,16 @@ class Controller {
             const userData = await User.findOne({ where: { id } });
             if (!userData) return res.status(404).json("User is not defined");
 
-            await Credit.create({ user_id: id, sum, date, status: 1 });
+            await Credit.create({
+                user_id: id,
+                comment,
+                bank,
+                elc,
+                time,
+                sum,
+                date,
+                status: 1,
+            });
 
             res.status(200).json(userData);
         } catch (e) {
@@ -69,7 +78,8 @@ class Controller {
     };
     setActive = async (req, res) => {
         try {
-            const { id, sum, date, comment, user_id } = req.body;
+            const { id, sum, date, comment, bank, time, elc, user_id } =
+                req.body;
 
             if (!id || !sum || !date)
                 return res
@@ -85,17 +95,30 @@ class Controller {
             if (!userData) return res.status(404).json("Not found User");
 
             await Credit.update(
-                { date, comment, sum, status: 2 },
+                { date, comment, bank, time, elc, sum, status: 2 },
                 { where: { id } }
             );
-            const newBalance = Number(userData.balance) + Number(sum);
+            // const newBalance = Number(userData.balance) + Number(sum);
 
-            await Event.create({ comment, increment: 1, user_id, sum, date });
+            // let elcString = elc || "";
+            // let bankString = bank || "";
+            // let commentString = comment || "";
 
-            await User.update(
-                { balance: newBalance },
-                { where: { id: user_id } }
-            );
+            // const eventComment =
+            //     commentString + " " + bankString + " " + elcString;
+
+            // await Event.create({
+            //     comment: eventComment,
+            //     increment: 1,
+            //     user_id,
+            //     sum,
+            //     date,
+            // });
+
+            // await User.update(
+            //     { balance: newBalance },
+            //     { where: { id: user_id } }
+            // );
             return res.json(true);
         } catch (e) {
             res.status(500).json(e.message);
@@ -104,7 +127,8 @@ class Controller {
     };
     setCancel = async (req, res) => {
         try {
-            const { id, sum, date, user_id } = req.body;
+            const { id, sum, date, comment, elc, time, bank, user_id } =
+                req.body;
             const document = req?.files?.document;
             console.log(document);
 
@@ -123,10 +147,8 @@ class Controller {
 
             const { document_id } = await documentService.save(document);
 
-            console.log(document_id);
-
             await Credit.update(
-                { date, document_id, sum, status: 3 },
+                { date, document_id, comment, time, elc, bank, sum, status: 3 },
                 { where: { id } }
             );
 
@@ -160,6 +182,9 @@ class Controller {
             await Credit.destroy({
                 where: { id: id },
             });
+            if (eventData?.document_id) {
+                await documentService.delete(eventData?.document_id);
+            }
 
             return res.json(true);
         } catch (e) {

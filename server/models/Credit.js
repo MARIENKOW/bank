@@ -14,6 +14,18 @@ export const Credit = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        elc: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        time: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        bank: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         status: {
             type: DataTypes.TINYINT(1),
             allowNull: false,
@@ -46,11 +58,9 @@ export const Credit = sequelize.define(
         hooks: {
             async afterDestroy(post, options) {
                 try {
-                    console.log('fffffffffffffffffffffffffffffffffffffffffff');
-                    console.log(post);
-                    if (post?.document?.id) {
-                        await documentService.delete(post?.document?.id);
-                    }
+                    // if (post?.document?.id) {
+                    //     await documentService.delete(post?.document?.id);
+                    // }
                 } catch (error) {
                     console.log(error);
                 }

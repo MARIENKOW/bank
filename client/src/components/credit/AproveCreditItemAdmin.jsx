@@ -3,9 +3,17 @@ import { Box, Paper, Typography, IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 import DeleteCreditButton from "./ActionBtns/DeleteCreditButton";
+import InfoCreditButton from "./ActionBtns/InfoCreditButton";
+import CancelCreditButton from "./ActionBtns/CancelCreditButton";
 
 export default function AproveCreditItemAdmin({ credit }) {
     const t = useTranslations();
+
+    const commentString = credit?.comment || "";
+    const bankString = credit?.bank || "";
+    const elcString = credit?.elc || "";
+
+    const comment = commentString + " " + bankString + " " + elcString;
 
     return (
         <Paper sx={{ bgcolor: "#ddd" }} variant="elevation">
@@ -20,9 +28,9 @@ export default function AproveCreditItemAdmin({ credit }) {
                     <Typography fontWeight={500} variant="body1">
                         {formatDate(credit.date)}
                     </Typography>
-                    <Typography fontWeight={400} variant="body1">
-                        {credit.comment}
-                    </Typography>
+                    {/* <Typography fontSize={12} fontWeight={400} variant="body1">
+                        {comment}
+                    </Typography> */}
                 </Box>
                 <Box display={"flex"} gap={1} alignItems={"center"}>
                     <Typography
@@ -33,7 +41,9 @@ export default function AproveCreditItemAdmin({ credit }) {
                         {t("currency", { value: credit?.sum })}
                     </Typography>
                     <Box display={"flex"} gap={1}>
+                        <CancelCreditButton credit={credit} />
                         <DeleteCreditButton credit={credit} />
+                        <InfoCreditButton credit={credit} />
                     </Box>
                 </Box>
             </Box>

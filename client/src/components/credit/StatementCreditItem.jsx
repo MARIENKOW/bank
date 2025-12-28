@@ -2,6 +2,7 @@ import { StyledLoadingButton } from "../form/StyledLoadingButton";
 import formatDate from "../../helpers/formatDate";
 import { Box, Paper, Typography, IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
+import InfoCreditButton from "../../components/credit/ActionBtns/InfoCreditButton";
 
 export default function StatementCreditItem({ credit, i }) {
     const t = useTranslations();
@@ -23,7 +24,7 @@ export default function StatementCreditItem({ credit, i }) {
                         {formatDate(credit.date)}
                     </Typography>
                 </Box>
-                <Box display={"flex"} gap={1} alignItems={"center"}>
+                <Box display={"flex"} gap={2} alignItems={"center"}>
                     <Typography
                         fontWeight={500}
                         color={"success"}
@@ -31,6 +32,7 @@ export default function StatementCreditItem({ credit, i }) {
                     >
                         {t("currency", { value: credit?.sum })}
                     </Typography>
+                    <InfoCreditButton credit={credit} />
                 </Box>
             </Box>
         </Box>

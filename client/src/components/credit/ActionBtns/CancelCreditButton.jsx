@@ -33,7 +33,7 @@ import "dayjs/locale/ru";
 import { StyledFormControl } from "../../form/StyledPassword";
 import { useTranslations } from "next-intl";
 import dayjs from "dayjs";
-import FileUploadIcon from '@mui/icons-material/FileUpload';
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const creditF = new CreditService();
 
@@ -63,7 +63,14 @@ export default function CancelCreditButton({ credit }) {
         formState: { errors, isSubmitting },
     } = useForm({
         mode: "onChange",
-        defaultValues: { date: dayjs(credit?.date), sum: credit?.sum },
+        defaultValues: {
+            date: dayjs(credit?.date),
+            sum: credit?.sum,
+            bank: credit?.bank,
+            elc: credit?.elc,
+            comment: credit?.comment,
+            time: credit?.time,
+        },
     });
 
     const onSubmit = async (data) => {
@@ -104,7 +111,6 @@ export default function CancelCreditButton({ credit }) {
             );
         }
     };
-
 
     // const handleFileChange = (file) => {
     //     clearErrors("document");
@@ -195,6 +201,26 @@ export default function CancelCreditButton({ credit }) {
                                     );
                                 }}
                             />
+                            <StyledTextField
+                                errors={errors}
+                                label={"цель кредита"}
+                                register={register("comment", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"банк"}
+                                register={register("bank", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"счет"}
+                                register={register("elc", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"время"}
+                                register={register("time", {})}
+                            />
                             <Controller
                                 control={control}
                                 name="sum"
@@ -263,7 +289,7 @@ export default function CancelCreditButton({ credit }) {
                                         sx={{
                                             display: "flex",
                                             flexDirection: "column",
-                                            width:'100%'
+                                            width: "100%",
                                         }}
                                     >
                                         <input
@@ -285,8 +311,8 @@ export default function CancelCreditButton({ credit }) {
                                         />
 
                                         <Button
-                                        endIcon={<FileUploadIcon />}
-                                        variant="contained"
+                                            endIcon={<FileUploadIcon />}
+                                            variant="contained"
                                             color={
                                                 errors?.document
                                                     ? "error"

@@ -2,15 +2,19 @@ import formatDate from "../../helpers/formatDate";
 import { Box, Paper, Typography, IconButton, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import ArticleIcon from "@mui/icons-material/Article";
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 import DeleteCreditButton from "./ActionBtns/DeleteCreditButton";
+import InfoCreditButton from "../../components/credit/ActionBtns/InfoCreditButton";
 
-export default function CancelCreditItem({ credit ,i}) {
+export default function CancelCreditItem({ credit, i }) {
     const t = useTranslations();
 
     return (
-        <Box sx={{ bgcolor: i%2?'#fff':"secondary.main" }}  variant="elevation">
+        <Box
+            sx={{ bgcolor: i % 2 ? "#fff" : "secondary.main" }}
+            variant="elevation"
+        >
             <Box
                 justifyContent={"space-between"}
                 display={"flex"}
@@ -37,13 +41,20 @@ export default function CancelCreditItem({ credit ,i}) {
                     <Box
                         component={"a"}
                         target="_blank"
-                        
                         href={credit?.document?.path}
                     >
-                        <Button color={'error'} sx={{ minWidth: 0, p: 0.5 }} variant="contained">
-                            <OpenInNewIcon fontSize={'medium'} color="secondary" />
+                        <Button
+                            color={"error"}
+                            sx={{ minWidth: 0, p: 0.5 }}
+                            variant="contained"
+                        >
+                            <OpenInNewIcon
+                                fontSize={"medium"}
+                                color="secondary"
+                            />
                         </Button>
                     </Box>
+                    <InfoCreditButton credit={credit} />
                 </Box>
             </Box>
         </Box>

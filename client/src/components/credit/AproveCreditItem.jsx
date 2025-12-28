@@ -1,3 +1,4 @@
+import InfoCreditButton from "../../components/credit/ActionBtns/InfoCreditButton";
 import formatDate from "../../helpers/formatDate";
 import { Box, Paper, Typography, IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -22,7 +23,7 @@ export default function AproveCreditItem({ credit ,i}) {
                         {credit.comment}
                     </Typography>
                 </Box>
-                <Box display={"flex"} gap={1} alignItems={"center"}>
+                <Box display={"flex"} gap={2} alignItems={"center"}>
                     <Typography
                         fontWeight={500}
                         color={"success"}
@@ -30,6 +31,7 @@ export default function AproveCreditItem({ credit ,i}) {
                     >
                         {t("currency", { value: credit?.sum })}
                     </Typography>
+                    <InfoCreditButton credit={credit}/>
                 </Box>
             </Box>
         </Box>

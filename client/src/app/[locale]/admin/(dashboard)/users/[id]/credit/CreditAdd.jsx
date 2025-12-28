@@ -32,6 +32,7 @@ import { StyledFormControl } from "../../../../../../../components/form/StyledPa
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import CreditService from "../../../../../../../services/CreditService";
+import { StyledTextField } from "../../../../../../../components/form/StyledTextField";
 
 const credit = new CreditService();
 
@@ -115,9 +116,7 @@ export default function CreditAdd({}) {
                             <Controller
                                 control={control}
                                 name={"date"}
-                                rules={{
-                                    required: "обязательное поле",
-                                }}
+                                rules={{ required: "required field" }}
                                 render={({
                                     field: { onChange, value },
                                     fieldState: { error },
@@ -167,6 +166,26 @@ export default function CreditAdd({}) {
                                         </LocalizationProvider>
                                     );
                                 }}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"цель кредита"}
+                                register={register("comment", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"банк"}
+                                register={register("bank", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"счет"}
+                                register={register("elc", {})}
+                            />
+                            <StyledTextField
+                                errors={errors}
+                                label={"время"}
+                                register={register("time", {})}
                             />
                             <Controller
                                 control={control}

@@ -94,6 +94,12 @@ export const he = {
         bankNumber: {
             success: `מספר תא הבטוח עודכן!`,
         },
+        credit: {
+            elc: "חשבון אישי",
+            bank: "בנק",
+            comment: "מטרת ההלוואה",
+            time: "זמן",
+        },
     },
     api: {
         ERR_NETWORK: "אין חיבור לרשת. נסה שוב מאוחר יותר.",
@@ -112,4 +118,5 @@ export const he = {
         title: "אופס!",
         subtitle: "משהו השתבש",
     },
+    buttons: { close: "סגור" },
 };
