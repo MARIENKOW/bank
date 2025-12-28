@@ -32,7 +32,7 @@ export default function StatementCreditItem({ credit, i }) {
                     >
                         {t("currency", { value: credit?.sum })}
                     </Typography>
-                    <InfoCreditButton credit={credit} />
+                    <InfoCreditButton user={true} credit={credit} />
                 </Box>
             </Box>
         </Box>

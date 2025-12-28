@@ -3,11 +3,14 @@ import formatDate from "../../helpers/formatDate";
 import { Box, Paper, Typography, IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
 
-export default function AproveCreditItem({ credit ,i}) {
+export default function AproveCreditItem({ credit, i }) {
     const t = useTranslations();
 
     return (
-        <Box  sx={{ bgcolor: i%2?'#fff':"secondary.main" }}  variant="elevation">
+        <Box
+            sx={{ bgcolor: i % 2 ? "#fff" : "secondary.main" }}
+            variant="elevation"
+        >
             <Box
                 justifyContent={"space-between"}
                 display={"flex"}
@@ -31,7 +34,7 @@ export default function AproveCreditItem({ credit ,i}) {
                     >
                         {t("currency", { value: credit?.sum })}
                     </Typography>
-                    <InfoCreditButton credit={credit}/>
+                    <InfoCreditButton user={true} credit={credit} />
                 </Box>
             </Box>
         </Box>

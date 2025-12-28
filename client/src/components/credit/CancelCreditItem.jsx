@@ -54,7 +54,7 @@ export default function CancelCreditItem({ credit, i }) {
                             />
                         </Button>
                     </Box>
-                    <InfoCreditButton credit={credit} />
+                    <InfoCreditButton user={true} credit={credit} />
                 </Box>
             </Box>
         </Box>
