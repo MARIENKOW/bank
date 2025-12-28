@@ -35,8 +35,8 @@ export const he = {
                 name: "הפקדות ביטוח",
             },
             document: {
-    name: 'מסמכים'
-},
+                name: "מסמכים",
+            },
 
             credit: {
                 name: "הלוואות",
@@ -122,5 +122,9 @@ export const he = {
         title: "אופס!",
         subtitle: "משהו השתבש",
     },
-    buttons: { close: "סגור" },
+    buttons: {
+        close: "סגור",
+        clear: "נקה",
+        sign: "חתום",
+    },
 };

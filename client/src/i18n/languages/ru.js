@@ -96,12 +96,12 @@ export const ru = {
         bankNumber: {
             success: `Номер сейфовой ячейки изменен!`,
         },
-        credit:{
-            elc:'Личный счет',
-            bank:'Банк',
-            comment:'Цель кредита',
-            time:'Время'
-        }
+        credit: {
+            elc: "Личный счет",
+            bank: "Банк",
+            comment: "Цель кредита",
+            time: "Время",
+        },
     },
     api: {
         ERR_NETWORK: "Нет подключения к сети. Попробуйте позже.",
@@ -117,5 +117,5 @@ export const ru = {
     },
     empty: "Тут пока что пусто.",
     error: { title: "Упс!", subtitle: "Что-то пошло не так" },
-    buttons:{close:'закрыть'}
+    buttons: { close: "закрыть", clear: "очистить", sign: "подписать" },
 };
