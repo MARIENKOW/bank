@@ -95,6 +95,9 @@ export const he = {
         elc: {
             success: `חשבון אחיד עודכן!`,
         },
+        document: {
+            success: `מסמך חתום!`,
+        },
         bankNumber: {
             success: `מספר תא הבטוח עודכן!`,
         },

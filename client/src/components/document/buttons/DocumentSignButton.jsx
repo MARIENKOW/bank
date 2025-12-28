@@ -11,10 +11,19 @@ import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import DrawIcon from "@mui/icons-material/Draw";
+import { useQueryClient } from "@tanstack/react-query";
+import UserDocumentService from "../../../services/UserDocumentService";
+import { enqueueSnackbar } from "notistack";
+import { CanceledError } from "axios";
 
-export default function DocumentSignButton({ credit }) {
+const userDocument = new UserDocumentService();
+
+export default function DocumentSignButton({ doc }) {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const queryClient = useQueryClient();
+
     const t = useTranslations();
 
     const handleClickOpen = () => {
@@ -32,11 +41,33 @@ export default function DocumentSignButton({ credit }) {
         setError(false); // тоже очищаем
     };
 
-    const handleSave = () => {
-        if (!sigRef.current || sigRef.current.isEmpty()) return setError(true);
-        const dataUrl = sigRef.current.toDataURL("image/png");
-        // отправляешь dataUrl на бэк как строку
-        console.log(dataUrl);
+    const handleSave = async () => {
+        try {
+            setLoading(true);
+            if (!sigRef.current || sigRef.current.isEmpty())
+                return setError(true);
+            const dataUrl = sigRef.current.toDataURL("image/png");
+            await userDocument.setSign({
+                img: dataUrl,
+                id: doc?.id,
+                user_id: doc?.user_id,
+            });
+            await queryClient.invalidateQueries({
+                queryKey: ["documents"],
+            });
+            enqueueSnackbar(t("fields.document.success"), {
+                variant: "success",
+            });
+            handleClose();
+        } catch (e) {
+            if (e instanceof CanceledError) return;
+            console.error(e);
+            enqueueSnackbar(t("form.error.message"), {
+                variant: "error",
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -44,12 +75,14 @@ export default function DocumentSignButton({ credit }) {
             <StyledLoadingButton
                 variant="contained"
                 fullWidth
+                loading={loading}
                 size="small"
-                sx={{ p: 1, minWidth: "10px" }}
+                sx={{ p: 1, minWidth: "10px", color: "secondary.main" }}
                 color="dif"
                 onClick={handleClickOpen}
+                endIcon={<DrawIcon color="secondary" />}
             >
-                <DrawIcon color="secondary" />
+                {t("buttons.sign")}
             </StyledLoadingButton>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent

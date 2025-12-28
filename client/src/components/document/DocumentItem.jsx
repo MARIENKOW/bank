@@ -1,8 +1,10 @@
 import { Box, Button, Grid2, Typography } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DocumentSignButton from "./buttons/DocumentSignButton";
+import { useTranslations } from "next-intl";
 
 export default function DocumentItem({ doc }) {
+    const t = useTranslations();
     return (
         <Box display={"flex"} flexDirection={"column"}>
             <Typography mb={1} textAlign={"center"} variant="h6">
@@ -38,7 +40,23 @@ export default function DocumentItem({ doc }) {
                     </Box>
                 </Grid2>
                 <Grid2 size={6}>
-                    <DocumentSignButton doc={doc} />
+                    {doc?.sign ? (
+                        <Button
+                            fullWidth
+                            disabled
+                            size="small"
+                            sx={{
+                                fontSize: 11,
+                                height: "100%",
+                                letterSpacing:0
+                            }}
+                            variant="contained"
+                        >
+                            {t("fields.document.success")}
+                        </Button>
+                    ) : (
+                        <DocumentSignButton doc={doc} />
+                    )}
                 </Grid2>
             </Grid2>
         </Box>

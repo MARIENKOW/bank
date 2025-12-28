@@ -90,6 +90,9 @@ export const ru = {
         name: {
             success: `Имя изменено!`,
         },
+        document: {
+            success: `Документ подписано!`,
+        },
         elc: {
             success: `Единый лицевой счет изменен!`,
         },

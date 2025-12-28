@@ -1,4 +1,4 @@
-import { $AdminApi } from "../http/index.js";
+import { $AdminApi, $UserApi } from "../http/index.js";
 import config from "../configs/config.js";
 import axios from "axios";
 
@@ -13,6 +13,16 @@ export default class UserDocumentService {
         this.create = async (value) => {
             const res = await $AdminApi.post(
                 USER_DOCUMENT_API_URL + "/",
+                value,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            return res;
+        };
+        this.setSign = async (value) => {
+            const res = await $UserApi.post(
+                USER_DOCUMENT_API_URL + "/setSign",
                 value,
                 {
                     headers: { "Content-Type": "multipart/form-data" },
