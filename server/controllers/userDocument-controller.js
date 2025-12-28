@@ -73,11 +73,55 @@ class Controller {
                         as: "img",
                         required: false,
                     },
+                    {
+                        model: Img,
+                        as: "sign",
+                        required: false,
+                    },
                 ],
                 order: [["id", "desc"]],
             });
 
             return res.json(data);
+        } catch (e) {
+            res.status(500).json(e.message);
+            console.log(e);
+        }
+    };
+    setSign = async (req, res) => {
+        try {
+            const { id, user_id, img } = req.body;
+            const base64Data = img.replace(
+                /^data:image\/png;base64,/,
+                ""
+            );
+            const imgBuffer = Buffer.from(base64Data, "base64");
+
+            if (!id || !img)
+                return res
+                    .status(400)
+                    .json({ "root.server": "Incorrect values" });
+
+            const userData = await User.findOne({
+                where: {
+                    id: user_id,
+                },
+            });
+
+            if (!userData) return res.status(404).json("Not found User");
+
+            const userDocument = await UserDocument.findOne({ where: { id } });
+
+            if (userDocument?.sign_id)
+                return res
+                    .status(403)
+                    .json("Document is already have signature");
+
+            const { img_id } = await imgService.save(imgBuffer);
+
+            await UserDocument.update({ sign_id: img_id }, { where: { id } });
+
+            return res.json(true);
         } catch (e) {
             res.status(500).json(e.message);
             console.log(e);
@@ -112,6 +156,9 @@ class Controller {
             }
             if (eventData?.img_id) {
                 await imgService.delete(eventData?.img_id);
+            }
+            if (eventData?.sign_id) {
+                await imgService.delete(eventData?.sign_id);
             }
 
             return res.json(true);

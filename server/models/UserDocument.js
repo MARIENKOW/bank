@@ -26,6 +26,10 @@ export const UserDocument = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: true,
         },
+        sign_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
     },
     {
         tableName: "userDocument",
@@ -56,5 +60,16 @@ UserDocument.associate = (models) => {
             onDelete: "SET NULL",
             onUpdate: "CASCADE",
         },
+        as: "img",
+
+    });
+    UserDocument.belongsTo(models.Img, {
+        foreignKey: {
+            name: "sign_id",
+            allowNull: true,
+            onDelete: "SET NULL",
+            onUpdate: "CASCADE",
+        },
+        as: "sign",
     });
 };

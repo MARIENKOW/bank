@@ -16,5 +16,14 @@ UserDocumentRouter.get(
     authUserAdminMiddleware,
     userDocumentController.find
 );
-UserDocumentRouter.delete("/:id", authAdminMiddelware, userDocumentController.delete);
+UserDocumentRouter.post(
+    "/setSign",
+    autUserMiddelware,
+    userDocumentController.setSign
+);
+UserDocumentRouter.delete(
+    "/:id",
+    authAdminMiddelware,
+    userDocumentController.delete
+);
 export default UserDocumentRouter;
