@@ -19,7 +19,7 @@ import StatementCreditItem from "../../../../../../components/credit/StatementCr
 import AproveCreditItem from "../../../../../../components/credit/AproveCreditItem";
 import CancelCreditItem from "../../../../../../components/credit/CancelCreditItem";
 import { $UserApi } from "../../../../../../http";
-import CreditAccordion from "../../../../../../app/[locale]/admin/(dashboard)/users/[id]/credit/CreditAccordion";
+import CreditAccordion from "../../../../admin/(dashboard)/users/[id]/credit/CreditAccordion";
 
 export default observer(function Page() {
     const t = useTranslations();
@@ -36,7 +36,7 @@ export default observer(function Page() {
                                 name: t("pages.account.name"),
                                 link: ACCOUNT_ROUTE(token),
                             },
-                            { name: t("pages.account.credit.name") },
+                            { name: t("pages.account.credit.active") },
                         ]}
                         sx={{
                             display: "inline-flex",
@@ -82,28 +82,23 @@ function Inner() {
     if (isPending) return <Loading />;
     if (error) return <ErrorElement />;
 
-    if (!data) return <Empty />;
+    if (!data || !data?.activeData || data?.activeData?.length === 0)
+        return <Empty />;
 
     return (
-        <Box flex={1} flexDirection={"column"} gap={2} display={"flex"}>
-            <CreditAccordion
-                user={true}
-                data={data?.statementData}
-                label={t("pages.account.credit.statement")}
-                InnerComponent={StatementCreditItem}
-            />
-            <CreditAccordion
-                user={true}
-                label={t("pages.account.credit.active")}
-                data={data?.activeData}
-                InnerComponent={AproveCreditItem}
-            />
-            <CreditAccordion
-                user={true}
-                label={t("pages.account.credit.cancel")}
-                data={data?.cancelData}
-                InnerComponent={CancelCreditItem}
-            />
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: user ? 0 : 1,
+                p: 1,
+                maxHeight: 350,
+                overflowY: "scroll",
+            }}
+        >
+            {data.activeData.map((credit, i) => (
+                <AproveCreditItem i={i} key={credit.id} credit={credit} />
+            ))}
         </Box>
     );
 }

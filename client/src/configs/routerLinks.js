@@ -4,7 +4,9 @@ export const ACCOUNT_ROUTE = (token) => MAIN_ROUTE(token) + "/account";
 export const BLOG_ROUTE = (token) => MAIN_ROUTE(token) + "/blog";
 export const ACCOUNT_INSURANCE_ROUTE = (token) =>
     ACCOUNT_ROUTE(token) + "/insuranceEvent";
-export const ACCOUNT_CREDIT_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/credit";
+export const ACCOUNT_CREDIT_STATEMENT_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditStatement";
+export const ACCOUNT_CREDIT_ACTIVE_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditActive";
+export const ACCOUNT_CREDIT_CANCEL_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditCancel";
 
 export const ADMIN_ROUTE = "/admin";
 export const ADMIN_ACCESS_ROUTE = ADMIN_ROUTE + "/access";

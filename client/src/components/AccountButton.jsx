@@ -11,7 +11,9 @@ import {
     ACCOUNT_ROUTE,
     MAIN_ROUTE,
     ACCOUNT_INSURANCE_ROUTE,
-    ACCOUNT_CREDIT_ROUTE,
+    ACCOUNT_CREDIT_STATEMENT_ROUTE,
+    ACCOUNT_CREDIT_ACTIVE_ROUTE,
+    ACCOUNT_CREDIT_CANCEL_ROUTE,
 } from "../configs/routerLinks";
 import { Link, useRouter } from "../i18n/navigation";
 import { useParams } from "next/navigation";
@@ -24,6 +26,13 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { observer } from "mobx-react-lite";
 import { LanguageChange } from "./native-translate";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import BlockIcon from "@mui/icons-material/Block";
 
 export default observer(function AccountButton({ header }) {
     const { token } = useParams();
@@ -141,21 +150,103 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.account.insurance.name")}
                     </Typography>
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                     // sx={{ bgcolor: red[50] }}
-                    onClick={(event) => {
-                        handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_CREDIT_ROUTE(token));
+                    // onClick={(event) => {
+                    //     handleCloseNavMenu(event);
+                    //     router.replace(ACCOUNT_CREDIT_ROUTE(token));
+                    // }}
+                > */}
+                <Accordion
+                    square={false}
+                    sx={{
+                        "& .MuiPaper-root": {},
+                        boxShadow: "none !important",
+                        // bgcolor: user ? "error.main" : "primary.main",
                     }}
                 >
-                    <ListItemIcon>
-                        <ReceiptLongIcon color="dif" />
-                    </ListItemIcon>
+                    <AccordionSummary
+                        sx={{
+                            "& .MuiAccordionSummary-content": {
+                                m: "0px 0px !important",
+                            },
+                            minHeight: "0px !important",
+                            p: "0px !important",
+                        }}
+                        expandIcon={<ExpandMoreIcon color="dif" />}
+                    >
+                        <MenuItem>
+                            <ListItemIcon>
+                                <ReceiptLongIcon color="dif" />
+                            </ListItemIcon>
 
-                    <Typography color="dif" variant="body1">
-                        {t("pages.account.credit.name")}
-                    </Typography>
-                </MenuItem>
+                            <Typography color="dif" variant="body1">
+                                {t("pages.account.credit.name")}
+                            </Typography>
+                        </MenuItem>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ bgcolor: "#fff", p: 0 }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: user ? 0 : 1,
+                                maxHeight: 350,
+                                overflowY: "scroll",
+                            }}
+                        >
+                            <MenuItem
+                                sx={{ pl: 4 }}
+                                onClick={(event) => {
+                                    handleCloseNavMenu(event);
+                                    router.replace(
+                                        ACCOUNT_CREDIT_STATEMENT_ROUTE(token)
+                                    );
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <PendingActionsIcon color="dif" />
+                                </ListItemIcon>
+                                <Typography color="dif" variant="body1">
+                                    {t("pages.account.credit.statement")}
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem
+                                sx={{ pl: 4 }}
+                                onClick={(event) => {
+                                    handleCloseNavMenu(event);
+                                    router.replace(
+                                        ACCOUNT_CREDIT_ACTIVE_ROUTE(token)
+                                    );
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <CheckCircleIcon color="success" />
+                                </ListItemIcon>
+                                <Typography color="success" variant="body1">
+                                    {t("pages.account.credit.active")}
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem
+                                sx={{ pl: 4 }}
+                                onClick={(event) => {
+                                    handleCloseNavMenu(event);
+                                    router.replace(
+                                        ACCOUNT_CREDIT_CANCEL_ROUTE(token)
+                                    );
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <BlockIcon color="warning" />
+                                </ListItemIcon>
+                                <Typography color="warning" variant="body1">
+                                    {t("pages.account.credit.cancel")}
+                                </Typography>
+                            </MenuItem>
+                        </Box>
+                    </AccordionDetails>
+                </Accordion>
+
                 <MenuItem sx={{ mt: 2, mb: 1 }}>
                     <LanguageChange />
                 </MenuItem>
