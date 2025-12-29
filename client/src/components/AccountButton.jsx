@@ -91,7 +91,7 @@ export default observer(function AccountButton({ header }) {
                         left: "0px !important",
                         width: "100%",
                         minWidth: "100%",
-                        height: "100%",
+                        // height: "100%",
                     },
                     paddingBottom: 0,
                 }}
@@ -169,8 +169,10 @@ export default observer(function AccountButton({ header }) {
                 >
                     <AccordionSummary
                         sx={{
+                            justifyContent:'start',
                             "& .MuiAccordionSummary-content": {
                                 m: "0px 0px !important",
+                                flex:'0 !important'
                             },
                             minHeight: "0px !important",
                             p: "0px !important",
@@ -198,7 +200,7 @@ export default observer(function AccountButton({ header }) {
                             }}
                         >
                             <MenuItem
-                                sx={{ pl: 4 }}
+                                sx={{ pl: 4, pr: 4 }}
                                 onClick={(event) => {
                                     handleCloseNavMenu(event);
                                     router.replace(
@@ -214,7 +216,7 @@ export default observer(function AccountButton({ header }) {
                                 </Typography>
                             </MenuItem>
                             <MenuItem
-                                sx={{ pl: 4 }}
+                                sx={{ pl: 4, pr: 4 }}
                                 onClick={(event) => {
                                     handleCloseNavMenu(event);
                                     router.replace(
@@ -230,7 +232,7 @@ export default observer(function AccountButton({ header }) {
                                 </Typography>
                             </MenuItem>
                             <MenuItem
-                                sx={{ pl: 4 }}
+                                sx={{ pl: 4, pr: 4 }}
                                 onClick={(event) => {
                                     handleCloseNavMenu(event);
                                     router.replace(
@@ -278,7 +280,7 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.account.declaration.name")}
                     </Typography>
                 </MenuItem>
-                <MenuItem sx={{ mt: 2, mb: 1 }}>
+                <MenuItem sx={{ mt: 3, mb: 1 }}>
                     <LanguageChange />
                 </MenuItem>
                 <MenuItem
