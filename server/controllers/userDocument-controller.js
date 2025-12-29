@@ -91,10 +91,7 @@ class Controller {
     setSign = async (req, res) => {
         try {
             const { id, user_id, img } = req.body;
-            const base64Data = img.replace(
-                /^data:image\/png;base64,/,
-                ""
-            );
+            const base64Data = img.replace(/^data:image\/png;base64,/, "");
             const imgBuffer = Buffer.from(base64Data, "base64");
 
             if (!id || !img)

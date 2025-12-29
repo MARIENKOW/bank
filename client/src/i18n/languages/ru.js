@@ -37,6 +37,11 @@ export const ru = {
             document: {
                 name: "Документы",
             },
+            declaration: {
+                name: "Декларация",
+                cash: "Наличные",
+                jewels: "Драгоценные металлы",
+            },
             credit: {
                 name: "Кредиты",
                 statement: "Активные заявки",
@@ -68,6 +73,9 @@ export const ru = {
         password: "Пароль",
         username: "Логин",
         name: "Имя",
+        date: "Дата",
+        valute: "Валюта",
+        sum: "Сумма",
         insurance_elc: "Личный счет",
         elc: "Единый лицевой счет",
         bankNumber: "Номер сейфовой ячейки",
@@ -75,6 +83,8 @@ export const ru = {
         events: "Информация об операциях на едином лицевом счету",
         maxLength: "максимум {value} символов",
         minLength: "минимум {value} символов",
+        pattern: "Значение должно быть в формате - 99 или 99.99",
+        min: `минимум {value}`,
         required: "обязательное поле",
         error: {
             message: "Упс, что-то пошло не так. Попробуйте позже",
@@ -92,6 +102,9 @@ export const ru = {
         },
         document: {
             success: `Документ подписано!`,
+        },
+        declaration: {
+            success: `Декларацию отправлено!`,
         },
         elc: {
             success: `Единый лицевой счет изменен!`,

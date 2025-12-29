@@ -8,6 +8,7 @@ export const ACCOUNT_CREDIT_STATEMENT_ROUTE = (token) => ACCOUNT_ROUTE(token) + 
 export const ACCOUNT_CREDIT_ACTIVE_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditActive";
 export const ACCOUNT_CREDIT_CANCEL_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/creditCancel";
 export const ACCOUNT_DOCUMENT_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/document";
+export const ACCOUNT_DECLARATION_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/declaration";
 
 export const ADMIN_ROUTE = "/admin";
 export const ADMIN_ACCESS_ROUTE = ADMIN_ROUTE + "/access";

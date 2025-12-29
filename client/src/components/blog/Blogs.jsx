@@ -59,7 +59,7 @@ export default function Blogs() {
 
     if (error) return <ErrorElement admin={true} message={error} />;
 
-    if (!data || data?.length === 0) return <Empty />;
+    if (!data || data?.length === 0) return <Empty admin={true} />;
 
     const handleClickDelite = async (id, name) => {
         const agree = window.confirm(

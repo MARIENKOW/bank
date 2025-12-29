@@ -65,7 +65,6 @@ export const STF = styled(TextField)(({ theme, error }) => ({
     },
 }));
 
-
 export const StyledTextField = ({
     errors,
     register,
@@ -74,20 +73,24 @@ export const StyledTextField = ({
     errMessage = "некорректное поле",
     helperMessage = "необязательное поле",
     helper = false,
+    variant = "filled",
 }) => {
+    const nameKeys = register.name.split(".");
+
+    const error = nameKeys.reduce((acc, el) => {
+        return acc?.[el];
+    }, errors);
     return (
         <STF
             fullWidth
-            error={!!errors[register.name]}
+            error={!!error}
             {...register}
             label={label}
             {...options}
             helperText={
-                errors?.[register.name]
-                    ? errors?.[register.name]?.message || errMessage
-                    : helper && helperMessage
+                error ? error.message || errMessage : helper && helperMessage
             }
-            variant="filled"
+            variant={variant}
         />
     );
 };

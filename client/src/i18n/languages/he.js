@@ -37,7 +37,11 @@ export const he = {
             document: {
                 name: "מסמכים",
             },
-
+            declaration: {
+                name: "הצהרה",
+                cash: "מזומן",
+                jewels: "מתכות יקרות",
+            },
             credit: {
                 name: "הלוואות",
                 statement: "בקשות פעילות",
@@ -70,13 +74,19 @@ export const he = {
         password: "סיסמה",
         username: "שם משתמש",
         name: "שם",
+        date: "תאריך",
         elc: "חשבון אחיד",
         insurance_elc: "חשבון בנק אישי",
         bankNumber: "מספר תא בטוח",
+        valute: "מטבע",
+        sum: "סכום",
         balance: "יתרת תא הבטוח",
         events: "מידע על פעולות בחשבון האחיד",
         maxLength: "מקסימום {value} תווים",
         minLength: "מינימום {value} תווים",
+        pattern: "הערך חייב להיות בפורמט - 99 או 99.99",
+        min: `מינימום {value}`,
+
         required: "שדה חובה",
         error: {
             message: "אופס, משהו השתבש. נסה שוב מאוחר יותר",
@@ -98,6 +108,10 @@ export const he = {
         document: {
             success: `מסמך חתום!`,
         },
+        declaration: {
+            success: `ההצהרה נשלחה!`,
+        },
+
         bankNumber: {
             success: `מספר תא הבטוח עודכן!`,
         },

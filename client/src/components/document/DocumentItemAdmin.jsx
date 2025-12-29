@@ -20,7 +20,7 @@ export default function ({ doc }) {
                 component={"img"}
                 src={doc?.img?.path}
             />
-            <Box display={'flex'} flexDirection={'column'} gap={0.5} >
+            <Box display={"flex"} flexDirection={"column"} gap={0.5}>
                 <Box component={"a"} target="_blank" href={doc?.document?.path}>
                     <Button
                         fullWidth

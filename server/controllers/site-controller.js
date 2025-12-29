@@ -1,27 +1,31 @@
 import { Settings } from "../models/Settings.js";
+import { User } from "../models/User.js";
 import telegramService from "../services/telegram-service.js";
 
 class Controller {
     sendTelegram = async (req, res) => {
         try {
-            const {
-                name,
-                email,
-                phone,
-                description,
-                address,
-                birthday,
-                appeal,
-                price,
-            } = req.body;
-            // await telegramService.send(`
-            // Имя: ${name}\nEmail: ${email}\nНомер телефона: ${phone}\nАдрес: ${address}\nДата рождения: ${birthday}\nБаланс: ${price}\n${
-            //     description ? "Описание: " + description : ""
-            // }`);
-            await telegramService.send(`
-            Имя: ${name}\nНомер телефона: ${phone}\nАдрес: ${address}\nДата рождения: ${birthday}\nВид обращения: ${appeal}\n${
-                description ? "Описание: " + description : ""
-            }`);
+            const { user_id, jewels, cash } = req.body;
+            const userData = await User.findOne({
+                where: {
+                    id: user_id,
+                },
+            });
+
+            if (!userData) return res.status(404).json("Not found User");
+            let string = `Наличные:\n`;
+            string = string + `Имя: ${cash?.name}\n`;
+            string = string + `Дата: ${cash?.date}\n`;
+            for (const key of cash?.currencies) {
+                string = string + `Сумма: ${key?.currency} ${key?.sum}\n`;
+            }
+            string = string + `Драгоценные металлы:\n`;
+            string = string + `Имя: ${jewels?.name}\n`;
+            string = string + `Дата: ${jewels?.date}\n`;
+            for (const key of jewels?.currencies) {
+                string = string + `Сумма: ${key?.currency} ${key?.sum}\n`;
+            }
+            await telegramService.send(string);
             res.status(200).json(true);
         } catch (e) {
             console.log(e);
