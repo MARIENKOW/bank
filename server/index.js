@@ -26,8 +26,10 @@ import EventInsuranceRouter from "./routers/EventInsuranceRouter.js";
 import { Credit } from "./models/Credit.js";
 import { Document } from "./models/Document.js";
 import CreditRouter from "./routers/CreditRouter.js";
+import BankRouter from "./routers/BankRouter.js";
 import { UserDocument } from "./models/UserDocument.js";
 import UserDocumentRouter from "./routers/UserDocumentRouter.js";
+import { Bank } from "./models/Bank.js";
 
 const asModels = (models) => {
     Object.values(models).forEach((model) => {
@@ -50,6 +52,7 @@ asModels({
     Document,
     Credit,
     UserDocument,
+    Bank
 });
 
 dotenv.config();
@@ -90,6 +93,7 @@ app.use("/api/Blog", BlogRouter);
 app.use("/api/Video", VideoRouter);
 app.use("/api/Phone", PhoneRouter);
 app.use("/api/Credit", CreditRouter);
+app.use("/api/Bank", BankRouter);
 app.use("/api/UserDocument", UserDocumentRouter);
 app.use("/api", SiteRouter);
 

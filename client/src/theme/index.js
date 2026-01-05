@@ -98,7 +98,7 @@ export const themeSettings = {
             styleOverrides: {
                 root: ({ theme }) => ({
                     // borderColor: theme.palette.divider,
-                    bgcolor: "#fff",
+                    bgcolor: "#ffffffff",
                     fontWeight: 500,
                     color: theme.palette.primary.dark,
                     backgroundColor: theme.palette.secondary.main, // ← ЗДЕСЬ!
