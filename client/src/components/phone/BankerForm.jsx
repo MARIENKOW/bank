@@ -3,7 +3,6 @@
 import {
     Box,
     FormHelperText,
-    InputAdornment,
     InputLabel,
     FormControl,
     OutlinedInput,

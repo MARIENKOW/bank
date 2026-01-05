@@ -7,10 +7,8 @@ import bankController from "../controllers/bank-controller.js";
 const BankRouter = new Router();
 
 BankRouter.post("/", authAdminMiddelware, bankController.create);
+BankRouter.put("/", authAdminMiddelware, bankController.update);
 BankRouter.get("/:id", authUserAdminMiddleware, bankController.find);
-
 BankRouter.delete("/:id", authAdminMiddelware, bankController.delete);
-BankRouter.post("/setActive", authAdminMiddelware, bankController.setActive);
-BankRouter.post("/setCancel", authAdminMiddelware, bankController.setCancel);
 
 export default BankRouter;

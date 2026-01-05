@@ -3,6 +3,8 @@ import {
     ADMIN_USER_CREDIT_ROUTE,
     ADMIN_USER_EVENT_INSURANCE_ROUTE,
     ADMIN_USER_DOCUMENT_ROUTE,
+    ADMIN_USER_INSURANCE_ROUTE,
+    ADMIN_USER_BANK_ROUTE
 } from "../../../../../../configs/routerLinks";
 import { Typography } from "@mui/material";
 import { IconButton } from "@mui/material";
@@ -95,6 +97,36 @@ export default function NavigationButton({ id }) {
                             textTransform="capitalize"
                         >
                             Документы
+                        </Typography>
+                    </MenuItem>
+                </Link>
+                <Link href={ADMIN_USER_BANK_ROUTE(id)}>
+                    <MenuItem
+                        onClick={(event) => {
+                            handleCloseNavMenu(event);
+                        }}
+                    >
+                        <Typography
+                            width={"100%"}
+                            textAlign="right"
+                            textTransform="capitalize"
+                        >
+                            Банки
+                        </Typography>
+                    </MenuItem>
+                </Link>
+                <Link href={ADMIN_USER_INSURANCE_ROUTE(id)}>
+                    <MenuItem
+                        onClick={(event) => {
+                            handleCloseNavMenu(event);
+                        }}
+                    >
+                        <Typography
+                            width={"100%"}
+                            textAlign="right"
+                            textTransform="capitalize"
+                        >
+                            Страховая
                         </Typography>
                     </MenuItem>
                 </Link>

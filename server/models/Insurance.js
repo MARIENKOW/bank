@@ -1,8 +1,8 @@
 import { sequelize } from "../services/DB.js";
 import { DataTypes } from "@sequelize/core";
 
-export const Bank = sequelize.define(
-    "Bank",
+export const Insurance = sequelize.define(
+    "Insurance",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -31,13 +31,13 @@ export const Bank = sequelize.define(
         },
     },
     {
-        tableName: "bank",
+        tableName: "insurance",
         timestamps: false,
     }
 );
 
-Bank.associate = (models) => {
-    Bank.belongsTo(models.User, {
+Insurance.associate = (models) => {
+    Insurance.belongsTo(models.User, {
         foreignKey: {
             name: "user_id",
             onDelete: "CASCADE",

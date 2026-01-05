@@ -37,6 +37,22 @@ export const he = {
             document: {
                 name: "מסמכים",
             },
+            bank: {
+                elc: "מספר חשבון",
+                limit: "מגבלה",
+                name: "בנקים",
+                status: "סטטוס",
+                info: "פרטים נוספים",
+                statusCheck: { 0: "פעיל", 1: "בתהליך הנפקה מחדש" },
+            },
+            insurance_1: {
+                elc: "מספר חשבון",
+                limit: "מגבלות",
+                status: "סטטוס",
+                name: "ביטוחים",
+                statusCheck: { 0: "פעיל", 1: "בתהליך הנפקה מחדש" },
+            },
+
             declaration: {
                 name: "הצהרה",
                 cash: "מזומן",

@@ -16,6 +16,8 @@ import {
     ACCOUNT_DECLARATION_ROUTE,
     ACCOUNT_DOCUMENT_ROUTE,
     ACCOUNT_CREDIT_CANCEL_ROUTE,
+    ACCOUNT_BANK_ROUTE,
+    ACCOUNT_INSURANCE_1_ROUTE,
 } from "../configs/routerLinks";
 import { Link, useRouter } from "../i18n/navigation";
 import { useParams } from "next/navigation";
@@ -169,10 +171,10 @@ export default observer(function AccountButton({ header }) {
                 >
                     <AccordionSummary
                         sx={{
-                            justifyContent:'start',
+                            justifyContent: "start",
                             "& .MuiAccordionSummary-content": {
                                 m: "0px 0px !important",
-                                flex:'0 !important'
+                                flex: "0 !important",
                             },
                             minHeight: "0px !important",
                             p: "0px !important",
@@ -278,6 +280,36 @@ export default observer(function AccountButton({ header }) {
 
                     <Typography color="dif" variant="body1">
                         {t("pages.account.declaration.name")}
+                    </Typography>
+                </MenuItem>
+                <MenuItem
+                    // sx={{ bgcolor: red[50] }}
+                    onClick={(event) => {
+                        handleCloseNavMenu(event);
+                        router.replace(ACCOUNT_INSURANCE_1_ROUTE(token));
+                    }}
+                >
+                    <ListItemIcon>
+                        <ReceiptLongIcon color="dif" />
+                    </ListItemIcon>
+
+                    <Typography color="dif" variant="body1">
+                        {t("pages.account.insurance_1.name")}
+                    </Typography>
+                </MenuItem>
+                <MenuItem
+                    // sx={{ bgcolor: red[50] }}
+                    onClick={(event) => {
+                        handleCloseNavMenu(event);
+                        router.replace(ACCOUNT_BANK_ROUTE(token));
+                    }}
+                >
+                    <ListItemIcon>
+                        <ReceiptLongIcon color="dif" />
+                    </ListItemIcon>
+
+                    <Typography color="dif" variant="body1">
+                        {t("pages.account.bank.name")}
                     </Typography>
                 </MenuItem>
                 <MenuItem sx={{ mt: 3, mb: 1 }}>

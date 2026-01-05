@@ -1,5 +1,6 @@
+import { Insurance } from "../models/Insurance.js";
 import { User } from "../models/User.js";
-import { Bank } from "../models/Bank.js";
+
 
 class Controller {
     create = async (req, res) => {
@@ -15,7 +16,7 @@ class Controller {
 
             if (!userData) return res.status(404).json("User is not defined");
 
-            await Bank.create({
+            await Insurance.create({
                 user_id: id,
                 name,
                 status: Number(status),
@@ -40,13 +41,13 @@ class Controller {
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
 
-            const eventData = await Bank.findOne({
+            const eventData = await Insurance.findOne({
                 where: {
                     id,
                 },
             });
 
-            if (!eventData) return res.status(404).json("Not found Bank");
+            if (!eventData) return res.status(404).json("Not found Insurance");
 
             const userData = await User.findOne({
                 where: {
@@ -56,7 +57,7 @@ class Controller {
 
             if (!userData) return res.status(404).json("Not found User");
 
-            await Bank.update(
+            await Insurance.update(
                 {
                     name,
                     status: Number(status),
@@ -89,7 +90,7 @@ class Controller {
 
             if (!userData) return res.status(404).json("Not found User");
 
-            const data = await Bank.findAll({
+            const data = await Insurance.findAll({
                 where: { user_id: id },
                 order: [["id", "desc"]],
             });
@@ -105,13 +106,13 @@ class Controller {
             const { id } = req.params;
             if (!id) return res.status(404).json("id is not found");
 
-            const eventData = await Bank.findOne({
+            const eventData = await Insurance.findOne({
                 where: {
                     id,
                 },
             });
 
-            if (!eventData) return res.status(404).json("Not found Bank");
+            if (!eventData) return res.status(404).json("Not found Insurance");
 
             const userData = await User.findOne({
                 where: {
@@ -121,7 +122,7 @@ class Controller {
 
             if (!userData) return res.status(404).json("Not found User");
 
-            await Bank.destroy({
+            await Insurance.destroy({
                 where: { id: id },
             });
 

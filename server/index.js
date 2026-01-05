@@ -30,6 +30,8 @@ import BankRouter from "./routers/BankRouter.js";
 import { UserDocument } from "./models/UserDocument.js";
 import UserDocumentRouter from "./routers/UserDocumentRouter.js";
 import { Bank } from "./models/Bank.js";
+import { Insurance } from "./models/Insurance.js";
+import InsuranceRouter from "./routers/InsuranceRouter.js";
 
 const asModels = (models) => {
     Object.values(models).forEach((model) => {
@@ -52,7 +54,8 @@ asModels({
     Document,
     Credit,
     UserDocument,
-    Bank
+    Bank,
+    Insurance,
 });
 
 dotenv.config();
@@ -94,6 +97,7 @@ app.use("/api/Video", VideoRouter);
 app.use("/api/Phone", PhoneRouter);
 app.use("/api/Credit", CreditRouter);
 app.use("/api/Bank", BankRouter);
+app.use("/api/Insurance", InsuranceRouter);
 app.use("/api/UserDocument", UserDocumentRouter);
 app.use("/api", SiteRouter);
 
