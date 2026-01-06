@@ -31,7 +31,7 @@ export default function Credits({}) {
     if (!data) return <Empty admin={true} />;
 
     return (
-        <Box flex={1} flexDirection={"column"} gap={2} display={"flex"}>
+        <Box flex={1} justifyContent={'center'} flexDirection={"column"} gap={2} display={"flex"}>
             <CreditAccordion
                 data={data?.statementData}
                 label={"Активные заявки"}

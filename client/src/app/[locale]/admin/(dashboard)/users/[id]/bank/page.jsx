@@ -36,12 +36,12 @@ export default function page() {
                     />
                     <Box
                         display={"flex"}
-                        // flexDirection={"column"}
-                        justifyContent={"center"}
-                        alignItems={"center"}
+                        flexDirection={"column"}
+                        // justifyContent={"center"}
+                        // alignItems={"center"}
                         flex={1}
                     >
-                        <Box flex={"0 1 700px"}>
+                        <Box display={'flex'} maxWidth={700} width={'100%'} margin={'0 auto'} flexDirection={'column'} flex={1} >
                             <Box
                                 display={"flex"}
                                 alignItems={"center"}

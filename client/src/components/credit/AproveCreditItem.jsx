@@ -22,9 +22,6 @@ export default function AproveCreditItem({ credit, i }) {
                     <Typography fontWeight={500} variant="body1">
                         {formatDate(credit.date)}
                     </Typography>
-                    <Typography fontWeight={400} variant="body1">
-                        {credit.comment}
-                    </Typography>
                 </Box>
                 <Box display={"flex"} gap={2} alignItems={"center"}>
                     <Typography

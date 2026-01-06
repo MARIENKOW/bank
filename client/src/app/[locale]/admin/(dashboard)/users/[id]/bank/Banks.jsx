@@ -28,7 +28,7 @@ export default function Banks({}) {
     if (!data || data?.length === 0) return <Empty admin={true} />;
 
     return (
-        <Box flex={1} flexDirection={"column"} gap={2} display={"flex"}>
+        <Box flex={1} flexDirection={"column"} justifyContent={'center'} gap={2} display={"flex"}>
             {data?.map((bank, i) => (
                 <BankAccordion key={bank.id} item={bank} />
             ))}

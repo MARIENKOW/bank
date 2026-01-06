@@ -89,7 +89,7 @@ export default function UserAdd() {
                                     required: "обязательное поле",
                                     maxLength: {
                                         value: USERNAME_MAX_LENGTH,
-                                        message: `максимум ${USERNAME_MAX_LENGTH} символов`,
+                                        message: `минимум ${USERNAME_MAX_LENGTH} символов`,
                                     },
                                     minLength: {
                                         value: USERNAME_MIN_LENGTH,
@@ -104,7 +104,7 @@ export default function UserAdd() {
                                     required: "обязательное поле",
                                     maxLength: {
                                         value: PASSWORD_MAX_LENGTH,
-                                        message: `максимум ${PASSWORD_MAX_LENGTH} символов`,
+                                        message: `минимум ${PASSWORD_MAX_LENGTH} символов`,
                                     },
                                     minLength: {
                                         value: PASSWORD_MIN_LENGTH,

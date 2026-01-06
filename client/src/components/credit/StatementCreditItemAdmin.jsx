@@ -1,15 +1,26 @@
 import { StyledLoadingButton } from "../form/StyledLoadingButton";
 import formatDate from "../../helpers/formatDate";
-import { Box, Paper, Typography, IconButton } from "@mui/material";
+import {
+    Box,
+    Paper,
+    Typography,
+    IconButton,
+    Menu,
+    MenuItem,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 
 import DeleteCreditButton from "./ActionBtns/DeleteCreditButton";
 import CancelCreditButton from "./ActionBtns/CancelCreditButton";
 import AproveCreditButton from "./ActionBtns/AproveCreditButton";
 import InfoCreditButton from "./ActionBtns/InfoCreditButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useRef, useState } from "react";
 
 export default function StatementCreditItemAdmin({ credit }) {
+    const ref = useRef();
     const t = useTranslations();
+    const [open, setOpen] = useState(false);
 
     const commentString = credit?.comment || "";
     const bankString = credit?.bank || "";
@@ -43,9 +54,24 @@ export default function StatementCreditItemAdmin({ credit }) {
                         {t("currency", { value: credit?.sum })}
                     </Typography>
                     <Box display={"flex"} gap={1}>
-                        <AproveCreditButton credit={credit} />
-                        <CancelCreditButton credit={credit} />
-                        <DeleteCreditButton credit={credit} />
+                        <IconButton onClick={() => setOpen(true)} ref={ref}>
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            anchorEl={ref.current}
+                        >
+                            <MenuItem>
+                                <AproveCreditButton credit={credit} />
+                            </MenuItem>
+                            <MenuItem>
+                                <CancelCreditButton credit={credit} />
+                            </MenuItem>
+                            <MenuItem>
+                                <DeleteCreditButton credit={credit} />
+                            </MenuItem>
+                        </Menu>
                         <InfoCreditButton credit={credit} />
                     </Box>
                 </Box>

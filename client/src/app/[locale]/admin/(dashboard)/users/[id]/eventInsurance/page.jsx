@@ -36,27 +36,38 @@ export default function page() {
                 />
                 <Box
                     display={"flex"}
-                    // flexDirection={"column"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
+                    flexDirection={"column"}
+                    // justifyContent={"center"}
+                    // alignItems={"center"}
                     flex={1}
                 >
-                    <Box flex={"0 1 700px"}>
-                        {/* <Box mt={2}>
-                            <InsuranceElcClient />
-                        </Box> */}
+                    <Box
+                        pt={5}
+                        display={"flex"}
+                        maxWidth={700}
+                        margin={"0 auto"}
+                        width={"100%"}
+                        flexDirection={"column"}
+                        flex={1}
+                    >
                         <Box
                             display={"flex"}
                             alignItems={"center"}
                             // flexDirection={{ xs: "column", md: "row" }}
                             justifyContent={"space-between"}
-                            mt={5}
-                            mb={2}
                         >
                             <DeleteAllButton />
                             <EventInsuranceAdd />
                         </Box>
-                        <EventsInsurance id={id} />
+                        <Box
+                            display={"flex"}
+                            mt={2}
+                            flex={1}
+                            justifyContent={'center'}
+                            flexDirection={"column"}
+                        >
+                            <EventsInsurance id={id} />
+                        </Box>
                     </Box>
                 </Box>
             </Box>

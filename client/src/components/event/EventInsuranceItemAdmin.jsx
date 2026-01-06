@@ -59,6 +59,7 @@ export default function EventInsuranceItemAdmin({ event }) {
                         fontWeight={500}
                         color={event?.increment ? "success" : "error"}
                         variant="body1"
+                        sx={{ whiteSpace: "nowrap" }}
                     >
                         {(event?.increment ? "+" : "-") +
                             t("currency", { value: event?.sum })}

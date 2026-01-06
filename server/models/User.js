@@ -43,7 +43,7 @@ export const User = sequelize.define(
         },
 
         balance: {
-            type: DataTypes.DECIMAL(10, 2),
+            type: DataTypes.DECIMAL(15, 2),
             allowNull: false,
             get() {
                 return parseFloat(this.getDataValue("balance")).toFixed(2);

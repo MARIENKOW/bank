@@ -28,7 +28,7 @@ export default function Insurances({}) {
     if (!data || data?.length === 0) return <Empty admin={true} />;
 
     return (
-        <Box flex={1} flexDirection={"column"} gap={2} display={"flex"}>
+        <Box flex={1} flexDirection={"column"} justifyContent={'center'} gap={2} display={"flex"}>
             {data?.map((insurance, i) => (
                 <InsuranceAccordion key={insurance.id} item={insurance} />
             ))}

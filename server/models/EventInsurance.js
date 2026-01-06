@@ -23,7 +23,7 @@ export const EventInsurance = sequelize.define(
             allowNull: false,
         },
         sum: {
-            type: DataTypes.DECIMAL(10, 2),
+            type: DataTypes.DECIMAL(11, 2),
             allowNull: false,
             get() {
                 return parseFloat(this.getDataValue("sum")).toFixed(2);

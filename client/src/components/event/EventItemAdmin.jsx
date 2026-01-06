@@ -58,6 +58,7 @@ export default function EventItemAdmin({ event }) {
                     <Typography
                         fontWeight={500}
                         color={event?.increment ? "success" : "error"}
+                        sx={{whiteSpace:'nowrap'}}
                         variant="body1"
                     >
                         {(event?.increment ? "+" : "-") +

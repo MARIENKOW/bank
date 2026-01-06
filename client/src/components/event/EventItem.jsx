@@ -2,10 +2,13 @@ import formatDate from "../../helpers/formatDate";
 import { Box, Paper, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 
-export default function EventItem({ event,i }) {
+export default function EventItem({ event, i }) {
     const t = useTranslations();
     return (
-        <Box sx={{ bgcolor: i%2?'#fff':"secondary.main" }} variant="elevation">
+        <Box
+            sx={{ bgcolor: i % 2 ? "#fff" : "secondary.main" }}
+            variant="elevation"
+        >
             <Box
                 justifyContent={"space-between"}
                 display={"flex"}
@@ -17,11 +20,13 @@ export default function EventItem({ event,i }) {
                     <Typography fontWeight={500} variant="body2">
                         {formatDate(event?.date)}
                     </Typography>
-                    <Typography fontWeight={500} variant="body2">{event?.comment}</Typography>
+                    <Typography fontWeight={500} variant="body2">
+                        {event?.comment}
+                    </Typography>
                 </Box>
                 <Box>
                     <Typography
-                    whiteSpace={'nowrap'}
+                        whiteSpace={"nowrap"}
                         fontWeight={500}
                         color={event?.increment ? "success" : "error"}
                         variant="body2"
