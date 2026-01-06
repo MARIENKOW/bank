@@ -25,6 +25,7 @@ import { useEffect } from "react";
 import { StyledTextField } from "../../../../../../../components/form/StyledTextField";
 import { StyledFormControl } from "../../../../../../../components/form/StyledPassword";
 import InsuranceService from "../../../../../../../services/InsuranceService";
+import DeleteInsuranceButton from "../../../../../../../components/insurance/DeleteInsuranceButton";
 
 const insurance = new InsuranceService();
 
@@ -175,15 +176,22 @@ export default function InsuranceAccordion({ item, user }) {
                                     </StyledFormControl>
                                 )}
                             />
-                            <StyledLoadingButton
-                                fullWidth
-                                type="submit"
-                                sx={{ height: "100%" }}
-                                loading={isSubmitting}
-                                disabled={!isValid || !isDirty}
-                                endIcon={<DoubleArrowIcon />}
-                                variant="contained"
-                            ></StyledLoadingButton>
+                            <Box display={"flex"} gap={1}>
+                                <Box flex={"0 1 50%"}>
+                                    <DeleteInsuranceButton item={item} />
+                                </Box>
+                                <Box flex={"0 1 50%"}>
+                                    <StyledLoadingButton
+                                        fullWidth
+                                        type="submit"
+                                        sx={{ height: "100%" }}
+                                        loading={isSubmitting}
+                                        disabled={!isValid || !isDirty}
+                                        endIcon={<DoubleArrowIcon />}
+                                        variant="contained"
+                                    ></StyledLoadingButton>
+                                </Box>
+                            </Box>
                             <Link
                                 href={
                                     ADMIN_USER_INSURANCE_ROUTE(item?.user_id) +

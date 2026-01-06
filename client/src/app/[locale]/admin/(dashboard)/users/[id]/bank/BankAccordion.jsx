@@ -25,6 +25,7 @@ import { useEffect } from "react";
 import { StyledTextField } from "../../../../../../../components/form/StyledTextField";
 import { StyledFormControl } from "../../../../../../../components/form/StyledPassword";
 import BankService from "../../../../../../../services/BankService";
+import DeleteBankButton from "../../../../../../../components/bank/DeleteBankButton";
 
 const bank = new BankService();
 
@@ -79,7 +80,6 @@ export default function BankAccordion({ item, user }) {
             );
         }
     };
-    const { token } = useParams();
     const t = useTranslations();
     return (
         <Box>
@@ -175,15 +175,22 @@ export default function BankAccordion({ item, user }) {
                                     </StyledFormControl>
                                 )}
                             />
-                            <StyledLoadingButton
-                                fullWidth
-                                type="submit"
-                                sx={{ height: "100%" }}
-                                loading={isSubmitting}
-                                disabled={!isValid || !isDirty}
-                                endIcon={<DoubleArrowIcon />}
-                                variant="contained"
-                            ></StyledLoadingButton>
+                            <Box display={"flex"} gap={1}>
+                                <Box flex={"0 1 50%"}>
+                                    <DeleteBankButton item={item} />
+                                </Box>
+                                <Box flex={"0 1 50%"}>
+                                    <StyledLoadingButton
+                                        fullWidth
+                                        type="submit"
+                                        sx={{ height: "100%" }}
+                                        loading={isSubmitting}
+                                        disabled={!isValid || !isDirty}
+                                        endIcon={<DoubleArrowIcon />}
+                                        variant="contained"
+                                    ></StyledLoadingButton>
+                                </Box>
+                            </Box>
                             <Link
                                 href={
                                     ADMIN_USER_BANK_ROUTE(item?.user_id) +
