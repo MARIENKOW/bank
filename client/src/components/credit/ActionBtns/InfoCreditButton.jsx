@@ -177,7 +177,7 @@ export default function InfoCreditButton({ credit, user }) {
                                 variant='outlined'
                                 // sx={{ bgcolor: red[50] }}
                                 onClick={(event) => {
-                                    router.replace(
+                                    router.push(
                                         ACCOUNT_DOCUMENT_ROUTE(token)
                                     );
                                 }}

@@ -109,7 +109,7 @@ export default observer(function AccountButton({ header }) {
                 <MenuItem
                     onClick={(event) => {
                         handleCloseNavMenu(event);
-                        router.replace(MAIN_ROUTE(token));
+                        router.push(MAIN_ROUTE(token));
                     }}
                 >
                     <ListItemIcon>
@@ -128,7 +128,7 @@ export default observer(function AccountButton({ header }) {
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
                         handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_ROUTE(token));
+                        router.push(ACCOUNT_ROUTE(token));
                     }}
                 >
                     <ListItemIcon>
@@ -143,7 +143,7 @@ export default observer(function AccountButton({ header }) {
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
                         handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_INSURANCE_ROUTE(token));
+                        router.push(ACCOUNT_INSURANCE_ROUTE(token));
                     }}
                 >
                     <ListItemIcon>
@@ -154,13 +154,6 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.account.insurance.name")}
                     </Typography>
                 </MenuItem>
-                {/* <MenuItem
-                    // sx={{ bgcolor: red[50] }}
-                    // onClick={(event) => {
-                    //     handleCloseNavMenu(event);
-                    //     router.replace(ACCOUNT_CREDIT_ROUTE(token));
-                    // }}
-                > */}
                 <Accordion
                     square={false}
                     sx={{
@@ -205,7 +198,7 @@ export default observer(function AccountButton({ header }) {
                                 sx={{ pl: 4, pr: 4 }}
                                 onClick={(event) => {
                                     handleCloseNavMenu(event);
-                                    router.replace(
+                                    router.push(
                                         ACCOUNT_CREDIT_STATEMENT_ROUTE(token)
                                     );
                                 }}
@@ -221,7 +214,7 @@ export default observer(function AccountButton({ header }) {
                                 sx={{ pl: 4, pr: 4 }}
                                 onClick={(event) => {
                                     handleCloseNavMenu(event);
-                                    router.replace(
+                                    router.push(
                                         ACCOUNT_CREDIT_ACTIVE_ROUTE(token)
                                     );
                                 }}
@@ -237,7 +230,7 @@ export default observer(function AccountButton({ header }) {
                                 sx={{ pl: 4, pr: 4 }}
                                 onClick={(event) => {
                                     handleCloseNavMenu(event);
-                                    router.replace(
+                                    router.push(
                                         ACCOUNT_CREDIT_CANCEL_ROUTE(token)
                                     );
                                 }}
@@ -256,7 +249,7 @@ export default observer(function AccountButton({ header }) {
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
                         handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_DOCUMENT_ROUTE(token));
+                        router.push(ACCOUNT_DOCUMENT_ROUTE(token));
                     }}
                 >
                     <ListItemIcon>
@@ -271,7 +264,7 @@ export default observer(function AccountButton({ header }) {
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
                         handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_DECLARATION_ROUTE(token));
+                        router.push(ACCOUNT_DECLARATION_ROUTE(token));
                     }}
                 >
                     <ListItemIcon>
@@ -286,7 +279,7 @@ export default observer(function AccountButton({ header }) {
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
                         handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_INSURANCE_1_ROUTE(token));
+                        router.push(ACCOUNT_INSURANCE_1_ROUTE(token));
                     }}
                 >
                     <ListItemIcon>
@@ -301,7 +294,7 @@ export default observer(function AccountButton({ header }) {
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
                         handleCloseNavMenu(event);
-                        router.replace(ACCOUNT_BANK_ROUTE(token));
+                        router.push(ACCOUNT_BANK_ROUTE(token));
                     }}
                 >
                     <ListItemIcon>

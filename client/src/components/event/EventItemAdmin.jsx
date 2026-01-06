@@ -19,7 +19,7 @@ export default function EventItemAdmin({ event }) {
     const handleDeleteEvent = async () => {
         try {
             setLoading(true);
-            if (!window.confirm("Удалить все события?")) return;
+            if (!window.confirm("Удалить событие?")) return;
             await eventF.delete(event.id);
             await queryClient.invalidateQueries({
                 queryKey: ["user", String(event.user_id)],
@@ -27,7 +27,7 @@ export default function EventItemAdmin({ event }) {
             await queryClient.invalidateQueries({
                 queryKey: ["events", String(event.user_id)],
             });
-            enqueueSnackbar(`События удалены!`, { variant: "success" });
+            enqueueSnackbar(`Событие удалено!`, { variant: "success" });
         } catch (error) {
             enqueueSnackbar(
                 "Упс! что-то пошло не так. Перезагрузите страницу",

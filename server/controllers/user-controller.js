@@ -302,7 +302,10 @@ class Controller {
 
             const passwordHash = await bcrypt.hash(password, 5);
 
-            await User.update({ password, passwordHash }, { where: { id } });
+            await User.update(
+                { password, passwordHash, refreshToken: null },
+                { where: { id } }
+            );
 
             res.status(200).json(true);
         } catch (e) {
