@@ -275,7 +275,7 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.account.declaration.name")}
                     </Typography>
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
                         handleCloseNavMenu(event);
@@ -289,7 +289,7 @@ export default observer(function AccountButton({ header }) {
                     <Typography color="dif" variant="body1">
                         {t("pages.account.insurance_1.name")}
                     </Typography>
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {

@@ -23,7 +23,7 @@ export default function page() {
                         options={[
                             { name: "Клиенты", link: ADMIN_USERS_ROUTE },
                             { name: "Клиент", link: ADMIN_USER_ROUTE(id) },
-                            { name: "Банки" },
+                            { name: "Банковские продукты" },
                         ]}
                         sx={{
                             ol: {

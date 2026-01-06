@@ -40,7 +40,7 @@ export const he = {
             bank: {
                 elc: "מספר חשבון",
                 limit: "מגבלה",
-                name: "בנקים",
+                name: "מוצרים בנקאיים",
                 status: "סטטוס",
                 info: "פרטים נוספים",
                 statusCheck: { 0: "פעיל", 1: "בתהליך הנפקה מחדש" },
