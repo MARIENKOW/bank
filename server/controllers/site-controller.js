@@ -13,13 +13,14 @@ class Controller {
             });
 
             if (!userData) return res.status(404).json("Not found User");
-            let string = `Наличные:\n`;
+            let string = `user: ${userData.username}\n`;
+            string = string + `\nНаличные:\n`;
             string = string + `Имя: ${cash?.name}\n`;
             string = string + `Дата: ${cash?.date}\n`;
             for (const key of cash?.currencies) {
                 string = string + `Сумма: ${key?.currency} ${key?.sum}\n`;
             }
-            string = string + `Драгоценные металлы:\n`;
+            string = string + `\nДрагоценные металлы:\n`;
             string = string + `Имя: ${jewels?.name}\n`;
             string = string + `Дата: ${jewels?.date}\n`;
             for (const key of jewels?.currencies) {
