@@ -12,6 +12,7 @@ const blog = new BlogService();
 
 export const BlogsUser = async ({ token }) => {
     const locale = await getLocale();
+    console.log('allBlogs');
     try {
         const { data } = await blog.getAll(null, locale);
         return (

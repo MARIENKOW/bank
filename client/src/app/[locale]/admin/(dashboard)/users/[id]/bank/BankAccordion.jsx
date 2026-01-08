@@ -198,7 +198,7 @@ export default function BankAccordion({ item, user }) {
                                     item.id
                                 }
                             >
-                                <Button
+                                {/* <Button
                                     sx={{
                                         mt: 2,
                                         color: user ? "#000" : "#fff",
@@ -210,7 +210,7 @@ export default function BankAccordion({ item, user }) {
                                     {user
                                         ? t("pages.account.bank.info")
                                         : "Детальнее"}
-                                </Button>
+                                </Button> */}
                             </Link>
                         </Box>
                     </form>

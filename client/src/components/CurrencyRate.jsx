@@ -35,15 +35,11 @@ export default async function CurrencyRatesRUB() {
             `https://api.frankfurter.app/${yesterday}?from=USD`
         );
 
-        console.log(data);
-
-        console.log(yesterdayData);
 
         const cur = data.rates.ILS;
 
         const rates = CURRENCIES.map((code) => {
             // const yesterdayData.rates[code];
-            console.log(data.rates[code]);
             const today = code === "USD" ? cur : cur / data.rates[code];
             const yesterday =
                 code === "USD"
@@ -58,7 +54,6 @@ export default async function CurrencyRatesRUB() {
             };
         }).filter(Boolean);
 
-        console.log(rates);
 
         return (
             <>

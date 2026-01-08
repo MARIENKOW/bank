@@ -25,7 +25,8 @@ export default async function Layout({ children, params }) {
     const { token } = await params;
     const locale = await getLocale();
 
-    console.log(token);
+    console.log("locale:", locale);
+    console.log("rootLToken:", token);
     if (!token) return <RedirectToGoogle />;
 
     try {

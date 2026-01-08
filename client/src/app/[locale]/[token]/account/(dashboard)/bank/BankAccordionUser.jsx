@@ -103,7 +103,7 @@ export default function BankAccordion({ item, user }) {
                                 {t(`pages.account.bank.statusCheck.${item?.status}`)}
                             </Typography>
                         </Box>
-                        <Link href={ACCOUNT_BANK_ROUTE(token) + "/" + item.id}>
+                        {/* <Link href={ACCOUNT_BANK_ROUTE(token) + "/" + item.id}>
                             <Button
                                 sx={{ mt: 2, color: user ? "#000" : "#fff" }}
                                 fullWidth
@@ -112,7 +112,7 @@ export default function BankAccordion({ item, user }) {
                             >
                                 {t("pages.account.bank.info")}
                             </Button>
-                        </Link>
+                        </Link> */}
                     </Box>
                 </AccordionDetails>
             </Accordion>

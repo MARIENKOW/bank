@@ -169,7 +169,6 @@ class Controller {
                     },
                 ],
             });
-            console.log(blogData);
             if (!blogData) return res.status(404).json(blog);
 
             const normalizedData = {

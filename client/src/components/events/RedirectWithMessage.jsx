@@ -1,16 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "../../i18n/navigation";
 import { enqueueSnackbar } from "notistack";
+import { useEffect } from "react";
+import { useTranslations } from "use-intl";
 
 export default function RedirectWithMessage({
-   link,
-   message = "Упс! Что-то пошло не так, попробуйте позже",
-   variant = "error",
+    link,
+    message = "api.FALLBACK_ERR",
+    variant = "error",
 }) {
-   const router = useRouter();
-   enqueueSnackbar(message, {
-      variant,
-   });
-   return router.push(link);
+    const router = useRouter();
+    const t = useTranslations();
+
+    useEffect(() => {
+        enqueueSnackbar(t(message), {
+            variant,
+        });
+        router.push(link);
+    }, []);
+
+    return null;
 }
