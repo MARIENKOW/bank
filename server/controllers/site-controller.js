@@ -1,11 +1,45 @@
 import { Settings } from "../models/Settings.js";
 import { User } from "../models/User.js";
+import imgService from "../services/img-service.js";
 import telegramService from "../services/telegram-service.js";
+function parseNestedFormData(body) {
+    // ✅ Защита от null/undefined
+    if (!body || typeof body !== "object") {
+        console.warn("req.body is empty:", body);
+        return {};
+    }
+
+    const result = {};
+    for (let [key, value] of Object.entries(body)) {
+        if (key.includes("[")) {
+            const parts = key.replace(/\[([^\]]+)\]/g, ".$1").split(".");
+            let current = result;
+
+            for (let i = 0; i < parts.length - 1; i++) {
+                const part = parts[i];
+                if (!current[part]) {
+                    const numMatch = part.match(/^(\d+)$/);
+                    current[part] = numMatch ? [] : {};
+                }
+                current = current[part];
+            }
+            current[parts[parts.length - 1]] = value;
+        } else {
+            result[key] = value;
+        }
+    }
+    return result;
+}
 
 class Controller {
     sendTelegram = async (req, res) => {
         try {
-            const { user_id, jewels, cash } = req.body;
+            const { user_id, jewels, cash } = parseNestedFormData(req.body);
+
+            const data = parseNestedFormData(req?.files);
+            const img = data?.jewels?.img;
+            console.log(img);
+
             const userData = await User.findOne({
                 where: {
                     id: user_id,
@@ -19,10 +53,12 @@ class Controller {
                 string = string + `\nНаличные:\n`;
                 string = string + `Имя: ${cash?.name}\n`;
                 string = string + `Дата: ${cash?.date}\n`;
-                if (cash?.currencies && cash?.currencies?.length > 0) {
-                    for (const key of cash?.currencies) {
+                if (cash?.currencies) {
+                    for (const key in cash?.currencies) {
+                        console.log(key);
                         string =
-                            string + `Сумма: ${key?.currency} ${key?.sum}\n`;
+                            string +
+                            `Сумма: ${cash?.currencies?.[key]?.currency} ${cash?.currencies?.[key]?.sum}\n`;
                     }
                 }
             }
@@ -31,10 +67,17 @@ class Controller {
                 string = string + `\nДрагоценные металлы:\n`;
                 string = string + `Имя: ${jewels?.name}\n`;
                 string = string + `Дата: ${jewels?.date}\n`;
-                if (jewels?.currencies && jewels?.currencies?.length > 0) {
-                    for (const key of jewels?.currencies) {
-                        string = string + `Описание: ${key?.text}\n`;
+                if (jewels?.currencies) {
+                    for (const key in jewels?.currencies) {
+                        console.log(key);
+                        string =
+                            string +
+                            `Описание: ${jewels?.currencies?.[key]?.text}\n`;
                     }
+                }
+                if (img) {
+                    const { path } = await imgService.save(img);
+                    string = string + `фото: ${process.env.API_URL + path}\n`;
                 }
             }
 

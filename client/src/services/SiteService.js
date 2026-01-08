@@ -7,7 +7,9 @@ const SITE_API_URL = config.SERVER_API + "/";
 export default class SiteService {
     constructor($api = axios) {
         this.sendTelegram = async (value) => {
-            const res = await $api.post(SITE_API_URL + "/sendTelegram", value);
+            const res = await $api.post(SITE_API_URL + "/sendTelegram", value, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
             return res;
         };
         this.getWhatsUp = async () => {

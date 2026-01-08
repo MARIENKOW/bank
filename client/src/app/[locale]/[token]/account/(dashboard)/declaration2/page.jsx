@@ -162,15 +162,14 @@ function Inner() {
     const [loading, setLoading] = useState(false);
     const [imgPreview, setImagePreview] = useState();
     const handleFileChange = (file) => {
-        console.log(file);
-        // clearErrors(name);
+        clearErrors("jewels.img");
         setLoading(true);
         const reader = new FileReader();
         reader.onloadend = () => {
             setLoading(false);
             if (reader.result.startsWith("data:image"))
                 return setImagePreview(reader.result);
-            // setError(name, { message: "Oops! incorrect data" });
+            setError("jewels.img", { message: "Oops! incorrect data" });
         };
         reader.readAsDataURL(file);
     };
@@ -196,7 +195,7 @@ function Inner() {
                 name: "",
                 date: "",
                 currencies: [{ text: "" }],
-                img: [],
+                img: "",
             },
         },
     });
@@ -235,7 +234,7 @@ function Inner() {
             });
         }
     };
-    console.log(errors);
+    console.log(getValues());
 
     return (
         <Box
@@ -243,6 +242,9 @@ function Inner() {
             pb={5}
             display={"flex"}
             flexDirection={"column"}
+            maxWidth={700}
+            width={"100%"}
+            margin={"0 auto"}
             mt={5}
             // gap={3}
         >
@@ -266,8 +268,8 @@ function Inner() {
                     <StyledDivider>
                         {t("pages.account.declaration.jewels")}
                     </StyledDivider>
-                    <Grid2 spacing={2} columns={2} container gap={"15px"}>
-                        <Grid2 size={{ xs: 2, md: 1 }}>
+                    <Grid2 spacing={20} columns={2} container gap={5}>
+                        <Grid2 size={{ xs: 2, md: 2 }}>
                             <Box gap={1} display={"flex"}>
                                 <Typography
                                     textAlign={"center"}
@@ -307,7 +309,7 @@ function Inner() {
                                 />
                             </Box>
                         </Grid2>
-                        <Grid2 size={{ xs: 2, md: 1 }}>
+                        <Grid2 size={{ xs: 2, md: 2 }}>
                             <Box gap={1} display={"flex"}>
                                 <Typography
                                     textAlign={"center"}
@@ -337,118 +339,122 @@ function Inner() {
                                 />
                             </Box>
                         </Grid2>
-                        {jewelCurrencies.map((field, index, a) => {
-                            return (
-                                <Grid2
-                                    size={{ xs: 2, md: 2 }}
-                                    display={"flex"}
-                                    key={field?.id}
-                                    gap={1}
-                                >
-                                    <Typography
-                                        textAlign={"center"}
-                                        flex={"0 0 75px"}
-                                        variant="body1"
-                                        fontWeight={"600"}
-                                        fontSize={13}
-                                        color="initial"
+                        <Box width={"100%"}>
+                            {jewelCurrencies.map((field, index, a) => {
+                                return (
+                                    <Grid2
+                                        size={{ xs: 2, md: 2 }}
+                                        display={"flex"}
+                                        key={field?.id}
+                                        gap={1}
                                     >
-                                        {t("form.text")}
-                                    </Typography>
-                                    <Box gap={1} flex={1} display={"flex"}>
-                                        <Controller
-                                            control={control}
-                                            name={`jewels.currencies[${index}].text`}
-                                            rules={{
-                                                required: t("form.required"),
-                                            }}
-                                            render={({
-                                                field: {
-                                                    value,
-                                                    onChange,
-                                                    name,
-                                                },
-                                                formState: { errors },
-                                                fieldState: { error },
-                                            }) => {
-                                                return (
-                                                    <StyledFormControl
-                                                        fullWidth
-                                                        error={!!error}
-                                                        variant="outlined"
-                                                    >
-                                                        <OutlinedInput
-                                                            rows={2}
-                                                            multiline={true}
-                                                            sx={{
-                                                                input: {
-                                                                    p: "5px",
-                                                                },
-                                                            }}
-                                                            type="number"
-                                                            id={`filled-adornment-amount-sum-text-${field.id}`}
-                                                            value={value}
-                                                            onChange={({
-                                                                target,
-                                                            }) => {
-                                                                onChange(
-                                                                    target?.value
-                                                                );
-                                                            }}
-                                                        />
-                                                        <FormHelperText>
-                                                            {error?.message}
-                                                        </FormHelperText>
-                                                    </StyledFormControl>
-                                                );
-                                            }}
-                                        />
-                                    </Box>
-                                    {a.length > 1 && (
-                                        <IconButton
-                                            onClick={() => removeJewels(index)}
-                                            color="error"
+                                        <Typography
+                                            textAlign={"center"}
+                                            flex={"0 0 75px"}
+                                            variant="body1"
+                                            fontWeight={"600"}
+                                            fontSize={13}
+                                            color="initial"
                                         >
-                                            <DeleteForeverOutlined />
-                                        </IconButton>
-                                    )}
-                                </Grid2>
-                            );
-                        })}
-                        <Grid2 display={"flex"} gap={1} size={2}>
-                            <Box width={"75px"}></Box>
-                            <Box flex={1}>
-                                <Button
-                                    onClick={async () => {
-                                        const isValid = await trigger(
-                                            "jewels.currencies"
-                                        );
-                                        console.log(isValid);
-                                        if (!isValid) return;
-                                        appendJewels({
-                                            text: "",
-                                        });
-                                    }}
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    color="dif"
-                                    sx={{ p: 0.5 }}
-                                >
-                                    <Box
-                                        width={"100%"}
-                                        borderRadius={1}
-                                        justifyContent={"center"}
-                                        border={"2px solid #fff"}
-                                        borderColor={"dif.main"}
-                                        display={"inline-flex"}
+                                            {t("form.text")}
+                                        </Typography>
+                                        <Box gap={1} flex={1} display={"flex"}>
+                                            <Controller
+                                                control={control}
+                                                name={`jewels.currencies[${index}].text`}
+                                                rules={{
+                                                    required:
+                                                        t("form.required"),
+                                                }}
+                                                render={({
+                                                    field: {
+                                                        value,
+                                                        onChange,
+                                                        name,
+                                                    },
+                                                    formState: { errors },
+                                                    fieldState: { error },
+                                                }) => {
+                                                    return (
+                                                        <StyledFormControl
+                                                            fullWidth
+                                                            error={!!error}
+                                                            variant="outlined"
+                                                        >
+                                                            <OutlinedInput
+                                                                rows={2}
+                                                                multiline={true}
+                                                                sx={{
+                                                                    input: {
+                                                                        p: "5px",
+                                                                    },
+                                                                }}
+                                                                type="number"
+                                                                id={`filled-adornment-amount-sum-text-${field.id}`}
+                                                                value={value}
+                                                                onChange={({
+                                                                    target,
+                                                                }) => {
+                                                                    onChange(
+                                                                        target?.value
+                                                                    );
+                                                                }}
+                                                            />
+                                                            <FormHelperText>
+                                                                {error?.message}
+                                                            </FormHelperText>
+                                                        </StyledFormControl>
+                                                    );
+                                                }}
+                                            />
+                                        </Box>
+                                        {a.length > 1 && (
+                                            <IconButton
+                                                onClick={() =>
+                                                    removeJewels(index)
+                                                }
+                                                color="error"
+                                            >
+                                                <DeleteForeverOutlined />
+                                            </IconButton>
+                                        )}
+                                    </Grid2>
+                                );
+                            })}
+                            <Grid2 display={"flex"} gap={1} size={2}>
+                                <Box width={"75px"}></Box>
+                                <Box flex={1}>
+                                    <Button
+                                        onClick={async () => {
+                                            const isValid = await trigger(
+                                                "jewels.currencies"
+                                            );
+                                            if (!isValid) return;
+                                            appendJewels({
+                                                text: "",
+                                            });
+                                        }}
+                                        fullWidth
+                                        size="small"
+                                        variant="outlined"
+                                        color="dif"
+                                        sx={{ p: 0.5 }}
                                     >
-                                        <AddIcon color="dif" />
-                                    </Box>
-                                </Button>
-                            </Box>
-                        </Grid2>
-                        <Grid2 display={"flex"} gap={1} size={2}>
+                                        <Box
+                                            width={"100%"}
+                                            borderRadius={1}
+                                            justifyContent={"center"}
+                                            border={"2px solid #fff"}
+                                            borderColor={"dif.main"}
+                                            display={"inline-flex"}
+                                        >
+                                            <AddIcon color="dif" />
+                                        </Box>
+                                    </Button>
+                                </Box>
+                            </Grid2>
+                        </Box>
+                        <Grid2 mt={2} display={"flex"} gap={1} size={2}>
                             <Typography
                                 textAlign={"center"}
                                 flex={"0 0 75px"}
@@ -460,113 +466,116 @@ function Inner() {
                                 {t("form.img")}
                             </Typography>
                             <Box flex={1}>
-                                {imgPreview && (
-                                    <Box
-                                        sx={{
-                                            position: "relative",
-                                            flex: 1,
-                                        }}
-                                    >
-                                        <Box
-                                            sx={{
-                                                width: "100%",
-                                                height: "auto",
-                                            }}
-                                            alt="nft-image"
-                                            src={imgPreview}
-                                            component={"img"}
-                                        />
-                                        <IconButton
-                                            onClick={async () => {
-                                                setImagePreview(null);
-                                                // setValue(name, null, {
-                                                //     shouldValidate: true,
-                                                //     shouldDirty: true,
-                                                // });
-                                            }}
-                                            sx={{
-                                                position: "absolute",
-                                                top: "0",
-                                                right: "0",
-                                                transform:
-                                                    "translate(50%,-50%)",
-                                            }}
-                                        >
-                                            {loading ? (
-                                                <CircularProgress size="30px" />
-                                            ) : (
-                                                <HighlightOffTwoToneIcon
-                                                    sx={{
-                                                        bgcolor: "error.main",
-                                                        borderRadius: "99px",
-                                                        width: 30,
-                                                        height: 30,
-                                                    }}
-                                                    color="error"
-                                                    fontSize="large"
-                                                />
-                                            )}
-                                        </IconButton>
-                                    </Box>
-                                )}
                                 <Controller
                                     control={control}
-                                    name={"jewels"}
+                                    name={"jewels.img"}
                                     render={({
-                                        field: { onChange },
+                                        field: { onChange, value },
                                         fieldState: { error },
-                                    }) => (
-                                        <Box
-                                            sx={{
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                width: "100%",
-                                            }}
-                                        >
-                                            <input
-                                                ref={inputImg}
-                                                accept="image/*"
-                                                style={{ display: "none" }}
-                                                // id={`raised-button-file-${credit?.id}`}
-                                                multiple
-                                                type="file"
-                                                onChange={(event) => {
-                                                    const files =
-                                                        event.target.files;
-                                                    console.log(files);
-                                                    if (files && files[0]) {
-                                                        handleFileChange(
-                                                            files[0]
-                                                        );
-
-                                                        onChange(files[0]);
-                                                    }
+                                    }) =>
+                                        imgPreview ? (
+                                            <Box
+                                                sx={{
+                                                    position: "relative",
+                                                    flex: 1,
+                                                    border: "1px solid #ddd",
                                                 }}
-                                            />
+                                            >
+                                                <Box
+                                                    sx={{
+                                                        width: "100%",
+                                                        height: "auto",
+                                                    }}
+                                                    alt="nft-image"
+                                                    src={imgPreview}
+                                                    component={"img"}
+                                                />
+                                                <IconButton
+                                                    onClick={async () => {
+                                                        setImagePreview(null);
+                                                        onChange("");
+                                                    }}
+                                                    sx={{
+                                                        position: "absolute",
+                                                        top: "0",
+                                                        right: "0",
+                                                        transform:
+                                                            "translate(50%,-50%)",
+                                                    }}
+                                                >
+                                                    {loading ? (
+                                                        <CircularProgress size="30px" />
+                                                    ) : (
+                                                        <HighlightOffTwoToneIcon
+                                                            sx={{
+                                                                bgcolor:
+                                                                    "error.contrastText",
+                                                                borderRadius:
+                                                                    "99px",
+                                                                width: 30,
+                                                                height: 30,
+                                                            }}
+                                                            color="error"
+                                                            fontSize="large"
+                                                        />
+                                                    )}
+                                                </IconButton>
+                                            </Box>
+                                        ) : (
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    width: "100%",
+                                                }}
+                                            >
+                                                <input
+                                                    ref={inputImg}
+                                                    accept="image/*"
+                                                    style={{ display: "none" }}
+                                                    // id={`raised-button-file-${credit?.id}`}
+                                                    multiple
+                                                    type="file"
+                                                    onChange={(event) => {
+                                                        const files =
+                                                            event.target.files;
+                                                        if (files && files[0]) {
+                                                            handleFileChange(
+                                                                files[0]
+                                                            );
 
-                                            <Button
-                                                endIcon={<FileUploadIcon />}
-                                                variant="contained"
-                                                color={
-                                                    errors?.document
-                                                        ? "error"
-                                                        : "secondary"
-                                                }
-                                                fullWidth
-                                                onClick={() =>
-                                                    inputImg?.current?.click()
-                                                }
-                                            >
-                                                {t("buttons.load")}
-                                            </Button>
-                                            <FormHelperText
-                                                sx={{ ml: "14px", mr: "14px" }}
-                                                error={!!error}
-                                            >
-                                                {errors?.document?.message}
-                                            </FormHelperText>
-                                        </Box>
-                                    )}
+                                                            onChange(files[0]);
+                                                        }
+                                                    }}
+                                                />
+
+                                                <Button
+                                                    endIcon={<FileUploadIcon />}
+                                                    variant="contained"
+                                                    color={
+                                                        errors?.document
+                                                            ? "error"
+                                                            : "secondary"
+                                                    }
+                                                    fullWidth
+                                                    onClick={() =>
+                                                        inputImg?.current?.click()
+                                                    }
+                                                >
+                                                    {t("buttons.load")}
+                                                </Button>
+                                                <FormHelperText
+                                                    sx={{
+                                                        ml: "14px",
+                                                        mr: "14px",
+                                                    }}
+                                                    error={!!error}
+                                                >
+                                                    {errors?.document?.message}
+                                                </FormHelperText>
+                                            </Box>
+                                        )
+                                    }
                                 />
                             </Box>
                         </Grid2>

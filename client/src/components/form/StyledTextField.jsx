@@ -81,9 +81,6 @@ export const StyledTextField = ({
         return acc?.[el];
     }, errors);
 
-    console.log(errors);
-    console.log(error);
-
     return (
         <STF
             fullWidth
