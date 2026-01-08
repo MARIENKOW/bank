@@ -40,18 +40,21 @@ export default function CancelCreditItemAdmin({ credit }) {
                     >
                         {t("currency", { value: credit?.sum })}
                     </Typography>
-                    <Box
-                        component={"a"}
-                        target="_blank"
-                        href={credit?.document?.path}
-                    >
-                        <Button
-                            sx={{ minWidth: "0px !important", p: 1 }}
-                            variant="contained"
+                    {credit?.document?.path && (
+                        <Box
+                            component={"a"}
+                            target="_blank"
+                            href={credit?.document?.path}
                         >
-                            <ArticleIcon color="secondary" />
-                        </Button>
-                    </Box>
+                            <Button
+                                sx={{ minWidth: "0px !important", p: 1 }}
+                                variant="contained"
+                            >
+                                <ArticleIcon color="secondary" />
+                            </Button>
+                        </Box>
+                    )}
+
                     <Box display={"flex"} gap={1}>
                         <DeleteCreditButton credit={credit} />
                         <InfoCreditButton credit={credit} />

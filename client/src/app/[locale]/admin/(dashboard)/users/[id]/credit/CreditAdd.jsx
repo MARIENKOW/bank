@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { StyledLoadingButton } from "../../../../../../../components/form/StyledLoadingButton";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
 import {
@@ -33,11 +33,13 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import CreditService from "../../../../../../../services/CreditService";
 import { StyledTextField } from "../../../../../../../components/form/StyledTextField";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const credit = new CreditService();
 
 export default function CreditAdd({}) {
     const { id } = useParams();
+    const input = useRef();
     const t = useTranslations();
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
@@ -242,6 +244,64 @@ export default function CreditAdd({}) {
                                         </StyledFormControl>
                                     );
                                 }}
+                            />
+                            <Controller
+                                control={control}
+                                name={"document"}
+                                render={({
+                                    field: { onChange },
+                                    fieldState: { error },
+                                }) => (
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            width: "100%",
+                                        }}
+                                    >
+                                        <input
+                                            ref={input}
+                                            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.rtf"
+                                            style={{ display: "none" }}
+                                            id={`raised-button-file-${credit?.id}`}
+                                            multiple
+                                            type="file"
+                                            onChange={(event) => {
+                                                const files =
+                                                    event.target.files;
+                                                if (files && files[0]) {
+                                                    // handleFileChange(files[0]);
+
+                                                    onChange(files[0]);
+                                                }
+                                            }}
+                                        />
+
+                                        <Button
+                                            endIcon={<FileUploadIcon />}
+                                            variant="contained"
+                                            color={
+                                                errors?.document
+                                                    ? "error"
+                                                    : "secondary"
+                                            }
+                                            fullWidth
+                                            onClick={() => {
+                                                console.log(
+                                                    input.current.click()
+                                                );
+                                            }}
+                                        >
+                                            Документ
+                                        </Button>
+                                        <FormHelperText
+                                            sx={{ ml: "14px", mr: "14px" }}
+                                            error={!!error}
+                                        >
+                                            {errors?.document?.message}
+                                        </FormHelperText>
+                                    </Box>
+                                )}
                             />
                         </Box>
                     </DialogContent>

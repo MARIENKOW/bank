@@ -38,22 +38,25 @@ export default function CancelCreditItem({ credit, i }) {
                     >
                         {t("currency", { value: credit?.sum })}
                     </Typography>
-                    <Box
-                        component={"a"}
-                        target="_blank"
-                        href={credit?.document?.path}
-                    >
-                        <Button
-                            color={"error"}
-                            sx={{ minWidth: 0, p: 0.5 }}
-                            variant="contained"
+                    {credit?.document?.path && (
+                        <Box
+                            component={"a"}
+                            target="_blank"
+                            href={credit?.document?.path}
                         >
-                            <OpenInNewIcon
-                                fontSize={"medium"}
-                                color="secondary"
-                            />
-                        </Button>
-                    </Box>
+                            <Button
+                                color={"error"}
+                                sx={{ minWidth: 0, p: 0.5 }}
+                                variant="contained"
+                            >
+                                <OpenInNewIcon
+                                    fontSize={"medium"}
+                                    color="secondary"
+                                />
+                            </Button>
+                        </Box>
+                    )}
+
                     <InfoCreditButton user={true} credit={credit} />
                 </Box>
             </Box>

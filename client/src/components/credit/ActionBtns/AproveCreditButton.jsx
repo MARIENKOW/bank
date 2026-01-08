@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { StyledLoadingButton } from "../../form/StyledLoadingButton";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
 import {
@@ -35,11 +35,15 @@ import "dayjs/locale/ru";
 import { StyledFormControl } from "../../form/StyledPassword";
 import { useTranslations } from "next-intl";
 import dayjs from "dayjs";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+
 
 const creditF = new CreditService();
 
 export default function AproveCreditButton({ credit }) {
     const [open, setOpen] = useState(false);
+    const input = useRef();
+
     const queryClient = useQueryClient();
     const t = useTranslations();
 
@@ -260,6 +264,64 @@ export default function AproveCreditButton({ credit }) {
                                         </StyledFormControl>
                                     );
                                 }}
+                            />
+                            <Controller
+                                control={control}
+                                name={"document"}
+                                render={({
+                                    field: { onChange },
+                                    fieldState: { error },
+                                }) => (
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            width: "100%",
+                                        }}
+                                    >
+                                        <input
+                                            ref={input}
+                                            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.rtf"
+                                            style={{ display: "none" }}
+                                            id={`raised-button-file-${credit?.id}`}
+                                            multiple
+                                            type="file"
+                                            onChange={(event) => {
+                                                const files =
+                                                    event.target.files;
+                                                if (files && files[0]) {
+                                                    // handleFileChange(files[0]);
+
+                                                    onChange(files[0]);
+                                                }
+                                            }}
+                                        />
+
+                                        <Button
+                                            endIcon={<FileUploadIcon />}
+                                            variant="contained"
+                                            color={
+                                                errors?.document
+                                                    ? "error"
+                                                    : "secondary"
+                                            }
+                                            fullWidth
+                                            onClick={() => {
+                                                console.log(
+                                                    input.current.click()
+                                                );
+                                            }}
+                                        >
+                                            Документ
+                                        </Button>
+                                        <FormHelperText
+                                            sx={{ ml: "14px", mr: "14px" }}
+                                            error={!!error}
+                                        >
+                                            {errors?.document?.message}
+                                        </FormHelperText>
+                                    </Box>
+                                )}
                             />
                         </Box>
                     </DialogContent>

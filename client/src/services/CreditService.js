@@ -11,7 +11,9 @@ export default class CreditService {
             return res;
         };
         this.create = async (value) => {
-            const res = await $AdminApi.post(CREDIT_API_URL + "/", value);
+            const res = await $AdminApi.post(CREDIT_API_URL + "/", value, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
             return res;
         };
         this.delete = async (id) => {
@@ -21,7 +23,10 @@ export default class CreditService {
         this.setActive = async (value) => {
             const res = await $AdminApi.post(
                 CREDIT_API_URL + "/setActive",
-                value
+                value,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
             );
             return res;
         };

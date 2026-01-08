@@ -7,6 +7,7 @@ import {
     IconButton,
     Menu,
     MenuItem,
+    Button,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -16,6 +17,7 @@ import AproveCreditButton from "./ActionBtns/AproveCreditButton";
 import InfoCreditButton from "./ActionBtns/InfoCreditButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRef, useState } from "react";
+import ArticleIcon from "@mui/icons-material/Article";
 
 export default function StatementCreditItemAdmin({ credit }) {
     const ref = useRef();
@@ -72,7 +74,22 @@ export default function StatementCreditItemAdmin({ credit }) {
                                 <DeleteCreditButton credit={credit} />
                             </MenuItem>
                         </Menu>
+                        {credit?.document?.path && (
+                            <Box
+                                component={"a"}
+                                target="_blank"
+                                href={credit?.document?.path}
+                            >
+                                <Button
+                                    sx={{ minWidth: "0px !important", p: 1 }}
+                                    variant="contained"
+                                >
+                                    <ArticleIcon color="secondary" />
+                                </Button>
+                            </Box>
+                        )}
                         <InfoCreditButton credit={credit} />
+
                     </Box>
                 </Box>
             </Box>

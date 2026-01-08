@@ -1,10 +1,12 @@
 import formatDate from "../../helpers/formatDate";
-import { Box, Paper, Typography, IconButton } from "@mui/material";
+import { Box, Paper, Typography, IconButton, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 import DeleteCreditButton from "./ActionBtns/DeleteCreditButton";
 import InfoCreditButton from "./ActionBtns/InfoCreditButton";
 import CancelCreditButton from "./ActionBtns/CancelCreditButton";
+import ArticleIcon from "@mui/icons-material/Article";
+
 
 export default function AproveCreditItemAdmin({ credit }) {
     const t = useTranslations();
@@ -41,6 +43,20 @@ export default function AproveCreditItemAdmin({ credit }) {
                         {t("currency", { value: credit?.sum })}
                     </Typography>
                     <Box display={"flex"} gap={1}>
+                        {credit?.document?.path && (
+                            <Box
+                                component={"a"}
+                                target="_blank"
+                                href={credit?.document?.path}
+                            >
+                                <Button
+                                    sx={{ minWidth: "0px !important", p: 1 }}
+                                    variant="contained"
+                                >
+                                    <ArticleIcon color="secondary" />
+                                </Button>
+                            </Box>
+                        )}
                         <CancelCreditButton credit={credit} />
                         <DeleteCreditButton credit={credit} />
                         <InfoCreditButton credit={credit} />

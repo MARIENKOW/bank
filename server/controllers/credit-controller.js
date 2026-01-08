@@ -8,6 +8,7 @@ class Controller {
     create = async (req, res) => {
         try {
             const { id, sum, comment, bank, time, elc, date } = req.body;
+            const document = req?.files?.document;
 
             if (!id || !sum || !date)
                 return res
@@ -17,11 +18,18 @@ class Controller {
             const userData = await User.findOne({ where: { id } });
             if (!userData) return res.status(404).json("User is not defined");
 
+            let document_id = null;
+            if (document) {
+                const documentData = await documentService.save(document);
+                document_id = documentData.document_id;
+            }
+
             await Credit.create({
                 user_id: id,
                 comment,
                 bank,
                 elc,
+                document_id,
                 time,
                 sum,
                 date,
@@ -49,6 +57,7 @@ class Controller {
 
             const statementData = await Credit.findAll({
                 where: { user_id: id, status: 1 },
+                include: [{ model: Document, as: "document", required: false }],
                 order: [
                     ["date", "desc"],
                     ["id", "desc"],
@@ -56,6 +65,7 @@ class Controller {
             });
             const activeData = await Credit.findAll({
                 where: { user_id: id, status: 2 },
+                include: [{ model: Document, as: "document", required: false }],
                 order: [
                     ["date", "desc"],
                     ["id", "desc"],
@@ -86,6 +96,14 @@ class Controller {
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
 
+            const eventData = await Credit.findOne({
+                where: {
+                    id,
+                },
+            });
+
+            if (!eventData) return res.status(404).json("Not found Event");
+
             const userData = await User.findOne({
                 where: {
                     id: user_id,
@@ -94,8 +112,19 @@ class Controller {
 
             if (!userData) return res.status(404).json("Not found User");
 
+            if (eventData?.document_id) {
+                await documentService.delete(eventData?.document_id);
+            }
+
+            const document = req?.files?.document;
+            let document_id = null;
+            if (document) {
+                const documentData = await documentService.save(document);
+                document_id = documentData.document_id;
+            }
+
             await Credit.update(
-                { date, comment, bank, time, elc, sum, status: 2 },
+                { date, comment, bank, document_id, time, elc, sum, status: 2 },
                 { where: { id } }
             );
             // const newBalance = Number(userData.balance) + Number(sum);
@@ -136,6 +165,14 @@ class Controller {
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
 
+            const eventData = await Credit.findOne({
+                where: {
+                    id,
+                },
+            });
+
+            if (!eventData) return res.status(404).json("Not found Event");
+
             const userData = await User.findOne({
                 where: {
                     id: user_id,
@@ -144,7 +181,14 @@ class Controller {
 
             if (!userData) return res.status(404).json("Not found User");
 
-            const { document_id } = await documentService.save(document);
+            if (eventData?.document_id) {
+                await documentService.delete(eventData?.document_id);
+            }
+            let document_id = null;
+            if (document) {
+                const documentData = await documentService.save(document);
+                document_id = documentData.document_id;
+            }
 
             await Credit.update(
                 { date, document_id, comment, time, elc, bank, sum, status: 3 },

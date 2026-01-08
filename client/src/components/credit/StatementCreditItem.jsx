@@ -1,8 +1,11 @@
 import { StyledLoadingButton } from "../form/StyledLoadingButton";
 import formatDate from "../../helpers/formatDate";
-import { Box, Paper, Typography, IconButton } from "@mui/material";
+import { Box, Paper, Typography, IconButton, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import InfoCreditButton from "../../components/credit/ActionBtns/InfoCreditButton";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+
+
 
 export default function StatementCreditItem({ credit, i }) {
     const t = useTranslations();
@@ -32,6 +35,24 @@ export default function StatementCreditItem({ credit, i }) {
                     >
                         {t("currency", { value: credit?.sum })}
                     </Typography>
+                    {credit?.document?.path && (
+                        <Box
+                            component={"a"}
+                            target="_blank"
+                            href={credit?.document?.path}
+                        >
+                            <Button
+                                color={"error"}
+                                sx={{ minWidth: 0, p: 0.5 }}
+                                variant="contained"
+                            >
+                                <OpenInNewIcon
+                                    fontSize={"medium"}
+                                    color="secondary"
+                                />
+                            </Button>
+                        </Box>
+                    )}
                     <InfoCreditButton user={true} credit={credit} />
                 </Box>
             </Box>

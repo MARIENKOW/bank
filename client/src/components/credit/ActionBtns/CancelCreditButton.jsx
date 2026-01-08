@@ -280,7 +280,6 @@ export default function CancelCreditButton({ credit }) {
                             <Controller
                                 control={control}
                                 name={"document"}
-                                rules={{ required: "required field" }}
                                 render={({
                                     field: { onChange },
                                     fieldState: { error },
