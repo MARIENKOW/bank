@@ -55,7 +55,7 @@ export const ru = {
             declaration: {
                 name: "Декларация",
                 cash: "Наличные",
-                jewels: "Драгоценные металлы",
+                jewels: "Драгоценности",
             },
             credit: {
                 name: "Кредиты",
@@ -89,8 +89,10 @@ export const ru = {
         username: "Логин",
         name: "Имя",
         date: "Дата",
+        img: "Фото",
         valute: "Валюта",
         sum: "Сумма",
+        text: "Описание",
         insurance_elc: "Личный счет",
         elc: "Единый лицевой счет",
         bankNumber: "Номер сейфовой ячейки",
@@ -148,5 +150,10 @@ export const ru = {
     },
     empty: "Тут пока что пусто.",
     error: { title: "Упс!", subtitle: "Что-то пошло не так" },
-    buttons: { close: "закрыть", clear: "очистить", sign: "подписать" },
+    buttons: {
+        close: "закрыть",
+        clear: "очистить",
+        sign: "подписать",
+        load: "загрузить",
+    },
 };

@@ -13,19 +13,31 @@ class Controller {
             });
 
             if (!userData) return res.status(404).json("Not found User");
+
             let string = `user: ${userData.username}\n`;
-            string = string + `\nНаличные:\n`;
-            string = string + `Имя: ${cash?.name}\n`;
-            string = string + `Дата: ${cash?.date}\n`;
-            for (const key of cash?.currencies) {
-                string = string + `Сумма: ${key?.currency} ${key?.sum}\n`;
+            if (cash) {
+                string = string + `\nНаличные:\n`;
+                string = string + `Имя: ${cash?.name}\n`;
+                string = string + `Дата: ${cash?.date}\n`;
+                if (cash?.currencies && cash?.currencies?.length > 0) {
+                    for (const key of cash?.currencies) {
+                        string =
+                            string + `Сумма: ${key?.currency} ${key?.sum}\n`;
+                    }
+                }
             }
-            string = string + `\nДрагоценные металлы:\n`;
-            string = string + `Имя: ${jewels?.name}\n`;
-            string = string + `Дата: ${jewels?.date}\n`;
-            for (const key of jewels?.currencies) {
-                string = string + `Сумма: ${key?.currency} ${key?.sum}\n`;
+
+            if (jewels) {
+                string = string + `\nДрагоценные металлы:\n`;
+                string = string + `Имя: ${jewels?.name}\n`;
+                string = string + `Дата: ${jewels?.date}\n`;
+                if (jewels?.currencies && jewels?.currencies?.length > 0) {
+                    for (const key of jewels?.currencies) {
+                        string = string + `Описание: ${key?.text}\n`;
+                    }
+                }
             }
+
             await telegramService.send(string);
             res.status(200).json(true);
         } catch (e) {

@@ -95,7 +95,9 @@ export const he = {
         insurance_elc: "חשבון בנק אישי",
         bankNumber: "מספר תא בטוח",
         valute: "מטבע",
+        img: "תמונה",
         sum: "סכום",
+        text: "תיאור",
         balance: "יתרת תא הבטוח",
         events: "מידע על פעולות בחשבון האחיד",
         maxLength: "מקסימום {value} תווים",
@@ -159,5 +161,6 @@ export const he = {
         close: "סגור",
         clear: "נקה",
         sign: "חתום",
+        load: "להעלות",
     },
 };

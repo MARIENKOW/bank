@@ -80,6 +80,10 @@ export const StyledTextField = ({
     const error = nameKeys.reduce((acc, el) => {
         return acc?.[el];
     }, errors);
+
+    console.log(errors);
+    console.log(error);
+
     return (
         <STF
             fullWidth

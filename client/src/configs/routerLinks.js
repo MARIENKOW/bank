@@ -14,6 +14,8 @@ export const ACCOUNT_DOCUMENT_ROUTE = (token) =>
     ACCOUNT_ROUTE(token) + "/document";
 export const ACCOUNT_DECLARATION_ROUTE = (token) =>
     ACCOUNT_ROUTE(token) + "/declaration";
+export const ACCOUNT_DECLARATION2_ROUTE = (token) =>
+    ACCOUNT_ROUTE(token) + "/declaration2";
 export const ACCOUNT_BANK_ROUTE = (token) => ACCOUNT_ROUTE(token) + "/bank";
 export const ACCOUNT_INSURANCE_1_ROUTE = (token) =>
     ACCOUNT_ROUTE(token) + "/insurance";

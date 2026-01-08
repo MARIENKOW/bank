@@ -3,7 +3,7 @@
 import { UserContext } from "../../../../../../components/wrappers/UserContextProvider";
 import { ContainerComponent } from "../../../../../../components/wrappers/ContainerComponent";
 import OnlyLoginUser from "../../../../../../components/wrappers/OnlyLoginUser";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { observer } from "mobx-react-lite";
 import BreadcrumbsComponent from "../../../../../../components/BreadcrumbsComponent";
@@ -11,6 +11,9 @@ import { ACCOUNT_ROUTE } from "../../../../../../configs/routerLinks";
 import { useParams } from "next/navigation";
 import { $UserApi } from "../../../../../../http";
 import SiteService from "../../../../../../services/SiteService";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
+
 import {
     Box,
     Button,
@@ -56,7 +59,7 @@ export default observer(function Page() {
                                 name: t("pages.account.name"),
                                 link: ACCOUNT_ROUTE(token),
                             },
-                            { name: t("pages.account.declaration.cash") },
+                            { name: t("pages.account.declaration.jewels") },
                         ]}
                         sx={{
                             display: "inline-flex",
@@ -152,8 +155,25 @@ const currencies = [
 
 function Inner() {
     const { user } = useContext(UserContext);
+    const inputImg = useRef();
 
     const t = useTranslations();
+
+    const [loading, setLoading] = useState(false);
+    const [imgPreview, setImagePreview] = useState();
+    const handleFileChange = (file) => {
+        console.log(file);
+        // clearErrors(name);
+        setLoading(true);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setLoading(false);
+            if (reader.result.startsWith("data:image"))
+                return setImagePreview(reader.result);
+            // setError(name, { message: "Oops! incorrect data" });
+        };
+        reader.readAsDataURL(file);
+    };
 
     const handleChange = () => {
         clearErrors("root");
@@ -167,25 +187,27 @@ function Inner() {
         trigger,
         control,
         clearErrors,
+        getValues,
         formState: { errors, isValid, isSubmitting },
     } = useForm({
         mode: "onChange",
         defaultValues: {
-            cash: {
+            jewels: {
                 name: "",
                 date: "",
-                currencies: [{ currency: "", sum: 0 }],
+                currencies: [{ text: "" }],
+                img: [],
             },
         },
     });
 
     const {
-        fields: cashCurrencies,
-        append: appendCash,
-        remove: removeCash,
+        fields: jewelCurrencies,
+        append: appendJewels,
+        remove: removeJewels,
     } = useFieldArray({
         control,
-        name: "cash.currencies",
+        name: "jewels.currencies",
     });
 
     const onSubmit = async (data) => {
@@ -242,7 +264,7 @@ function Inner() {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <StyledDivider>
-                        {t("pages.account.declaration.cash")}
+                        {t("pages.account.declaration.jewels")}
                     </StyledDivider>
                     <Grid2 spacing={2} columns={2} container gap={"15px"}>
                         <Grid2 size={{ xs: 2, md: 1 }}>
@@ -267,7 +289,7 @@ function Inner() {
                                         },
                                     }}
                                     errors={errors}
-                                    register={register("cash.name", {
+                                    register={register("jewels.name", {
                                         required: t("form.required"),
                                         minLength: {
                                             value: NAME_MIN_LENGTH,
@@ -308,14 +330,14 @@ function Inner() {
                                         variant: "outlined",
                                     }}
                                     errors={errors}
-                                    register={register("cash.date", {
+                                    register={register("jewels.date", {
                                         required: t("form.required"),
                                     })}
                                     // label="Имя Фамилия"
                                 />
                             </Box>
                         </Grid2>
-                        {cashCurrencies.map((field, index, a) => {
+                        {jewelCurrencies.map((field, index, a) => {
                             return (
                                 <Grid2
                                     size={{ xs: 2, md: 2 }}
@@ -331,12 +353,12 @@ function Inner() {
                                         fontSize={13}
                                         color="initial"
                                     >
-                                        {t("form.sum")}
+                                        {t("form.text")}
                                     </Typography>
                                     <Box gap={1} flex={1} display={"flex"}>
                                         <Controller
                                             control={control}
-                                            name={`cash.currencies[${index}].currency`}
+                                            name={`jewels.currencies[${index}].text`}
                                             rules={{
                                                 required: t("form.required"),
                                             }}
@@ -351,11 +373,20 @@ function Inner() {
                                             }) => {
                                                 return (
                                                     <StyledFormControl
+                                                        fullWidth
                                                         error={!!error}
                                                         variant="outlined"
                                                     >
-                                                        <Select
-                                                            // sx={{}}}
+                                                        <OutlinedInput
+                                                            rows={2}
+                                                            multiline={true}
+                                                            sx={{
+                                                                input: {
+                                                                    p: "5px",
+                                                                },
+                                                            }}
+                                                            type="number"
+                                                            id={`filled-adornment-amount-sum-text-${field.id}`}
                                                             value={value}
                                                             onChange={({
                                                                 target,
@@ -364,40 +395,7 @@ function Inner() {
                                                                     target?.value
                                                                 );
                                                             }}
-                                                            sx={{
-                                                                "& .MuiSelect-select":
-                                                                    {
-                                                                        p: "5px",
-                                                                    },
-                                                            }}
-                                                            MenuProps={{
-                                                                sx: {
-                                                                    "& .MuiPaper-root":
-                                                                        {
-                                                                            bgcolor:
-                                                                                "#fff",
-                                                                        },
-                                                                },
-                                                            }}
-                                                        >
-                                                            {currencies.map(
-                                                                ({
-                                                                    value,
-                                                                    symbol,
-                                                                }) => (
-                                                                    <MenuItem
-                                                                        key={
-                                                                            value
-                                                                        }
-                                                                        value={
-                                                                            symbol
-                                                                        }
-                                                                    >
-                                                                        {symbol}
-                                                                    </MenuItem>
-                                                                )
-                                                            )}
-                                                        </Select>
+                                                        />
                                                         <FormHelperText>
                                                             {error?.message}
                                                         </FormHelperText>
@@ -405,73 +403,10 @@ function Inner() {
                                                 );
                                             }}
                                         />
-                                        <Box flex={1}>
-                                            <Controller
-                                                control={control}
-                                                name={`cash.currencies[${index}].sum`}
-                                                rules={{
-                                                    required:
-                                                        t("form.required"),
-                                                    pattern: {
-                                                        value: SUM_PATTERN,
-                                                        message:
-                                                            t("form.pattern"),
-                                                    },
-                                                    min: {
-                                                        value: SUM_MIN_VALUE,
-                                                        message: t("form.min", {
-                                                            value: SUM_MIN_VALUE,
-                                                        }),
-                                                    },
-                                                    // max: {
-                                                    //     value: SUM_MAX_VALUE,
-                                                    //     message: `maximum ${SUM_MAX_VALUE}`,
-                                                    // },
-                                                }}
-                                                render={({
-                                                    field: {
-                                                        value,
-                                                        onChange,
-                                                        name,
-                                                    },
-                                                    formState: { errors },
-                                                    fieldState: { error },
-                                                }) => {
-                                                    return (
-                                                        <StyledFormControl
-                                                            fullWidth
-                                                            error={!!error}
-                                                            variant="outlined"
-                                                        >
-                                                            <OutlinedInput
-                                                                sx={{
-                                                                    input: {
-                                                                        p: "5px",
-                                                                    },
-                                                                }}
-                                                                type="number"
-                                                                id={`filled-adornment-amount-sum-cash-${field.id}`}
-                                                                value={value}
-                                                                onChange={({
-                                                                    target,
-                                                                }) => {
-                                                                    onChange(
-                                                                        target?.value
-                                                                    );
-                                                                }}
-                                                            />
-                                                            <FormHelperText>
-                                                                {error?.message}
-                                                            </FormHelperText>
-                                                        </StyledFormControl>
-                                                    );
-                                                }}
-                                            />
-                                        </Box>
                                     </Box>
                                     {a.length > 1 && (
                                         <IconButton
-                                            onClick={() => removeCash(index)}
+                                            onClick={() => removeJewels(index)}
                                             color="error"
                                         >
                                             <DeleteForeverOutlined />
@@ -486,13 +421,12 @@ function Inner() {
                                 <Button
                                     onClick={async () => {
                                         const isValid = await trigger(
-                                            "cash.currencies"
+                                            "jewels.currencies"
                                         );
                                         console.log(isValid);
                                         if (!isValid) return;
-                                        appendCash({
-                                            currency: "",
-                                            sum: 0,
+                                        appendJewels({
+                                            text: "",
                                         });
                                     }}
                                     fullWidth
@@ -514,8 +448,129 @@ function Inner() {
                                 </Button>
                             </Box>
                         </Grid2>
-                    </Grid2>
+                        <Grid2 display={"flex"} gap={1} size={2}>
+                            <Typography
+                                textAlign={"center"}
+                                flex={"0 0 75px"}
+                                variant="body1"
+                                fontWeight={"600"}
+                                fontSize={13}
+                                color="initial"
+                            >
+                                {t("form.img")}
+                            </Typography>
+                            <Box flex={1}>
+                                {imgPreview && (
+                                    <Box
+                                        sx={{
+                                            position: "relative",
+                                            flex: 1,
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                width: "100%",
+                                                height: "auto",
+                                            }}
+                                            alt="nft-image"
+                                            src={imgPreview}
+                                            component={"img"}
+                                        />
+                                        <IconButton
+                                            onClick={async () => {
+                                                setImagePreview(null);
+                                                // setValue(name, null, {
+                                                //     shouldValidate: true,
+                                                //     shouldDirty: true,
+                                                // });
+                                            }}
+                                            sx={{
+                                                position: "absolute",
+                                                top: "0",
+                                                right: "0",
+                                                transform:
+                                                    "translate(50%,-50%)",
+                                            }}
+                                        >
+                                            {loading ? (
+                                                <CircularProgress size="30px" />
+                                            ) : (
+                                                <HighlightOffTwoToneIcon
+                                                    sx={{
+                                                        bgcolor: "error.main",
+                                                        borderRadius: "99px",
+                                                        width: 30,
+                                                        height: 30,
+                                                    }}
+                                                    color="error"
+                                                    fontSize="large"
+                                                />
+                                            )}
+                                        </IconButton>
+                                    </Box>
+                                )}
+                                <Controller
+                                    control={control}
+                                    name={"jewels"}
+                                    render={({
+                                        field: { onChange },
+                                        fieldState: { error },
+                                    }) => (
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                width: "100%",
+                                            }}
+                                        >
+                                            <input
+                                                ref={inputImg}
+                                                accept="image/*"
+                                                style={{ display: "none" }}
+                                                // id={`raised-button-file-${credit?.id}`}
+                                                multiple
+                                                type="file"
+                                                onChange={(event) => {
+                                                    const files =
+                                                        event.target.files;
+                                                    console.log(files);
+                                                    if (files && files[0]) {
+                                                        handleFileChange(
+                                                            files[0]
+                                                        );
 
+                                                        onChange(files[0]);
+                                                    }
+                                                }}
+                                            />
+
+                                            <Button
+                                                endIcon={<FileUploadIcon />}
+                                                variant="contained"
+                                                color={
+                                                    errors?.document
+                                                        ? "error"
+                                                        : "secondary"
+                                                }
+                                                fullWidth
+                                                onClick={() =>
+                                                    inputImg?.current?.click()
+                                                }
+                                            >
+                                                {t("buttons.load")}
+                                            </Button>
+                                            <FormHelperText
+                                                sx={{ ml: "14px", mr: "14px" }}
+                                                error={!!error}
+                                            >
+                                                {errors?.document?.message}
+                                            </FormHelperText>
+                                        </Box>
+                                    )}
+                                />
+                            </Box>
+                        </Grid2>
+                    </Grid2>
                     {errors?.root?.server && (
                         <StyledAlert
                             severity="error"

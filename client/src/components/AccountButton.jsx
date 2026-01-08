@@ -14,6 +14,7 @@ import {
     ACCOUNT_CREDIT_STATEMENT_ROUTE,
     ACCOUNT_CREDIT_ACTIVE_ROUTE,
     ACCOUNT_DECLARATION_ROUTE,
+    ACCOUNT_DECLARATION2_ROUTE,
     ACCOUNT_DOCUMENT_ROUTE,
     ACCOUNT_CREDIT_CANCEL_ROUTE,
     ACCOUNT_BANK_ROUTE,
@@ -37,6 +38,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import BlockIcon from "@mui/icons-material/Block";
+import DiamondIcon from "@mui/icons-material/Diamond";
+import EuroIcon from "@mui/icons-material/Euro";
 
 export default observer(function AccountButton({ header }) {
     const { token } = useParams();
@@ -159,6 +162,8 @@ export default observer(function AccountButton({ header }) {
                     sx={{
                         "& .MuiPaper-root": {},
                         boxShadow: "none !important",
+                        margin: "0 !important",
+
                         // bgcolor: user ? "error.main" : "primary.main",
                     }}
                 >
@@ -260,21 +265,89 @@ export default observer(function AccountButton({ header }) {
                         {t("pages.account.document.name")}
                     </Typography>
                 </MenuItem>
-                <MenuItem
-                    // sx={{ bgcolor: red[50] }}
-                    onClick={(event) => {
-                        handleCloseNavMenu(event);
-                        router.push(ACCOUNT_DECLARATION_ROUTE(token));
+                <Accordion
+                    square={false}
+                    sx={{
+                        "&.MuiPaper-root::before": {
+                            height: "0px !important",
+                        },
+                        boxShadow: "none !important",
+                        margin: "0 !important",
+
+                        // bgcolor: user ? "error.main" : "primary.main",
                     }}
                 >
-                    <ListItemIcon>
-                        <ReceiptLongIcon color="dif" />
-                    </ListItemIcon>
+                    <AccordionSummary
+                        sx={{
+                            justifyContent: "start",
+                            "& .MuiAccordionSummary-content": {
+                                m: "0px 0px !important",
+                                flex: "0 !important",
+                            },
+                            minHeight: "0px !important",
+                            p: "0px !important",
+                        }}
+                        expandIcon={<ExpandMoreIcon color="dif" />}
+                    >
+                        <MenuItem>
+                            <ListItemIcon>
+                                <ReceiptLongIcon color="dif" />
+                            </ListItemIcon>
 
-                    <Typography color="dif" variant="body1">
-                        {t("pages.account.declaration.name")}
-                    </Typography>
-                </MenuItem>
+                            <Typography color="dif" variant="body1">
+                                {t("pages.account.declaration.name")}
+                            </Typography>
+                        </MenuItem>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ bgcolor: "#fff", p: 0 }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: user ? 0 : 1,
+                                maxHeight: 350,
+                                overflowY: "scroll",
+                            }}
+                        >
+                            <MenuItem
+                                sx={{ pl: 4, pr: 4 }}
+                                // sx={{ bgcolor: red[50] }}
+                                onClick={(event) => {
+                                    handleCloseNavMenu(event);
+                                    router.push(
+                                        ACCOUNT_DECLARATION_ROUTE(token)
+                                    );
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <EuroIcon color="dif" />
+                                </ListItemIcon>
+
+                                <Typography color="dif" variant="body1">
+                                    {t("pages.account.declaration.cash")}
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem
+                                sx={{ pl: 4, pr: 4 }}
+                                // sx={{ bgcolor: red[50] }}
+                                onClick={(event) => {
+                                    handleCloseNavMenu(event);
+                                    router.push(
+                                        ACCOUNT_DECLARATION2_ROUTE(token)
+                                    );
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <DiamondIcon color="dif" />
+                                </ListItemIcon>
+
+                                <Typography color="dif" variant="body1">
+                                    {t("pages.account.declaration.jewels")}
+                                </Typography>
+                            </MenuItem>
+                        </Box>
+                    </AccordionDetails>
+                </Accordion>
                 {/* <MenuItem
                     // sx={{ bgcolor: red[50] }}
                     onClick={(event) => {
