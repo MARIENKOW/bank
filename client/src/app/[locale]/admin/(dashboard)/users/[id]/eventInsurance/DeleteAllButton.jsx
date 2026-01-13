@@ -8,10 +8,8 @@ import { enqueueSnackbar } from "notistack";
 
 const event = new EventInsuranceService();
 
-export default function DeleteAllButton() {
+export default function DeleteAllButton({ id }) {
     const [loading, setLoading] = useState(false);
-
-    const { id } = useParams();
 
     const queryClient = useQueryClient();
 

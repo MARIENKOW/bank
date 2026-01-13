@@ -41,8 +41,7 @@ import { useParams } from "next/navigation";
 
 const event = new EventInsuranceService();
 
-export default function EventInsuranceAdd({}) {
-    const { id } = useParams();
+export default function EventInsuranceAdd({ id }) {
     const t = useTranslations();
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
@@ -112,203 +111,199 @@ export default function EventInsuranceAdd({}) {
                 Событие
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <DialogContent>
-                        <Box
-                            flexDirection={"row"}
-                            gap={1}
-                            flexWrap={"wrap"}
-                            display={"flex"}
-                        >
-                            <Controller
-                                control={control}
-                                name={"date"}
-                                rules={{
-                                    required: "обязательное поле",
-                                }}
-                                render={({
-                                    field: { onChange, value },
-                                    fieldState: { error },
-                                }) => {
-                                    return (
-                                        <LocalizationProvider
-                                            dateAdapter={AdapterDayjs}
-                                            adapterLocale="ru"
-                                            localeText={
-                                                ruRU.components
-                                                    .MuiLocalizationProvider
-                                                    .defaultProps.localeText
-                                            }
-                                        >
-                                            <DatePicker
-                                                slotProps={{
-                                                    textField: {
-                                                        // component:<STF/>,
-                                                        sx: {
-                                                            width: "100%",
-                                                            "& .MuiPickersInputBase-root":
-                                                                {
-                                                                    bgcolor:
-                                                                        "#fff",
-                                                                },
-                                                        },
-                                                        // color:'secondary',
-                                                        variant: "filled",
-                                                        error: !!errors?.date,
-                                                        helperText:
-                                                            errors?.date
-                                                                ?.message || "",
+                <DialogContent>
+                    <Box
+                        flexDirection={"row"}
+                        gap={1}
+                        flexWrap={"wrap"}
+                        display={"flex"}
+                    >
+                        <Controller
+                            control={control}
+                            name={"date"}
+                            rules={{
+                                required: "обязательное поле",
+                            }}
+                            render={({
+                                field: { onChange, value },
+                                fieldState: { error },
+                            }) => {
+                                return (
+                                    <LocalizationProvider
+                                        dateAdapter={AdapterDayjs}
+                                        adapterLocale="ru"
+                                        localeText={
+                                            ruRU.components
+                                                .MuiLocalizationProvider
+                                                .defaultProps.localeText
+                                        }
+                                    >
+                                        <DatePicker
+                                            slotProps={{
+                                                textField: {
+                                                    // component:<STF/>,
+                                                    sx: {
+                                                        width: "100%",
+                                                        "& .MuiPickersInputBase-root":
+                                                            {
+                                                                bgcolor: "#fff",
+                                                            },
                                                     },
-                                                }}
-                                                onChange={(v) => {
-                                                    onChange(v);
-                                                }}
-                                                value={value}
-                                                sx={{
-                                                    width: {
-                                                        xs: "100%",
-                                                        md: "100%",
-                                                    },
-                                                }}
-                                                format="DD.MM.YYYY"
-                                            />
-                                        </LocalizationProvider>
-                                    );
-                                }}
-                            />
-                            <StyledTextField
-                                errors={errors}
-                                label={"комментарий"}
-                                register={register("comment", {})}
-                            />
-                            <Controller
-                                control={control}
-                                name="increment"
-                                rules={{ required: "required field" }}
-                                render={({
-                                    field: { value, onChange, name },
-                                    formState: { errors },
-                                }) => (
+                                                    // color:'secondary',
+                                                    variant: "filled",
+                                                    error: !!errors?.date,
+                                                    helperText:
+                                                        errors?.date?.message ||
+                                                        "",
+                                                },
+                                            }}
+                                            onChange={(v) => {
+                                                onChange(v);
+                                            }}
+                                            value={value}
+                                            sx={{
+                                                width: {
+                                                    xs: "100%",
+                                                    md: "100%",
+                                                },
+                                            }}
+                                            format="DD.MM.YYYY"
+                                        />
+                                    </LocalizationProvider>
+                                );
+                            }}
+                        />
+                        <StyledTextField
+                            errors={errors}
+                            label={"комментарий"}
+                            register={register("comment", {})}
+                        />
+                        <Controller
+                            control={control}
+                            name="increment"
+                            rules={{ required: "required field" }}
+                            render={({
+                                field: { value, onChange, name },
+                                formState: { errors },
+                            }) => (
+                                <StyledFormControl
+                                    error={!!errors?.increment}
+                                    variant="filled"
+                                    fullWidth
+                                >
+                                    <InputLabel
+                                        id={`demo-simple-select-standard-increment`}
+                                    >
+                                        Тип события
+                                    </InputLabel>
+                                    <Select
+                                        // sx={{}}}
+                                        labelId={`demo-simple-select-standard-increment`}
+                                        value={value}
+                                        onChange={({ target }) => {
+                                            onChange(target?.value);
+                                        }}
+                                        label={"Тип события"}
+                                        MenuProps={{
+                                            sx: {
+                                                "& .MuiPaper-root": {
+                                                    bgcolor: "#fff",
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        <MenuItem value={0}>Снятие</MenuItem>
+                                        <MenuItem value={1}>
+                                            Пополнение
+                                        </MenuItem>
+                                    </Select>
+                                    <FormHelperText>
+                                        {errors?.increment?.message}
+                                    </FormHelperText>
+                                </StyledFormControl>
+                            )}
+                        />
+                        <Controller
+                            control={control}
+                            name="sum"
+                            rules={{
+                                required: "required field",
+                                pattern: {
+                                    value: SUM_PATTERN,
+                                    message:
+                                        "value must be in the format - 99 or 99.99",
+                                },
+                                min: {
+                                    value: SUM_MIN_VALUE,
+                                    message: `minimum ${SUM_MIN_VALUE}`,
+                                },
+                                max: {
+                                    value: SUM_MAX_VALUE,
+                                    message: `maximum ${SUM_MAX_VALUE}`,
+                                },
+                                // validate: (value) => {
+                                //     const numberValue = Number(value);
+                                //     if (numberValue > SUM_MAX_VALUE) {
+                                //         return `maximum ${maxValue}`;
+                                //     }
+                                //     return true;
+                                // },
+                            }}
+                            render={({
+                                field: { value, onChange, name },
+                                formState: { errors },
+                            }) => {
+                                return (
                                     <StyledFormControl
-                                        error={!!errors?.increment}
-                                        variant="filled"
                                         fullWidth
+                                        error={!!errors?.sum}
+                                        variant="filled"
                                     >
                                         <InputLabel
-                                            id={`demo-simple-select-standard-increment`}
+                                            htmlFor={`filled-adornment-amount-sum`}
                                         >
-                                            Тип события
+                                            Сумма
                                         </InputLabel>
-                                        <Select
-                                            // sx={{}}}
-                                            labelId={`demo-simple-select-standard-increment`}
+                                        <FilledInput
+                                            type="number"
+                                            id={`filled-adornment-amount-sum`}
                                             value={value}
                                             onChange={({ target }) => {
                                                 onChange(target?.value);
                                             }}
-                                            label={"Тип события"}
-                                            MenuProps={{
-                                                sx: {
-                                                    "& .MuiPaper-root": {
-                                                        bgcolor: "#fff",
-                                                    },
-                                                },
-                                            }}
-                                        >
-                                            <MenuItem value={0}>
-                                                Снятие
-                                            </MenuItem>
-                                            <MenuItem value={1}>
-                                                Пополнение
-                                            </MenuItem>
-                                        </Select>
+                                            startAdornment={
+                                                <InputAdornment position="start">
+                                                    {t("currency", {
+                                                        value: "",
+                                                    })}
+                                                </InputAdornment>
+                                            }
+                                        />
                                         <FormHelperText>
-                                            {errors?.increment?.message}
+                                            {errors?.sum?.message}
                                         </FormHelperText>
                                     </StyledFormControl>
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="sum"
-                                rules={{
-                                    required: "required field",
-                                    pattern: {
-                                        value: SUM_PATTERN,
-                                        message:
-                                            "value must be in the format - 99 or 99.99",
-                                    },
-                                    min: {
-                                        value: SUM_MIN_VALUE,
-                                        message: `minimum ${SUM_MIN_VALUE}`,
-                                    },
-                                    max: {
-                                        value: SUM_MAX_VALUE,
-                                        message: `maximum ${SUM_MAX_VALUE}`,
-                                    },
-                                    // validate: (value) => {
-                                    //     const numberValue = Number(value);
-                                    //     if (numberValue > SUM_MAX_VALUE) {
-                                    //         return `maximum ${maxValue}`;
-                                    //     }
-                                    //     return true;
-                                    // },
-                                }}
-                                render={({
-                                    field: { value, onChange, name },
-                                    formState: { errors },
-                                }) => {
-                                    return (
-                                        <StyledFormControl
-                                            fullWidth
-                                            error={!!errors?.sum}
-                                            variant="filled"
-                                        >
-                                            <InputLabel
-                                                htmlFor={`filled-adornment-amount-sum`}
-                                            >
-                                                Сумма
-                                            </InputLabel>
-                                            <FilledInput
-                                                type="number"
-                                                id={`filled-adornment-amount-sum`}
-                                                value={value}
-                                                onChange={({ target }) => {
-                                                    onChange(target?.value);
-                                                }}
-                                                startAdornment={
-                                                    <InputAdornment position="start">
-                                                        {t("currency", {
-                                                            value: "",
-                                                        })}
-                                                    </InputAdornment>
-                                                }
-                                            />
-                                            <FormHelperText>
-                                                {errors?.sum?.message}
-                                            </FormHelperText>
-                                        </StyledFormControl>
-                                    );
-                                }}
-                            />
-                        </Box>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button color="secondary" onClick={handleClose}>
-                            Отмена
-                        </Button>
-                        <StyledLoadingButton
-                            type="submit"
-                            sx={{ height: "100%" }}
-                            loading={isSubmitting}
-                            endIcon={<DoubleArrowIcon />}
-                            variant="contained"
-                            color="secondary"
-                        >
-                            Создать событие
-                        </StyledLoadingButton>
-                    </DialogActions>
-                </form>
+                                );
+                            }}
+                        />
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button color="secondary" onClick={handleClose}>
+                        Отмена
+                    </Button>
+                    <StyledLoadingButton
+                        // type="submit"
+                        sx={{ height: "100%" }}
+                        onClick={handleSubmit(onSubmit)}
+                        loading={isSubmitting}
+                        endIcon={<DoubleArrowIcon />}
+                        variant="contained"
+                        color="secondary"
+                    >
+                        Создать событие
+                    </StyledLoadingButton>
+                </DialogActions>
             </Dialog>
         </>
     );

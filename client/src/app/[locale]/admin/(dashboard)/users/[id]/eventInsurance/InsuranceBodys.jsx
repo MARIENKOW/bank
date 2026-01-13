@@ -7,16 +7,17 @@ import ErrorElement from "../../../../../../../components/ErrorElement";
 import { Empty } from "../../../../../../../components/Empty";
 import { Box } from "@mui/material";
 import { useParams } from "next/navigation";
-import InsuranceAccordion from "./InsuranceAccordion";
-import InsuranceService from "../../../../../../../services/InsuranceService";
+import InsuranceBodyAccordion from "./InsuranceBodyAccordion";
+import InsuranceBodyService from "../../../../../../../services/InsuranceBodyService";
 
-const insurance = new InsuranceService($AdminApi);
+const body = new InsuranceBodyService($AdminApi);
 
-export default function Insurances({ id }) {
+export default function InsuranceBodys({}) {
+    const { id } = useParams();
     const { isPending, error, data } = useQuery({
-        queryKey: ["insurances", id],
+        queryKey: ["bodys", id],
         queryFn: async () => {
-            const { data } = await insurance.find(id);
+            const { data } = await body.find(id);
             return data;
         },
     });
@@ -34,8 +35,8 @@ export default function Insurances({ id }) {
             gap={2}
             display={"flex"}
         >
-            {data?.map((insurance, i) => (
-                <InsuranceAccordion key={insurance.id} item={insurance} />
+            {data?.map((bank, i) => (
+                <InsuranceBodyAccordion key={bank.id} item={bank} />
             ))}
         </Box>
     );

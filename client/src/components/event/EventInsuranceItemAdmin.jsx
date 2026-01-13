@@ -15,6 +15,8 @@ export default function EventInsuranceItemAdmin({ event }) {
 
     const queryClient = useQueryClient();
 
+    console.log(event);
+
     const t = useTranslations();
     const handleDeleteEvent = async () => {
         try {
@@ -25,7 +27,7 @@ export default function EventInsuranceItemAdmin({ event }) {
             //     queryKey: ["user", String(event.user_id)],
             // });
             await queryClient.invalidateQueries({
-                queryKey: ["eventsInsurance", String(event.user_id)],
+                queryKey: ["eventsInsurance", event.body_id],
             });
             enqueueSnackbar(`Событие удалено!`, { variant: "success" });
         } catch (error) {

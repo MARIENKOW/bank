@@ -1,5 +1,6 @@
 import { EventInsurance } from "../models/EventInsurance.js";
-import { User } from "../models/User.js";
+import { InsuranceBody } from "../models/InsuranceBody.js";
+
 
 class Controller {
     create = async (req, res) => {
@@ -11,18 +12,21 @@ class Controller {
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
 
-            const userData = await User.findOne({ where: { id } });
-            if (!userData) return res.status(404).json("User is not defined");
+            const insuranceBodyData = await InsuranceBody.findOne({
+                where: { id },
+            });
+            if (!insuranceBodyData)
+                return res.status(404).json("InsuranceBody is not defined");
 
             await EventInsurance.create({
                 comment,
                 increment,
-                user_id: id,
+                body_id: id,
                 sum,
                 date,
             });
 
-            res.status(200).json(userData);
+            res.status(200).json(insuranceBodyData);
         } catch (e) {
             console.log(e);
             res.status(500).json(e.message);
@@ -33,16 +37,17 @@ class Controller {
             const { id } = req.params;
             if (!id) return res.status(404).json("id is not found");
 
-            const userData = await User.findOne({
+            const insuranceBodyData = await InsuranceBody.findOne({
                 where: {
                     id,
                 },
             });
 
-            if (!userData) return res.status(404).json("Not found User");
+            if (!insuranceBodyData)
+                return res.status(404).json("Not found insuranceBodyData");
 
             const data = await EventInsurance.findAll({
-                where: { user_id: id },
+                where: { body_id: id },
                 order: [
                     ["date", "desc"],
                     ["id", "desc"],
@@ -60,16 +65,17 @@ class Controller {
             const { id } = req.params;
             if (!id) return res.status(404).json("id is not found");
 
-            const userData = await User.findOne({
+            const insuranceBodyData = await InsuranceBody.findOne({
                 where: {
                     id,
                 },
             });
 
-            if (!userData) return res.status(404).json("Not found User");
+            if (!insuranceBodyData)
+                return res.status(404).json("Not found insuranceBodyData");
 
             await EventInsurance.destroy({
-                where: { user_id: id },
+                where: { body_id: id },
             });
 
             return res.json(true);
@@ -91,13 +97,14 @@ class Controller {
 
             if (!eventData) return res.status(404).json("Not found Event");
 
-            const userData = await User.findOne({
+            const insuranceBodyData = await InsuranceBody.findOne({
                 where: {
-                    id: eventData.user_id,
+                    id: eventData.body_id,
                 },
             });
 
-            if (!userData) return res.status(404).json("Not found User");
+            if (!insuranceBodyData)
+                return res.status(404).json("Not found insuranceBodyData");
 
             await EventInsurance.destroy({
                 where: { id: id },

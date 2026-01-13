@@ -12,8 +12,8 @@ import { useParams } from "next/navigation";
 
 const event = new EventInsuranceService($AdminApi);
 
-export default function EventsInsurance({}) {
-    const { id } = useParams();
+export default function EventsInsurance({ id }) {
+    console.log(id);
     const { isPending, error, data } = useQuery({
         queryKey: ["eventsInsurance", id],
         queryFn: async () => {

@@ -11,8 +11,9 @@ import EventInsuranceService from "../../../../../../services/EventInsuranceServ
 const event = new EventInsuranceService($UserApi);
 
 export default function EventsInsuranceUser({ id }) {
+    console.log(id);
     const { isPending, error, data } = useQuery({
-        queryKey: ["users"],
+        queryKey: ["eventInsurance", id],
         queryFn: async () => {
             const { data } = await event.find(id);
             return data;

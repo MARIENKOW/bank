@@ -3,19 +3,25 @@
 import { UserContext } from "../../../../../../components/wrappers/UserContextProvider";
 import { ContainerComponent } from "../../../../../../components/wrappers/ContainerComponent";
 import OnlyLoginUser from "../../../../../../components/wrappers/OnlyLoginUser";
-import Typography from "@mui/material/Typography";
 import { useContext } from "react";
 import { Box, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { observer } from "mobx-react-lite";
-import EventsInsuranceUser from "./EventsInsuranceUser";
 import BreadcrumbsComponent from "../../../../../../components/BreadcrumbsComponent";
 import { ACCOUNT_ROUTE } from "../../../../../../configs/routerLinks";
 import { useParams } from "next/navigation";
+import CreditService from "../../../../../../services/CreditService";
+import Loading from "../../../../../../components/loading/Loading";
+import ErrorElement from "../../../../../../components/ErrorElement";
+import { Empty } from "../../../../../../components/Empty";
+import { useQuery } from "@tanstack/react-query";
+import { $UserApi } from "../../../../../../http";
+import BankService from "../../../../../../services/BankService";
+import BankAccordionUser from "./BankAccordionUser";
+import InsuranceBodyService from "../../../../../../services/InsuranceBodyService";
 
 export default observer(function Page() {
     const t = useTranslations();
-    const { user } = useContext(UserContext);
     const { token } = useParams();
     return (
         <OnlyLoginUser>
@@ -50,18 +56,48 @@ export default observer(function Page() {
                     flex={1}
                     mb={10}
                 >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            maxHeight: 400,
-                            overflowY: "scroll",
-                        }}
-                    >
-                        <EventsInsuranceUser id={user.id} />
-                    </Box>
+                    <Inner />
                 </Box>
             </ContainerComponent>
         </OnlyLoginUser>
     );
 });
+
+const body = new InsuranceBodyService($UserApi);
+
+function Inner() {
+    const { user } = useContext(UserContext);
+
+    const { isPending, error, data } = useQuery({
+        queryKey: ["bodys"],
+        queryFn: async () => {
+            const { data } = await body.find(user?.id);
+            return data;
+        },
+    });
+
+    if (isPending) return <Loading />;
+    if (error) return <ErrorElement />;
+
+    if (!data || data?.length === 0) return <Empty />;
+
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                p: 1,
+                gap: 1,
+            }}
+        >
+            {data.map((bank, i) => (
+                <BankAccordionUser
+                    user={true}
+                    i={i}
+                    key={bank.id}
+                    item={bank}
+                />
+            ))}
+        </Box>
+    );
+}

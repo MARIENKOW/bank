@@ -6,7 +6,7 @@ export default function EventItem({ event, i }) {
     const t = useTranslations();
     return (
         <Box
-            sx={{ bgcolor: i % 2 ? "#fff" : "secondary.main" }}
+            sx={{ bgcolor: i % 2 ? "secondary.main" : "#fff" }}
             variant="elevation"
         >
             <Box
