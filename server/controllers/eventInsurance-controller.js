@@ -1,7 +1,6 @@
 import { EventInsurance } from "../models/EventInsurance.js";
 import { InsuranceBody } from "../models/InsuranceBody.js";
 
-
 class Controller {
     create = async (req, res) => {
         try {
@@ -35,6 +34,8 @@ class Controller {
     find = async (req, res) => {
         try {
             const { id } = req.params;
+
+            console.log(id);
             if (!id) return res.status(404).json("id is not found");
 
             const insuranceBodyData = await InsuranceBody.findOne({
