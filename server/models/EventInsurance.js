@@ -22,6 +22,10 @@ export const EventInsurance = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         sum: {
             type: DataTypes.DECIMAL(11, 2),
             allowNull: false,
@@ -45,6 +49,13 @@ EventInsurance.associate = (models) => {
     EventInsurance.belongsTo(models.InsuranceBody, {
         foreignKey: {
             name: "body_id",
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
+        },
+    });
+    EventInsurance.belongsTo(models.User, {
+        foreignKey: {
+            name: "user_id",
             onDelete: "CASCADE",
             onUpdate: "CASCADE",
         },
