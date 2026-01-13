@@ -23,6 +23,7 @@ import { enqueueSnackbar } from "notistack";
 import EventService from "../../../../../../services/EventService";
 import { BankerForm } from "../../../../../../components/phone/BankerForm";
 import NavigationButton from "./NavigationButton";
+import { UserReservedBalanceForm } from "../../../../../../components/form/user/UserReservedBalanceForm";
 
 const userService = new UserService();
 const event = new EventService();
@@ -90,7 +91,7 @@ export default function Page() {
                     />
 
                     <Box flex={1} display={"flex"} justifyContent={"right"}>
-                        <NavigationButton id={id}  />
+                        <NavigationButton id={id} />
                     </Box>
                 </Box>
                 <Box
@@ -116,6 +117,7 @@ export default function Page() {
                             <UserNameForm item={data} />
                             <UserElcForm item={data} />
                             <UserBankNumberForm item={data} />
+                            <UserReservedBalanceForm item={data} />
                         </Box>
                     </Box>
                     <Box

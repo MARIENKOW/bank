@@ -17,12 +17,7 @@ export default observer(function Page() {
     return (
         <OnlyLoginUser>
             <ContainerComponent>
-                <Box
-                    display={"flex"}
-                    flexDirection={"column"}
-                    flex={1}
-                    mb={10}
-                >
+                <Box display={"flex"} flexDirection={"column"} flex={1} mb={10}>
                     <Box display={"flex"} gap={4} mt={3}>
                         <Box
                             display={"inline-flex"}
@@ -71,6 +66,26 @@ export default observer(function Page() {
                             pb={1}
                         >
                             <Typography lineHeight={"1"} variant="body1">
+                                {t("form.reservedBalance")}
+                            </Typography>
+                            <Typography
+                                // fontSize={18}
+                                fontWeight={600}
+                                variant="h5"
+                            >
+                                {t("currency", { value: user.reservedBalance })}
+                            </Typography>
+                        </Box>
+                    </Box>
+                    <Box display={"flex"} gap={4} mt={4}>
+                        <Box
+                            display={"inline-flex"}
+                            flexDirection={"column"}
+                            gap={0.5}
+                            pt={1}
+                            pb={1}
+                        >
+                            <Typography lineHeight={"1"} variant="body1">
                                 {t("form.balance")}
                             </Typography>
                             <Typography
@@ -100,6 +115,7 @@ export default observer(function Page() {
                             </Typography>
                         </Box>
                     </Box>
+
                     <Divider sx={{ mt: 4 }} />
                     <Box mt={4}>
                         <BankerBtn />

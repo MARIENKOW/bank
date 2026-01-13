@@ -96,6 +96,7 @@ export const he = {
         bankNumber: "מספר תא בטוח",
         valute: "מטבע",
         img: "תמונה",
+        reservedBalance: "תרת שמורה",
         sum: "סכום",
         text: "תיאור",
         balance: "יתרת תא הבטוח",
@@ -138,6 +139,7 @@ export const he = {
             bank: "בנק",
             comment: "מטרת ההלוואה",
             time: "זמן",
+            date: "תאריך",
         },
     },
     api: {

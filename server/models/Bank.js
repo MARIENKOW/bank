@@ -18,8 +18,8 @@ export const Bank = sequelize.define(
             allowNull: true,
         },
         status: {
-            type: DataTypes.TINYINT(1),
-            allowNull: false,
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         limit: {
             type: DataTypes.STRING,

@@ -292,6 +292,20 @@ class Controller {
             res.status(500).json(e?.message);
         }
     };
+    updateReservedBalance = async (req, res) => {
+        try {
+            const { id } = req.body;
+
+            const reservedBalance = Number(req?.body?.reservedBalance) ?? 0;
+
+            await User.update({ reservedBalance }, { where: { id } });
+
+            res.status(200).json(true);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(e?.message);
+        }
+    };
     updatePassword = async (req, res) => {
         try {
             const { id } = req.body;

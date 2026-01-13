@@ -6,7 +6,7 @@ class Controller {
         try {
             const { id, name, status, limit, elc } = req.body;
 
-            if (!id || !name || (status !== 0 && status !== 1))
+            if (!id || !name)
                 return res
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
@@ -18,7 +18,7 @@ class Controller {
             await Bank.create({
                 user_id: id,
                 name,
-                status: Number(status),
+                status,
                 limit,
                 elc,
             });
@@ -35,7 +35,7 @@ class Controller {
 
             if (!id) return res.status(404).json("id is not found");
 
-            if (!id || !name || (status !== 0 && status !== 1))
+            if (!id || !name)
                 return res
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
@@ -59,7 +59,7 @@ class Controller {
             await Bank.update(
                 {
                     name,
-                    status: Number(status),
+                    status,
                     limit,
                     elc,
                 },

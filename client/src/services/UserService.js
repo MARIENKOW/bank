@@ -48,6 +48,13 @@ export default class UserService {
             );
             return res;
         };
+        this.updateReservedBalance = async (value) => {
+            const res = await $AdminApi.post(
+                USER_API_URL + "/updateReservedBalance",
+                value
+            );
+            return res;
+        };
         this.updateElc = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateElc",

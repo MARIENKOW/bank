@@ -23,6 +23,11 @@ UserRouter.get("/:id", authAdminMiddelware, controller.getById);
 // UserRouter.post("/cash-out", authAdminMiddelware, controller.cashOut);
 
 UserRouter.post("/updateName", authAdminMiddelware, controller.updateName);
+UserRouter.post(
+    "/updateReservedBalance",
+    authAdminMiddelware,
+    controller.updateReservedBalance
+);
 UserRouter.post("/updateElc", authAdminMiddelware, controller.updateElc);
 UserRouter.post(
     "/updateInsuranceElc",

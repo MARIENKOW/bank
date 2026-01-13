@@ -95,6 +95,7 @@ export const ru = {
         text: "Описание",
         insurance_elc: "Личный счет",
         elc: "Единый лицевой счет",
+        reservedBalance: "Резерв",
         bankNumber: "Номер сейфовой ячейки",
         balance: "Баланс сейфовой ячейки",
         events: "Информация об операциях на едином лицевом счету",
@@ -134,6 +135,7 @@ export const ru = {
             bank: "Банк",
             comment: "Цель кредита",
             time: "Время",
+            date: "Дата",
         },
     },
     api: {

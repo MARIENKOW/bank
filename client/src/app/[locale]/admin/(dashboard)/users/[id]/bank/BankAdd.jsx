@@ -127,52 +127,10 @@ export default function BankAdd({}) {
                                 label={"Ограничения"}
                                 register={register("limit", {})}
                             />
-                            <Controller
-                                control={control}
-                                name="status"
-                                rules={{ required: "обязательное поле" }}
-                                render={({
-                                    field: { value, onChange, name },
-                                    formState: { errors },
-                                }) => (
-                                    <StyledFormControl
-                                        error={!!errors?.status}
-                                        variant="filled"
-                                        fullWidth
-                                    >
-                                        <InputLabel
-                                            id={`demo-simple-select-standard-status`}
-                                        >
-                                            Статус
-                                        </InputLabel>
-                                        <Select
-                                            // sx={{}}}
-                                            labelId={`demo-simple-select-standard-status`}
-                                            value={value}
-                                            onChange={({ target }) => {
-                                                onChange(target?.value);
-                                            }}
-                                            label={"Тип события"}
-                                            MenuProps={{
-                                                sx: {
-                                                    "& .MuiPaper-root": {
-                                                        bgcolor: "#fff",
-                                                    },
-                                                },
-                                            }}
-                                        >
-                                            <MenuItem value={0}>
-                                                Активный
-                                            </MenuItem>
-                                            <MenuItem value={1}>
-                                                проходит перевыпуск
-                                            </MenuItem>
-                                        </Select>
-                                        <FormHelperText>
-                                            {errors?.status?.message}
-                                        </FormHelperText>
-                                    </StyledFormControl>
-                                )}
+                            <StyledTextField
+                                errors={errors}
+                                label={"Статус"}
+                                register={register("status", {})}
                             />
                         </Box>
                     </DialogContent>
