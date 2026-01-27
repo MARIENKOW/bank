@@ -14,13 +14,13 @@ export default function InsuranceAccordionUser({ item, user }) {
             <Accordion
                 sx={{
                     "& .MuiPaper-root": {},
-                    bgcolor: user ? "error.main" : "primary",
+                    bgcolor:  "primary",
                 }}
             >
                 <AccordionSummary
                     expandIcon={
                         <ExpandMoreIcon
-                            color={user ? "inherit" : "secondary"}
+                            color={ "secondary"}
                         />
                     }
                     aria-controls="panel1-content"
@@ -30,7 +30,7 @@ export default function InsuranceAccordionUser({ item, user }) {
                         fontSize={12}
                         textTransform={"uppercase"}
                         component="span"
-                        color={user ? "inherit" : "secondary"}
+                        color={"secondary"}
                         fontWeight={500}
                     >
                         {item?.name}

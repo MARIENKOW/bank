@@ -39,7 +39,6 @@ export default observer(function Page() {
                         ]}
                         sx={{
                             display: "inline-flex",
-                            backgroundColor: "error.main",
                             ol: {
                                 borderRadius: 0.5,
                                 display: "inline-flex",

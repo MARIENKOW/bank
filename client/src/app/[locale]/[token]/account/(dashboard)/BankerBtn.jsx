@@ -19,7 +19,7 @@ export default function BankerBtn() {
             <Accordion
                 sx={{
                     "& .MuiPaper-root": {},
-                    bgcolor: "error.main",
+                    bgcolor: "primary.main",
                 }}
             >
                 <AccordionSummary
@@ -32,6 +32,7 @@ export default function BankerBtn() {
                         textTransform={"uppercase"}
                         component="span"
                         fontWeight={500}
+                        color='secondary'
                     >
                         {t("pages.account.buttons.banker")}
                     </Typography>
@@ -118,10 +119,9 @@ export default function BankerBtn() {
                         </Box>
                         <Link target='_blank' href={user?.banker_whatsup||''}>
                             <Button
-                                sx={{ mt: 2 ,color:'#000'}}
+                                sx={{ mt: 2 ,color:'#fff'}}
                                 fullWidth
                                 variant="contained"
-                                color="error"
                             >
                                 {t("pages.account.banker.whatsup")}
                             </Button>

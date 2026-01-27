@@ -80,7 +80,7 @@ export default observer(function AccountButton({ header }) {
                 }}
                 onClick={handleOpenNavMenu}
             >
-                <MenuIcon color="error" />
+                <MenuIcon color='primary' />
             </Button>
             <Menu
                 id="long-menu"

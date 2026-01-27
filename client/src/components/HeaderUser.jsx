@@ -58,7 +58,7 @@ const Header = () => {
                             whiteSpace={"nowrap"}
                             fontWeight={500}
                             variant="body2"
-                            color="error"
+                            color='primary'
                         >
                             {t("pages.account.header")}
                         </Typography>

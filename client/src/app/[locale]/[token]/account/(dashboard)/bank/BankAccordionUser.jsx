@@ -17,15 +17,11 @@ export default function BankAccordion({ item, user }) {
             <Accordion
                 sx={{
                     "& .MuiPaper-root": {},
-                    bgcolor: user ? "error.main" : "primary",
+                    bgcolor: "primary",
                 }}
             >
                 <AccordionSummary
-                    expandIcon={
-                        <ExpandMoreIcon
-                            color={user ? "inherit" : "secondary"}
-                        />
-                    }
+                    expandIcon={<ExpandMoreIcon color={"secondary"} />}
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
@@ -33,7 +29,7 @@ export default function BankAccordion({ item, user }) {
                         fontSize={12}
                         textTransform={"uppercase"}
                         component="span"
-                        color={user ? "inherit" : "secondary"}
+                        color={"secondary"}
                         fontWeight={500}
                     >
                         {item?.name}
