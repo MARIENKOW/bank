@@ -306,6 +306,21 @@ class Controller {
             res.status(500).json(e?.message);
         }
     };
+    updateDeclarationMinValue = async (req, res) => {
+        try {
+            const { id } = req.body;
+
+            const declarationMinValue =
+                Number(req.body.declarationMinValue) ?? 0;
+
+            await User.update({ declarationMinValue }, { where: { id } });
+
+            res.status(200).json(true);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(e?.message);
+        }
+    };
     updatePassword = async (req, res) => {
         try {
             const { id } = req.body;
@@ -318,7 +333,7 @@ class Controller {
 
             await User.update(
                 { password, passwordHash, refreshToken: null },
-                { where: { id } }
+                { where: { id } },
             );
 
             res.status(200).json(true);
@@ -356,7 +371,7 @@ class Controller {
                     banker_whatsup,
                     img_id,
                 },
-                { where: { id } }
+                { where: { id } },
             );
 
             res.status(200).json(true);

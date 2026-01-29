@@ -46,7 +46,9 @@ export const User = sequelize.define(
             type: DataTypes.DECIMAL(15, 2),
             allowNull: false,
             get() {
-                return parseFloat(this.getDataValue("reservedBalance")).toFixed(2);
+                return parseFloat(this.getDataValue("reservedBalance")).toFixed(
+                    2,
+                );
             },
             defaultValue: 0,
         },
@@ -67,6 +69,16 @@ export const User = sequelize.define(
             type: DataTypes.UUID.V4,
             defaultValue: sql.uuidV4,
             allowNull: false,
+        },
+        declarationMinValue: {
+            type: DataTypes.DECIMAL(15, 2),
+            allowNull: true,
+            get() {
+                const tq = parseFloat(
+                    this.getDataValue("declarationMinValue"),
+                ).toFixed(2);
+                return isNaN(tq) ? 0.0 : tq;
+            },
         },
         banker_name: {
             type: DataTypes.STRING,
@@ -93,7 +105,7 @@ export const User = sequelize.define(
     {
         tableName: "user",
         timestamps: false,
-    }
+    },
 );
 User.associate = (models) => {
     User.belongsTo(models.Img, {

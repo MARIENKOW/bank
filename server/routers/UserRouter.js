@@ -26,29 +26,34 @@ UserRouter.post("/updateName", authAdminMiddelware, controller.updateName);
 UserRouter.post(
     "/updateReservedBalance",
     authAdminMiddelware,
-    controller.updateReservedBalance
+    controller.updateReservedBalance,
+);
+UserRouter.post(
+    "/updateDeclarationMinValue",
+    authAdminMiddelware,
+    controller.updateDeclarationMinValue,
 );
 UserRouter.post("/updateElc", authAdminMiddelware, controller.updateElc);
 UserRouter.post(
     "/updateInsuranceElc",
     authAdminMiddelware,
-    controller.updateInsuranceElc
+    controller.updateInsuranceElc,
 );
 UserRouter.post(
     "/updateBankNumber",
     authAdminMiddelware,
-    controller.updateBankNumber
+    controller.updateBankNumber,
 );
 
 UserRouter.post(
     "/updateUsername",
     authAdminMiddelware,
-    controller.updateUsername
+    controller.updateUsername,
 );
 UserRouter.post(
     "/updatePassword",
     authAdminMiddelware,
-    controller.updatePassword
+    controller.updatePassword,
 );
 UserRouter.post("/bankerUpdate", authAdminMiddelware, controller.bankerUpdate);
 
