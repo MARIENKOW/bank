@@ -15,9 +15,26 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { UserDeclarationMinValueForm } from "../../../../../../../components/form/user/UserDeclarationMinValueForm";
+import { observer } from "mobx-react-lite";
+import Loading from "../../../../../../../components/loading/Loading";
+import ErrorElement from "../../../../../../../components/ErrorElement";
+import { useQuery } from "@tanstack/react-query";
+import UserService from "../../../../../../../services/UserService";
 
-export default function page() {
+const user = new UserService();
+
+export default observer(function page() {
     const { id } = useParams();
+
+    const { data, error, isPending } = useQuery({
+        queryKey: ["user", id],
+        queryFn: async () => {
+            const { data } = await user.getById(id);
+            return data;
+        },
+    });
+    console.log(error);
 
     return (
         <ContainerComponent>
@@ -41,59 +58,71 @@ export default function page() {
                         <Box
                             mt={2}
                             display={"flex"}
-                            flexDirection={"row"}
-                            alignItems={"start"}
+                            flexDirection={{ xs: "column", md: "row" }}
+                            // alignItems={"start"}
                             flex={1}
+                            gap={2}
                         >
-                            <Accordion
-                                sx={{
-                                    "& .MuiPaper-root": {},
-                                    bgcolor: "primary.main",
-                                    width: "100%",
-                                }}
-                                defaultExpanded
-                            >
-                                <AccordionSummary
-                                    expandIcon={
-                                        <ExpandMoreIcon color="secondary" />
-                                    }
+                            <Box flex={{ xs: "none", md: "0 1 50%" }}>
+                                {isPending ? (
+                                    <Loading />
+                                ) : error ? (
+                                    <ErrorElement admin={true} />
+                                ) : (
+                                    <UserDeclarationMinValueForm item={data} />
+                                )}
+                            </Box>
+                            <Box flex={{ xs: "none", md: "0 1 50%" }}>
+                                <Accordion
+                                    sx={{
+                                        "& .MuiPaper-root": {},
+                                        bgcolor: "primary.main",
+                                        width: "100%",
+                                    }}
+                                    defaultExpanded
                                 >
-                                    <Box
-                                        display={"flex"}
-                                        width={"100%"}
-                                        alignItems={"center"}
-                                        justifyContent={"space-between"}
+                                    <AccordionSummary
+                                        expandIcon={
+                                            <ExpandMoreIcon color="secondary" />
+                                        }
                                     >
-                                        <Typography
-                                            variant="body1"
-                                            color="secondary"
+                                        <Box
+                                            display={"flex"}
+                                            width={"100%"}
+                                            alignItems={"center"}
+                                            justifyContent={"space-between"}
                                         >
-                                            {"Валюта"}
-                                        </Typography>
-                                    </Box>
-                                </AccordionSummary>
-                                <AccordionDetails
-                                    sx={{ bgcolor: "#fff", p: 0 }}
-                                >
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: 1,
-                                            p: 1,
-                                            maxHeight: 350,
-                                            overflowY: "scroll",
-                                        }}
+                                            <Typography
+                                                variant="body1"
+                                                color="secondary"
+                                            >
+                                                {"Валюта"}
+                                            </Typography>
+                                        </Box>
+                                    </AccordionSummary>
+                                    <AccordionDetails
+                                        sx={{ bgcolor: "#fff", p: 0 }}
                                     >
-                                        <DeclarationAdd />
-                                        <Declarations id={id} />
-                                    </Box>
-                                </AccordionDetails>
-                            </Accordion>
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: 1,
+                                                p: 1,
+                                                maxHeight: 350,
+                                                overflowY: "scroll",
+                                            }}
+                                        >
+                                            <DeclarationAdd />
+                                            <Declarations id={id} />
+                                        </Box>
+                                    </AccordionDetails>
+                                </Accordion>
+                            </Box>
                         </Box>
                     </Box>
                 </>
             </Box>
         </ContainerComponent>
     );
-}
+});

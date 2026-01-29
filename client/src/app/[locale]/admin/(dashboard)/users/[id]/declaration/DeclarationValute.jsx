@@ -35,12 +35,11 @@ export default function DeclarationValute({ item }) {
         console.log(item);
     };
     return (
-        <Box display={"flex"} gap={2} alignItems={'center'} >
+        <Box display={"flex"}  gap={2} alignItems={"center"}>
             <Typography variant="body1" fontSize={18} color="initial">
                 {item.name}
             </Typography>
             <StyledLoadingButton
-                // fullWidth
                 variant="contained"
                 size="small"
                 sx={{ p: 1, minWidth: "10px" }}

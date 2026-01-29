@@ -55,6 +55,13 @@ export default class UserService {
             );
             return res;
         };
+        this.updateDeclarationMinValue = async (value) => {
+            const res = await $AdminApi.post(
+                USER_API_URL + "/updateDeclarationMinValue",
+                value
+            );
+            return res;
+        };
         this.updateElc = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateElc",

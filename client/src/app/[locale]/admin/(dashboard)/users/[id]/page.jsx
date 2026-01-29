@@ -58,7 +58,7 @@ export default function Page() {
                 "Упс! что-то пошло не так. Перезагрузите страницу",
                 {
                     variant: "error",
-                }
+                },
             );
         } finally {
             setLoading(false);
