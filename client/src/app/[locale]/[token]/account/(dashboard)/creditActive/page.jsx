@@ -67,13 +67,14 @@ const credit = new CreditService($UserApi);
 
 function Inner() {
     const { user } = useContext(UserContext);
+    console.log(user.id);
 
     const t = useTranslations();
     const { id } = useParams();
     const { isPending, error, data } = useQuery({
         queryKey: ["credits"],
         queryFn: async () => {
-            const { data } = await credit.find(user?.id);
+            const { data } = await credit.find(user.id);
             return data;
         },
     });

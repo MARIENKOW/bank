@@ -14,7 +14,13 @@ export default function Layout({ children }) {
                 flexDirection={"column"}
             >
                 <ImgBG2 />
-                <Box position={'relative'}zIndex={3} >
+                <Box
+                    display={"flex"}
+                    flex={"1"}
+                    flexDirection={"column"}
+                    position={"relative"}
+                    zIndex={3}
+                >
                     {children}
                 </Box>
             </Box>

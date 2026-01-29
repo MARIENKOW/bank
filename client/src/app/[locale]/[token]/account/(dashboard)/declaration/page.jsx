@@ -3,11 +3,14 @@
 import { UserContext } from "../../../../../../components/wrappers/UserContextProvider";
 import { ContainerComponent } from "../../../../../../components/wrappers/ContainerComponent";
 import OnlyLoginUser from "../../../../../../components/wrappers/OnlyLoginUser";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { observer } from "mobx-react-lite";
 import BreadcrumbsComponent from "../../../../../../components/BreadcrumbsComponent";
-import { ACCOUNT_ROUTE } from "../../../../../../configs/routerLinks";
+import {
+    ACCOUNT_DOCUMENT_ROUTE,
+    ACCOUNT_ROUTE,
+} from "../../../../../../configs/routerLinks";
 import { useParams } from "next/navigation";
 import { $UserApi } from "../../../../../../http";
 import SiteService from "../../../../../../services/SiteService";
@@ -40,10 +43,36 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { StyledFormControl } from "../../../../../../components/form/StyledPassword";
 import { DeleteForeverOutlined } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
+import DeclarationService from "../../../../../../services/DeclarationService";
+import Loading from "../../../../../../components/loading/Loading";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import { useRouter } from "../../../../../../i18n/navigation";
+
+const declaration = new DeclarationService($UserApi);
 
 export default observer(function Page() {
     const t = useTranslations();
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
     const { token } = useParams();
+    const { user } = useContext(UserContext);
+    useEffect(() => {
+        (async function () {
+            if (!user.id) return;
+            setLoading(true);
+            try {
+                console.log(user.id);
+                const { data } = await declaration.find(user.id);
+                setData(data);
+            } catch (error) {
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [user]);
+
+    if (loading) return <Loading />;
+
     return (
         <OnlyLoginUser>
             <ContainerComponent>
@@ -76,7 +105,7 @@ export default observer(function Page() {
                     flex={1}
                     mb={10}
                 >
-                    <Inner />
+                    <Inner user_id={user.id} data={data} />
                 </Box>
             </ContainerComponent>
         </OnlyLoginUser>
@@ -138,25 +167,30 @@ export function StyledDivider({ children }) {
 const site = new SiteService($UserApi);
 
 const currencies = [
-    { value: "ILS", symbol: "₪" },
-    { value: "USD", symbol: "$" },
-    { value: "EUR", symbol: "€" },
-    { value: "RUB", symbol: "₽" },
-    { value: "GBP", symbol: "£" },
-    { value: "CAD", symbol: "C$" },
-    { value: "AUD", symbol: "A$" },
-    { value: "JPY", symbol: "¥" },
-    { value: "CHF", symbol: "CHF" },
+    { name: "ILS" },
+    { name: "USD" },
+    { name: "EUR" },
+    { name: "RUB" },
+    { name: "GBP" },
+    { name: "CAD" },
+    { name: "AUD" },
+    { name: "JPY" },
+    { name: "CHF" },
 ];
 
-function Inner() {
-    const { user } = useContext(UserContext);
-
+function Inner({ user_id, data }) {
     const t = useTranslations();
 
+    const { token } = useParams();
     const handleChange = () => {
         clearErrors("root");
     };
+
+    const cR = !data || data?.length === 0 ? currencies : data;
+
+    console.log(data);
+    console.log(cR);
+    const router = useRouter();
 
     const {
         handleSubmit,
@@ -191,7 +225,7 @@ function Inner() {
         try {
             await site.sendTelegram({
                 ...data,
-                user_id: user?.id,
+                user_id,
             });
             enqueueSnackbar(t("fields.declaration.success"), {
                 variant: "success",
@@ -310,7 +344,6 @@ function Inner() {
                                     register={register("cash.date", {
                                         required: t("form.required"),
                                     })}
-                                    // label="Имя Фамилия"
                                 />
                             </Box>
                         </Grid2>
@@ -360,7 +393,7 @@ function Inner() {
                                                                 target,
                                                             }) => {
                                                                 onChange(
-                                                                    target?.value
+                                                                    target?.value,
                                                                 );
                                                             }}
                                                             sx={{
@@ -379,22 +412,19 @@ function Inner() {
                                                                 },
                                                             }}
                                                         >
-                                                            {currencies.map(
-                                                                ({
-                                                                    value,
-                                                                    symbol,
-                                                                }) => (
+                                                            {cR.map(
+                                                                ({ name }) => (
                                                                     <MenuItem
                                                                         key={
-                                                                            value
+                                                                            name
                                                                         }
                                                                         value={
-                                                                            symbol
+                                                                            name
                                                                         }
                                                                     >
-                                                                        {symbol}
+                                                                        {name}
                                                                     </MenuItem>
-                                                                )
+                                                                ),
                                                             )}
                                                         </Select>
                                                         <FormHelperText>
@@ -455,7 +485,7 @@ function Inner() {
                                                                     target,
                                                                 }) => {
                                                                     onChange(
-                                                                        target?.value
+                                                                        target?.value,
                                                                     );
                                                                 }}
                                                             />
@@ -484,9 +514,8 @@ function Inner() {
                             <Box flex={1}>
                                 <Button
                                     onClick={async () => {
-                                        const isValid = await trigger(
-                                            "cash.currencies"
-                                        );
+                                        const isValid =
+                                            await trigger("cash.currencies");
                                         console.log(isValid);
                                         if (!isValid) return;
                                         appendCash({
@@ -514,7 +543,19 @@ function Inner() {
                             </Box>
                         </Grid2>
                     </Grid2>
+                    <Button
+                        variant="outlined"
+                        // sx={{ bgcolor: red[50] }}
+                        onClick={(event) => {
+                            router.push(ACCOUNT_DOCUMENT_ROUTE(token));
+                        }}
+                    >
+                        <ReceiptLongIcon color="dif" />
 
+                        <Typography color="dif" variant="body1">
+                            {t("pages.account.document.name")}
+                        </Typography>
+                    </Button>
                     {errors?.root?.server && (
                         <StyledAlert
                             severity="error"

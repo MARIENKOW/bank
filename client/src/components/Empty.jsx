@@ -5,7 +5,9 @@ import { useTranslations } from "next-intl";
 
 export const Empty = ({ admin }) => {
     const t = useTranslations();
-    return null
+    if (!admin) {
+        return null;
+    }
     return (
         <InCenter>
             <Box

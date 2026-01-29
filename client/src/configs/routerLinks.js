@@ -30,6 +30,8 @@ export const ADMIN_USER_CREDIT_ROUTE = (id) => ADMIN_USER_ROUTE(id) + "/credit";
 export const ADMIN_USER_DOCUMENT_ROUTE = (id) =>
     ADMIN_USER_ROUTE(id) + "/document";
 export const ADMIN_USER_BANK_ROUTE = (id) => ADMIN_USER_ROUTE(id) + "/bank";
+export const ADMIN_USER_DECLARATION_ROUTE = (id) =>
+    ADMIN_USER_ROUTE(id) + "/declaration";
 export const ADMIN_USER_INSURANCE_ROUTE = (id) =>
     ADMIN_USER_ROUTE(id) + "/insurance";
 export const ADMIN_PHONE_ROUTE = ADMIN_ROUTE + "/phone";
