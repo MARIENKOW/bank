@@ -1,74 +1,23 @@
-import { Insurance } from "../models/Insurance.js";
 import { User } from "../models/User.js";
+import { DeclarationValute } from "../models/DeclarationValute.js";
 
 class Controller {
     create = async (req, res) => {
         try {
-            const { id, name, status, limit, elc } = req.body;
+            const { id, name } = req.body;
 
-            if (!id || !name || (status !== 0 && status !== 1))
+            if (!name)
                 return res
                     .status(400)
                     .json({ "root.server": "Incorrect values" });
 
             const userData = await User.findOne({ where: { id } });
-
             if (!userData) return res.status(404).json("User is not defined");
 
-            await Insurance.create({
+            await DeclarationValute.create({
                 user_id: id,
                 name,
-                status: Number(status),
-                limit,
-                elc,
             });
-
-            res.status(200).json(userData);
-        } catch (e) {
-            console.log(e);
-            res.status(500).json(e.message);
-        }
-    };
-    update = async (req, res) => {
-        try {
-            const { id, name, status, limit, elc } = req.body;
-
-            if (!id) return res.status(404).json("id is not found");
-
-            if (!id || !name || (status !== 0 && status !== 1))
-                return res
-                    .status(400)
-                    .json({ "root.server": "Incorrect values" });
-
-            const eventData = await Insurance.findOne({
-                where: {
-                    id,
-                },
-            });
-
-            if (!eventData) return res.status(404).json("Not found Insurance");
-
-            const userData = await User.findOne({
-                where: {
-                    id: eventData.user_id,
-                },
-            });
-
-            if (!userData) return res.status(404).json("Not found User");
-
-            await Insurance.update(
-                {
-                    name,
-                    status: Number(status),
-                    limit,
-                    elc,
-                },
-                {
-                    where: {
-                        id,
-                    },
-                },
-            );
 
             res.status(200).json(userData);
         } catch (e) {
@@ -89,7 +38,7 @@ class Controller {
 
             if (!userData) return res.status(404).json("Not found User");
 
-            const data = await Insurance.findAll({
+            const data = await DeclarationValute.findAll({
                 where: { user_id: id },
                 order: [["id", "desc"]],
             });
@@ -105,13 +54,13 @@ class Controller {
             const { id } = req.params;
             if (!id) return res.status(404).json("id is not found");
 
-            const eventData = await Insurance.findOne({
+            const eventData = await DeclarationValute.findOne({
                 where: {
                     id,
                 },
             });
 
-            if (!eventData) return res.status(404).json("Not found Insurance");
+            if (!eventData) return res.status(404).json("Not found Valut");
 
             const userData = await User.findOne({
                 where: {
@@ -121,7 +70,7 @@ class Controller {
 
             if (!userData) return res.status(404).json("Not found User");
 
-            await Insurance.destroy({
+            await DeclarationValute.destroy({
                 where: { id: id },
             });
 

@@ -34,6 +34,9 @@ import { Insurance } from "./models/Insurance.js";
 import InsuranceRouter from "./routers/InsuranceRouter.js";
 import { InsuranceBody } from "./models/InsuranceBody.js";
 import InsuranceBodyRouter from "./routers/InsuranceBodyRouter.js";
+import { Declaration } from "./models/Declaration.js";
+import { DeclarationValute } from "./models/DeclarationValute.js";
+import DeclarationRouter from "./routers/DeclarationRouter.js";
 
 const asModels = (models) => {
     Object.values(models).forEach((model) => {
@@ -59,6 +62,8 @@ asModels({
     Bank,
     Insurance,
     InsuranceBody,
+    Declaration,
+    DeclarationValute,
 });
 
 dotenv.config();
@@ -74,20 +79,20 @@ app.use(
     cors({
         credentials: true,
         origin: config.CLIENT_URL,
-    })
+    }),
 );
 
 app.use(
     "/api" + process.env.VIDEO_FOLDER,
-    express.static("./" + process.env.VIDEO_FOLDER)
+    express.static("./" + process.env.VIDEO_FOLDER),
 );
 app.use(
     "/api" + process.env.NFT_FOLDER,
-    express.static("./" + process.env.NFT_FOLDER)
+    express.static("./" + process.env.NFT_FOLDER),
 );
 app.use(
     "/api" + process.env.DOCUMENT_FOLDER,
-    express.static("./" + process.env.DOCUMENT_FOLDER)
+    express.static("./" + process.env.DOCUMENT_FOLDER),
 );
 app.use("/api/meta", express.static("./meta"));
 app.use("/api/Admin", AdminRouter);
@@ -103,13 +108,14 @@ app.use("/api/Bank", BankRouter);
 app.use("/api/Insurance", InsuranceRouter);
 app.use("/api/InsuranceBody", InsuranceBodyRouter);
 app.use("/api/UserDocument", UserDocumentRouter);
+app.use("/api/Declaration", DeclarationRouter);
 app.use("/api", SiteRouter);
 
 const web = http.Server(app);
 
 try {
     web.listen(PORT, process.env.SERVER_URL, () =>
-        console.log("Server is working")
+        console.log("Server is working"),
     );
 } catch (e) {
     console.log(`${e.message}`);
