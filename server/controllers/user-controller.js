@@ -209,6 +209,33 @@ class Controller {
             console.log(e);
         }
     };
+    delete = async (req, res) => {
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json("id is not found");
+
+            const userData = await User.findOne({
+                where: {
+                    id,
+                },
+                include: [
+                    {
+                        model: Img,
+                        as: "img",
+                    },
+                ],
+            });
+
+            if (!userData) return res.status(404).json("Not found User");
+
+            await userData.destroy();
+
+            return res.json(true);
+        } catch (e) {
+            res.status(500).json(e.message);
+            console.log(e);
+        }
+    };
     updateName = async (req, res) => {
         try {
             const { name, id } = req.body;

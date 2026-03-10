@@ -19,6 +19,7 @@ UserRouter.get("/aboutUser", autUserMiddelware, controller.aboutUser);
 UserRouter.get("/getAll", authAdminMiddelware, controller.getAll);
 
 UserRouter.get("/:id", authAdminMiddelware, controller.getById);
+UserRouter.delete("/:id", authAdminMiddelware, controller.delete);
 
 // UserRouter.post("/cash-out", authAdminMiddelware, controller.cashOut);
 
