@@ -1,5 +1,11 @@
-import { Paper, Typography, useTheme } from "@mui/material";
-import { useRef, useState } from "react";
+import {
+    Box,
+    CircularProgress,
+    Paper,
+    Typography,
+    useTheme,
+} from "@mui/material";
+import { use, useRef, useState } from "react";
 import { IconButton, ListItemIcon } from "@mui/material";
 import { MenuItem, Menu } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -7,10 +13,38 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { red } from "@mui/material/colors";
 import Link from "next/link";
 import { ADMIN_USERS_ROUTE } from "../../../../../configs/routerLinks";
+import { useQueryClient } from "@tanstack/react-query";
+import UserService from "../../../../../services/UserService";
+import { $AdminApi } from "../../../../../http";
+import { enqueueSnackbar } from "notistack";
+
+const userApi = new UserService($AdminApi);
 
 export default function UserItemAdmin({ user }) {
     const anchorEl = useRef();
     const [open, setOpen] = useState(false);
+    const [loadingDelete, setLoadingDelete] = useState(false);
+    const quryclient = useQueryClient();
+
+    const handleClickDelite = async () => {
+        const agree = window.confirm(
+            `Вы уверены, что хотите удалить \n "${user?.username}" ?`,
+        );
+        if (!agree) return;
+        setLoadingDelete(true);
+        try {
+            await userApi.delete(user.id);
+            enqueueSnackbar(`${user?.username} удалён`, {
+                variant: "success",
+            });
+            quryclient.invalidateQueries("users");
+        } catch (e) {
+            console.dir(e);
+            enqueueSnackbar("Упс! что-то пошло не так", { variant: "error" });
+        } finally {
+            setLoadingDelete(false);
+        }
+    };
 
     const handleOpenNavMenu = (event) => {
         setOpen(true);
@@ -36,20 +70,23 @@ export default function UserItemAdmin({ user }) {
                 }}
             >
                 <Typography variant="body1" fontWeight={600} color="secondary">
-                    {user.username}
+                    {user.id + " | " + user.username}
                 </Typography>
-                <IconButton
-                    size="large"
-                    id={`menu-appbar-${user?.id}`}
-                    aria-label="account of current user"
-                    aria-controls={`menu-appbarr-${user?.id}`}
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color="secondary"
-                    ref={anchorEl}
-                >
-                    <MenuIcon />
-                </IconButton>
+                <Box display={'flex'} alignItems={'center'}   >
+                    {loadingDelete && <CircularProgress color='secondary' size={20} />}
+                    <IconButton
+                        size="large"
+                        id={`menu-appbar-${user?.id}`}
+                        aria-label="account of current user"
+                        aria-controls={`menu-appbarr-${user?.id}`}
+                        aria-haspopup="true"
+                        onClick={handleOpenNavMenu}
+                        color="secondary"
+                        ref={anchorEl}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                </Box>
                 <Menu
                     id="long-menu"
                     MenuListProps={{
@@ -89,10 +126,11 @@ export default function UserItemAdmin({ user }) {
                         </MenuItem>
                     </Link>
 
-                    {/* <MenuItem
+                    <MenuItem
                         sx={{ color: red[900], bgcolor: red[50] }}
                         onClick={(event) => {
                             handleCloseNavMenu(event);
+                            handleClickDelite();
                             event.preventDefault();
                         }}
                     >
@@ -105,7 +143,7 @@ export default function UserItemAdmin({ user }) {
                         >
                             Удалить
                         </Typography>
-                    </MenuItem> */}
+                    </MenuItem>
                 </Menu>
             </Paper>
         </Link>

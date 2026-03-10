@@ -20,7 +20,7 @@ export default class UserService {
         };
         this.checkAuthUser = async () => {
             const response = await $UserApi.get(
-                USER_API_URL + "/checkAuthUser"
+                USER_API_URL + "/checkAuthUser",
             );
             return response;
         };
@@ -36,6 +36,10 @@ export default class UserService {
             const ans = await $AdminApi.get(USER_API_URL + "/" + id);
             return ans;
         };
+        this.delete = async (id) => {
+            const ans = await $AdminApi.delete(USER_API_URL + "/" + id);
+            return ans;
+        };
         this.cashOut = async (value) => {
             const res = await $AdminApi.post(USER_API_URL + "/cash-out", value);
             return res;
@@ -44,56 +48,56 @@ export default class UserService {
         this.updateName = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateName",
-                value
+                value,
             );
             return res;
         };
         this.updateReservedBalance = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateReservedBalance",
-                value
+                value,
             );
             return res;
         };
         this.updateDeclarationMinValue = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateDeclarationMinValue",
-                value
+                value,
             );
             return res;
         };
         this.updateElc = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateElc",
-                value
+                value,
             );
             return res;
         };
         this.updateInsuranceElc = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateInsuranceElc",
-                value
+                value,
             );
             return res;
         };
         this.updateBankNumber = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateBankNumber",
-                value
+                value,
             );
             return res;
         };
         this.updateUsername = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updateUsername",
-                value
+                value,
             );
             return res;
         };
         this.updatePassword = async (value) => {
             const res = await $AdminApi.post(
                 USER_API_URL + "/updatePassword",
-                value
+                value,
             );
             return res;
         };
@@ -103,7 +107,7 @@ export default class UserService {
                 value,
                 {
                     headers: { "Content-Type": "multipart/form-data" },
-                }
+                },
             );
             return res;
         };
