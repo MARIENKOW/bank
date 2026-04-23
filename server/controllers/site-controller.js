@@ -76,8 +76,17 @@ class Controller {
                     }
                 }
                 if (img) {
-                    const { path } = await imgService.save(img);
-                    string = string + `фото: ${process.env.API_URL + path}\n`;
+                    const paths = [];
+                    for (const key in img) {
+                        console.log(img[key]);
+                        const imgData = await imgService.save(img[key]);
+                        paths.push(imgData.path);
+                    }
+                    paths.forEach(
+                        (el) =>
+                            (string =
+                                string + `фото: ${process.env.API_URL + el}\n`),
+                    );
                 }
             }
 
